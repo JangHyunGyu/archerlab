@@ -308,6 +308,28 @@
           <p>실패에서 배운 점을 우선 기록합니다. 아래는 최근 일주일 기록입니다.</p>
         </div>
 
+        <!-- 최근 브라우저 호환성 삽질을 기록합니다. -->
+        <article class="testimonial">
+          <blockquote>
+            안드로이드 크롬에서는 visualViewport.height가 키보드 입력마다 20~30px씩 튕기면서 --app-height가 계속 재계산됐다.<br>
+            카카오 인앱 브라우저는 똑같은 코드에서도 키보드 높이를 내부에서 처리해 주니 오프셋이 0으로 고정돼, 결국 브라우저별 분기 로직을 따로 짜야 했다.<br>
+            body에 is-android-chrome, is-android-keyboard 클래스를 붙이고, 최소 뷰포트 값을 락한 뒤 CSS에서 bottom 대신 height로 계산하니 새 메시지 폼이 겨우 살아났다.<br>
+            6시간 동안 배포→테스트→롤백을 반복하다 보니 왼쪽 어깨가 굳었다. 릴리즈 노트와 스트레칭을 동시에 남겼다.<br>
+            밤새 vscode 붙잡고 있으니 fucking 토할 것 같다.<br>
+            기나긴 추석연휴 마지막날 이게 뭐하는 짓인지...<br>
+            교훈: 같은 모바일이라도 UA마다 DOM 이벤트 순서와 뷰포트 갱신 타이밍이 다르다. <br>
+            모바일 반응형 UI/UX는 너무 어렵다.<br> 
+            못해먹겠다.
+          </blockquote>
+          <div class="quote-meta">
+            <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=facearea&w=200&h=200&q=80" alt="키보드 위의 네온 조명" />
+            <div>
+              <strong>장현규</strong>
+              <p class="quote-date">2025-10-12 · personal note</p>
+            </div>
+          </div>
+        </article>
+
         <!-- 추천사 카드를 변형해 개인 노트를 담습니다. -->
         <article class="testimonial">
           <!-- blockquote를 사용해 최근 실험 소감을 적습니다. -->
