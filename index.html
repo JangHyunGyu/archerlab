@@ -7,18 +7,18 @@
     <!-- 모바일에서도 글자 크기와 레이아웃이 안정적으로 보이도록 뷰포트를 설정합니다. -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- 브라우저 탭과 검색 결과에 노출될 페이지 제목을 정의합니다. -->
-    <title>ArcherLab — Midnight Build Log</title>
+    <title>ArcherLab</title>
     <!-- 검색엔진과 SNS 카드에 사용할 간단한 페이지 설명을 제공합니다. -->
     <meta
       name="description"
-      content="ArcherLab은 프로토타입을 만들고 기록하는 1인 플레이그라운드입니다. 코드, 오디오, 라이트 인터페이스로 밤을 채웁니다."
+      content="ArcherLab은 프로토타입을 만들고 기록하는 테스트존입니다."
     />
     <!-- 소셜 미디어에 공유될 때 사용될 페이지 제목을 지정합니다. -->
-    <meta property="og:title" content="ArcherLab — Midnight Build Log" />
+    <meta property="og:title" content="ArcherLab" />
     <!-- 오픈 그래프 설명도 개인적인 플레이그라운드 분위기로 맞춥니다. -->
     <meta
       property="og:description"
-      content="개인 플레이로그와 도구 목록."
+      content="개인 개발로그와 도구 목록."
     />
     <!-- 이 페이지가 일반 웹사이트임을 명시합니다. -->
     <meta property="og:type" content="website" />
@@ -90,11 +90,11 @@
         <!-- 행동 유도 버튼 묶음으로 방문자가 다음으로 할 일을 제안합니다. -->
         <div class="hero-actions">
           <!-- 정체성을 정리한 섹션으로 스크롤합니다. -->
-          <a class="cta-btn" href="#identity" data-cta="hero">아이덴티티 살펴보기</a>
-          <!-- 플레이그라운드 쇼케이스 섹션으로 빠르게 이동하는 보조 버튼입니다. -->
-          <a class="ghost-btn" href="#experiments">플레이그라운드 입장</a>
+          <a class="cta-btn" href="#identity" data-cta="hero">Identity</a>
+          <!-- 경험 섹션으로 빠르게 이동하는 보조 버튼입니다. -->
+          <a class="ghost-btn" href="#experiments">Experiments</a>
           <!-- IT 스토리 서브 도메인으로 이동하는 링크입니다. -->
-          <a class="ghost-btn" href="https://itstory.archerlab.dev" target="_blank" rel="noopener" data-cta="hero-itstory">IT Story 읽어보기</a>
+          <a class="ghost-btn" href="https://itstory.archerlab.dev" target="_blank" rel="noopener" data-cta="hero-itstory">IT Story</a>
           <!-- 챗봇 테스트 존을 직접 체험하도록 안내합니다. -->
           <a class="ghost-btn" href="https://walkwithme.archerlab.dev" target="_blank" rel="noopener" data-cta="hero-chatbot">챗봇 체험하기</a>
         </div>
@@ -201,33 +201,26 @@
 
         <!-- 실험 카드를 격자 형태로 배치합니다. -->
         <div class="pill-grid">
-          <!-- 첫 번째 실험 카드에는 생성형 모델 기반 프로젝트를 소개합니다. -->
+          <!-- 첫 번째 실험 카드는 브라우저 기반 핀볼 프로토타입입니다. -->
           <article class="pill-card">
-            <!-- 카드 제목은 프로젝트 이름을 나타냅니다. -->
-            <strong>EchoTrace</strong>
-            <!-- 프로젝트에 대한 짧은 설명을 작성합니다. -->
-            <p>오픈소스 LLM을 미니 PC에 올리고, 내 음성을 즉시 코드 스니펫으로 바꿔주는 음성-코드 인터페이스.</p>
+            <!-- 카드 제목은 프로젝트 이름을 사용합니다. -->
+            <strong>Pinball Game</strong>
+            <!-- 물리 엔진 튜닝과 조작성 개선 과정을 정리합니다. -->
+            <p>Canvas와 Matter.js로 만든 미니 핀볼. 중력과 바운스 값을 수십 번 조정하며 키보드 반응을 맞춘 네온 테마 프로토타입.<br>(수학적 난이도로 인한 진행 어려움 발생)</p>
           </article>
-          <!-- 두 번째 카드에는 물리 디바이스 실험을 담습니다. -->
+          <!-- 두 번째 카드는 OCR 스캐너 실험입니다. -->
           <article class="pill-card">
             <!-- 프로젝트 타이틀을 명시합니다. -->
-            <strong>NightShift Deck</strong>
-            <!-- 구체적인 기능과 목적을 설명합니다. -->
-            <p>키캡 아래에 칩LED를 삽입한 커스텀 매크로 패드. 음향 효과와 빠른 매핑으로 라이브 코딩을 지원합니다.</p>
+            <strong>OCR</strong>
+            <!-- 반복 학습과 모델 교체 과정을 설명합니다. -->
+            <p>Tesseract와 PaddleOCR를 번갈아 붙여 영수증·필기 사진을 읽고, 후처리 파이프라인을 커밋한 클라이언트 사이드 스캐너.<br>(오픈소스 라이브러리 텍스트 인식률 문제 발생)</p>
           </article>
-          <!-- 세 번째 카드는 실험적인 웹 인터페이스를 소개합니다. -->
+          <!-- 세 번째 카드는 자동 문법 수정기입니다. -->
           <article class="pill-card">
-            <!-- 프로젝트 타이틀을 기록합니다. -->
-            <strong>404 Observatory</strong>
-            <!-- 실험의 특징을 설명하는 문장입니다. -->
-            <p>실시간 트래픽 로그를 시각 패턴으로 변환합니다.</p>
-          </article>
-          <!-- 네 번째 카드는 프로토타입을 테스트하는 도구를 공유합니다. -->
-          <article class="pill-card">
-            <!-- 프로젝트 타이틀입니다. -->
-            <strong>Capsule Lab</strong>
-            <!-- 아이디어의 핵심을 간단히 정리합니다. -->
-            <p>익명 큐레이션 서버. 짧은 초대 링크로 피드백을 수집합니다.</p>
+            <!-- 명확한 프로젝트명을 씁니다. -->
+            <strong>Syntax Medic</strong>
+            <!-- 실제로 반복 개선한 요점을 담습니다. -->
+            <p>회사 주간보고 작성 노트에 적은 글을 즉시 교정하기 위해 사전 필터를 여러 번 손보며 만든 자동 문법 보정기.<br>(너무 잦은 문법 변경과 룰 충돌로 인한 혼란 발생)</p>
           </article>
         </div>
       </section>
@@ -237,40 +230,54 @@
         <!-- 섹션 제목과 설명을 한 곳에 모읍니다. -->
         <div class="section-heading">
           <!-- 타이틀을 통해 어떤 기술을 즐겨 쓰는지 소개합니다. -->
-          <h2>손에 익은 도구들과 새로 배우는 것들</h2>
+          <h2>학습중인 것들</h2>
           <!-- 설명 문단으로 경험의 성격을 요약합니다. -->
-          <p>프런트엔드, 사운드, 전자공학을 필요에 맞게 조합합니다. 새 기술은 작은 단위로 실험합니다.</p>
+          <p>프런트엔드, 백엔드를 필요에 맞게 외부 호스팅 서비스들과 조합합니다.</p>
         </div>
 
         <!-- 각 도구 카드를 그리드로 정렬합니다. -->
         <div class="feature-grid">
-          <!-- 첫 번째 카드는 소프트웨어 스택을 설명합니다. -->
+          <!-- 첫 번째 카드는 데이터 작업 도구를 설명합니다. -->
           <article class="feature-card">
-            <!-- 카드 제목은 도구군을 간단히 명명합니다. -->
-            <h3>Symmetric Stack</h3>
-            <!-- 카드 본문에서 구체적인 도구를 나열합니다. -->
-            <p>TypeScript, Astro, SvelteKit, Three.js 조합으로 인터랙티브 웹을 빠르게 스케치합니다.</p>
+            <!-- 실제 사용 중인 툴셋 이름을 사용합니다. -->
+            <h3>DBeaver + Eclipse</h3>
+            <!-- 데이터베이스와 서버 개발 워크플로를 요약합니다. -->
+            <p>DBeaver로 DB 스키마를 정리하고, Eclipse에서 API와 배치 코드를 함께 다루는 기본 작업 환경.</p>
           </article>
-          <!-- 두 번째 카드는 하드웨어 및 제작 도구를 담습니다. -->
+          <!-- 두 번째 카드는 코드 에디터를 소개합니다. -->
           <article class="feature-card">
-            <!-- 카드의 제목입니다. -->
-            <h3>Physical Playground</h3>
-            <!-- 사용 중인 하드웨어 도구를 설명합니다. -->
-            <p>Raspberry Pi 5, ESP32, 심박 센서를 결합해 실시간 감정 반응을 캡처합니다.</p>
+            <!-- 자주 쓰는 에디터를 명시합니다. -->
+            <h3>VS Code</h3>
+            <!-- 에디터와 확장 사용 흐름을 설명합니다. -->
+            <p>멀티 커서, REST Client, Git Graph 확장으로 커밋과 프론트 실험을 빠르게 반복합니다.</p>
           </article>
-          <!-- 세 번째 카드는 크리에이티브 도구를 소개합니다. -->
+          <!-- 세 번째 카드는 인프라 관리를 다룹니다. -->
           <article class="feature-card">
-            <!-- 카드 제목을 통해 영역을 드러냅니다. -->
-            <h3>Sonic Rituals</h3>
-            <!-- 사운드와 관련된 워크플로를 작성합니다. -->
-            <p>Ableton Live와 Max for Live로 모듈러 신스와 코드를 연결해 데이터 기반 사운드를 만듭니다.</p>
+            <!-- 클라우드 운영 스택을 소개합니다. -->
+            <h3>AWS + Cloudflare</h3>
+            <!-- 도구 조합과 용도를 정리합니다. -->
+            <p>AWS로 배포와 모니터링을 맡고, Cloudflare Worker·DNS로 프록시와 CORS를 조정합니다.</p>
           </article>
-          <!-- 네 번째 카드는 학습 중인 기술을 공유합니다. -->
+          <!-- 네 번째 카드는 알림용 메일 라우팅 도구를 소개합니다. -->
           <article class="feature-card">
-            <!-- 제목으로 새로 파고드는 주제를 나타냅니다. -->
-            <h3>Current Obsession</h3>
-            <!-- 어떤 기술을 공부하고 있는지 설명합니다. -->
-            <p>WebUSB를 활용한 브라우저 기반 MIDI 인터페이스. 아직 불안정하지만 라이브 코딩 세션에서 테스트 중입니다.</p>
+            <!-- 실제 사용 채널을 명시합니다. -->
+            <h3>Google SMTP Relay</h3>
+            <!-- 커스텀 도메인 메일 라우팅 방식을 설명합니다. -->
+            <p>커스텀 도메인 메일을 Google Workspace SMTP 릴레이로 포워딩해 Gmail에서 송수신하고, 스팸 필터와 보관함을 한곳에서 관리합니다.</p>
+          </article>
+          <!-- 다섯 번째 카드는 AI 개발 보조 도구를 담습니다. -->
+          <article class="feature-card">
+            <!-- 코드 작성 시 사용하는 보조 플러그인을 소개합니다. -->
+            <h3>GitHub Copilot 플러그인</h3>
+            <!-- 반복 작성 코드를 빠르게 제안받는 흐름을 설명합니다. -->
+            <p>VS Code의 Copilot 제안을 받아 반복 코드를 줄이고, 테스트 케이스 초안을 바로 작성합니다.</p>
+          </article>
+          <!-- 여섯 번째 카드는 API 실험 환경을 설명합니다. -->
+          <article class="feature-card">
+            <!-- 언어 모델을 연결하는 핵심 API를 소개합니다. -->
+            <h3>OpenAI API</h3>
+            <!-- 실제로 구현한 시나리오를 간단히 공유합니다. -->
+            <p>GPT 계열 모델로 요약, 번역, 텍스트 보정 파이프라인을 구성하고, Worker 프록시로 응답 지연을 줄였습니다.</p>
           </article>
         </div>
 
@@ -295,7 +302,7 @@
             <!-- 강조 숫자로 장비 개수를 기입합니다. -->
             <strong>7</strong>
             <!-- 설명 문구로 장비의 종류를 안내합니다. -->
-            <span>상시 연결된 센서 및 컨트롤러</span>
+            <span>임대중인 도메인</span>
           </div>
         </div>
       </section>
@@ -320,11 +327,10 @@
             밤새 vscode 붙잡고 있으니 fucking 토할 것 같다.<br>
             기나긴 추석연휴 마지막날 이게 뭐하는 짓인지...<br>
             교훈: 같은 모바일이라도 UA마다 DOM 이벤트 순서와 뷰포트 갱신 타이밍이 다르다. <br>
-            모바일 반응형 UI/UX는 너무 어렵다.<br> 
-            못해먹겠다.
+            모바일 반응형 UI/UX는 HELL...
           </blockquote>
           <div class="quote-meta">
-            <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=facearea&w=200&h=200&q=80" alt="키보드 위의 네온 조명" />
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=facearea&w=200&h=200&q=80" alt="네온 조명 아래의 작업 데스크" />
             <div>
               <strong>장현규</strong>
               <p class="quote-date">2025-10-12 · personal note</p>
@@ -336,12 +342,12 @@
         <article class="testimonial">
           <!-- blockquote를 사용해 최근 실험 소감을 적습니다. -->
           <blockquote>
-            GPT-4o mini API 기반 챗봇 스택을 GPT-5 mini API 기준으로 리빌드했다. <br>속도는 기존과 큰 차이가 없는데, 응답 톤 제어와 맥락 유지력이 체감될 정도로 개선됐다. <br>4o에서 잘 돌던 `translate: 0.7` 커스텀 옵션을 그대로 넣었다가 GPT-5가 HTTP 400으로 뱉어내는 바람에 원인을 몰라 밤새 설정 코드를 다시 배포했다.
+            GPT-4o mini API 기반 챗봇 스택을 GPT-5 mini API 기준으로 리빌드했다. <br>속도는 기존과 큰 차이가 없는데, 응답 톤 제어와 맥락 유지력이 체감될 정도로 개선됐다. <br>4o에서 잘 돌던 `translate` 옵션을 그대로 넣었다가 GPT-5가 HTTP 400으로 뱉어내는 바람에 원인을 몰라 밤새 설정 코드를 다시 배포했다.
           </blockquote>
           <!-- 메타 정보에는 작성자와 날짜를 포함합니다. -->
           <div class="quote-meta">
             <!-- 프로필 이미지는 플레이그라운드에서 자주 쓰는 장비를 상징적으로 표현합니다. -->
-            <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=facearea&w=200&h=200&q=80" alt="키보드 위의 네온 조명" />
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=facearea&w=200&h=200&q=80" alt="네온 조명 아래의 작업 데스크" />
             <!-- 텍스트 블록 안에 작성자와 날짜 정보를 적습니다. -->
             <div>
               <!-- 작성자 이름을 명시합니다. -->
@@ -361,7 +367,7 @@
           <!-- 메타 정보에는 작성자와 날짜를 포함합니다. -->
           <div class="quote-meta">
             <!-- 프로필 이미지는 플레이그라운드에서 자주 쓰는 장비를 상징적으로 표현합니다. -->
-            <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=facearea&w=200&h=200&q=80" alt="키보드 위의 네온 조명" />
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=facearea&w=200&h=200&q=80" alt="네온 조명 아래의 작업 데스크" />
             <!-- 텍스트 블록 안에 작성자와 날짜 정보를 적습니다. -->
             <div>
               <!-- 작성자 이름을 명시합니다. -->
@@ -381,7 +387,7 @@
           <!-- 메타 정보에는 작성자와 날짜를 포함합니다. -->
           <div class="quote-meta">
             <!-- 프로필 이미지는 플레이그라운드에서 자주 쓰는 장비를 상징적으로 표현합니다. -->
-            <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=facearea&w=200&h=200&q=80" alt="키보드 위의 네온 조명" />
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=facearea&w=200&h=200&q=80" alt="네온 조명 아래의 작업 데스크" />
             <!-- 텍스트 블록 안에 작성자와 날짜 정보를 적습니다. -->
             <div>
               <!-- 작성자 이름을 명시합니다. -->
@@ -442,7 +448,7 @@
             </p>
             <div class="footer-signal">
               <span class="footer-label">Now streaming</span>
-              <p class="footer-signal-value">ThinkPad X1 · Modular synth · Drip coffee</p>
+              <p class="footer-signal-value">Cheese burger · Red wine · Drip coffee</p>
             </div>
           </div>
           <div class="footer-column">
@@ -463,8 +469,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <span>© <span id="year"></span> ArcherLab · crafted in Daegu at night</span>
-          <span>Session window opens 23:00 – 03:00 KST</span>
+          <span>© <span id="year"></span> ArcherLab<br>crafted in Daegu at night</span>
         </div>
       </div>
     </footer>
