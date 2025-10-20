@@ -1,5 +1,109 @@
 // DOMContentLoaded 이벤트는 HTML 문서가 완전히 파싱되었을 때 발생합니다.
 document.addEventListener("DOMContentLoaded", () => {
+	const LANGUAGE_STORAGE_KEY = "archerlab:language";
+	const languageSelects = Array.from(document.querySelectorAll("[data-language-switch]"));
+
+	const normalizeLanguage = (value) => {
+		if (!value || typeof value !== "string") {
+			return null;
+		}
+		const lowered = value.toLowerCase();
+		if (lowered.startsWith("ko")) {
+			return "ko";
+		}
+		if (lowered.startsWith("en")) {
+			return "en";
+		}
+		return null;
+	};
+
+	const getStoredLanguage = () => {
+		try {
+			return localStorage.getItem(LANGUAGE_STORAGE_KEY);
+		} catch (error) {
+			return null;
+		}
+	};
+
+	const setStoredLanguage = (code) => {
+		if (!code) {
+			return;
+		}
+		try {
+			localStorage.setItem(LANGUAGE_STORAGE_KEY, code);
+		} catch (error) {
+			// 저장이 불가능한 환경에서는 조용히 무시합니다.
+		}
+	};
+
+	const findOptionByLanguage = (select, languageCode) => {
+		if (!select || !languageCode) {
+			return null;
+		}
+		return (
+			Array.from(select.options || []).find((option) =>
+				normalizeLanguage(option.dataset?.languageCode || option.value)
+				=== languageCode
+			) || null
+		);
+	};
+
+	const getSelectedOption = (select) => {
+		if (!select) {
+			return null;
+		}
+		if (select.selectedOptions && select.selectedOptions.length) {
+			return select.selectedOptions[0];
+		}
+		const index = typeof select.selectedIndex === "number" ? select.selectedIndex : -1;
+		if (index < 0 || !select.options || !select.options.length) {
+			return null;
+		}
+		return select.options[index] || null;
+	};
+
+	const currentLanguage = normalizeLanguage(document.documentElement?.lang || "");
+	const storedLanguage = normalizeLanguage(getStoredLanguage());
+
+	languageSelects.forEach((select) => {
+		const optionForCurrent = findOptionByLanguage(select, currentLanguage);
+		if (optionForCurrent) {
+			select.value = optionForCurrent.value;
+		}
+	});
+
+	if (storedLanguage && currentLanguage && storedLanguage !== currentLanguage) {
+		const redirectSelect = languageSelects[0] || null;
+		const redirectOption = findOptionByLanguage(redirectSelect, storedLanguage);
+		if (redirectOption) {
+			setStoredLanguage(storedLanguage);
+			window.location.replace(redirectOption.value);
+			return;
+		}
+	}
+
+	if (!storedLanguage && currentLanguage) {
+		setStoredLanguage(currentLanguage);
+	}
+
+	languageSelects.forEach((select) => {
+		select.addEventListener("change", (event) => {
+			const target = event.target;
+			const destination = target?.value;
+			const selectedOption = getSelectedOption(target);
+			const selectedLanguageCode = normalizeLanguage(
+				selectedOption?.dataset?.languageCode || selectedOption?.value || ""
+			);
+			if (selectedLanguageCode) {
+				setStoredLanguage(selectedLanguageCode);
+			}
+			if (!destination) {
+				return;
+			}
+			window.location.href = destination;
+		});
+	});
+
 	// 푸터 연도를 채울 span 요소를 id로 선택합니다.
 	const yearEl = document.getElementById("year");
 	// 요소가 존재하는 경우에만 값을 업데이트해 오류를 방지합니다.
