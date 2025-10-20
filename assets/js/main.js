@@ -86,6 +86,40 @@ document.addEventListener("DOMContentLoaded", () => {
 		setStoredLanguage(currentLanguage);
 	}
 
+	const languageLinkTargets = {
+		itstory: {
+			ko: "https://itstory.archerlab.dev",
+			en: "https://itstory.archerlab.dev/index-en.html"
+		},
+		walkwithme: {
+			ko: "https://walkwithme.archerlab.dev",
+			en: "https://walkwithme.archerlab.dev/index-en.html"
+		}
+	};
+
+	const resolveActiveLanguage = () => normalizeLanguage(getStoredLanguage()) || currentLanguage || "ko";
+
+	const syncExternalLanguageLinks = () => {
+		const languageCode = resolveActiveLanguage();
+		const linkNodes = document.querySelectorAll("[data-language-link][data-link-key]");
+		if (!linkNodes.length) {
+			return;
+		}
+		linkNodes.forEach((node) => {
+			const linkKey = node.dataset?.linkKey;
+			if (!linkKey) {
+				return;
+			}
+			const targets = languageLinkTargets[linkKey];
+			if (!targets) {
+				return;
+			}
+			node.href = targets[languageCode] || targets.en || node.href;
+		});
+	};
+
+	syncExternalLanguageLinks();
+
 	languageSelects.forEach((select) => {
 		select.addEventListener("change", (event) => {
 			const target = event.target;
