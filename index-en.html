@@ -379,39 +379,190 @@
           <p>
             Architecture diagrams and the public repo are linked so reviewers see the site as a knowledge resource, not a thin landing page.
           </p>
-          <div class="ad-slot" role="complementary" aria-label="Advertisement">
-            <strong class="ad-slot__label">Advertisement</strong>
-            <p class="ad-slot__placeholder">Ad placeholder · 300 × 250</p>
-          </div>
+          <aside class="insight-card" aria-label="Dashboard metrics">
+            <h4>Dashboard Operations Snapshot</h4>
+            <ul>
+              <li>Average latency: 184ms after Worker proxy (down from 226ms)</li>
+              <li>Daily token usage: 38k · error rate trimmed from 0.7% to 0.18%</li>
+              <li>Slack alert rule: trigger when 500/522 appears 3 times within 5 minutes</li>
+              <li>Deployment stack: GitHub Actions `deploy.yml` + Cloudflare `wrangler publish`</li>
+            </ul>
+          </aside>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Automating meeting notes with GPT-5 mini</h3>
+            <p class="article-meta">Published: 2025-09-10 · 6 minute read</p>
+          </header>
+          <p>
+            Weekly meetings used to generate hours of manual note-taking. The current pipeline records audio, sends it to AssemblyAI for transcription, and feeds summarization plus action-item prompts to GPT-5 mini so the recap feels human, not templated.
+          </p>
+          <p>
+            Vercel Cron triggers the workflow every Friday, while recursion guards prevent runaway retries. Success rate, token spend, and latency are logged to BigQuery so it is easy to alert when costs spike.
+          </p>
+          <p>
+            The article includes prompt templates, failure-case logs, and anonymized snippets so readers can adapt the flow without exposing private meeting data.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Accessibility checklist from real client work</h3>
+            <p class="article-meta">Published: 2025-08-18 · 8 minute read</p>
+          </header>
+          <p>
+            I walk through contrast audits for dark UI, keyboard navigation drills, and screen reader smoke tests that caught regressions before launch. Lighthouse and axe DevTools screenshots back each recommendation.
+          </p>
+          <p>
+            HTML snippets show how ARIA labels, skip links, and heading structure were applied. Before/after tables and downloadable checklists help teams copy the workflow.
+          </p>
+          <p>
+            The closing section covers how I plan email opt-in modules and social embeds so they remain accessible and ad-friendly on mobile.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Recording experiment data with PostgreSQL + Timescale</h3>
+            <p class="article-meta">Published: 2025-08-02 · 9 minute read</p>
+          </header>
+          <p>
+            Pinball physics experiments and chatbot latency tests needed a durable time-series store, so I rolled out TimescaleDB. Hypertables, compression policies, and Grafana dashboards are documented with screenshots and SQL snippets.
+          </p>
+          <p>
+            Continuous aggregates and AWS RDS backups keep historical analytics fast without ballooning storage. A Node.js ingestion script handles batching, retry logic, and observability hooks.
+          </p>
+          <p>
+            Troubleshooting notes at the end explain how index bloat and lock contention were solved before they became outages.
+          </p>
+          <aside class="insight-card insight-card--wide" aria-label="TimescaleDB checklist">
+            <h4>TimescaleDB Checklist</h4>
+            <ul>
+              <li>Chunk interval: 7 days (prod) / 1 day (stage) for predictable vacuum windows</li>
+              <li>Continuous aggregates refresh every 15 minutes via scheduled `REFRESH MATERIALIZED VIEW`</li>
+              <li>Alerts: disk usage ≥ 75% routes to PagerDuty, query latency ≥ 500ms pings Slack</li>
+              <li>Backups: weekly full, 6-hour WAL archive, 90-day retention in S3 Glacier</li>
+            </ul>
+          </aside>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Static deployments without Next.js</h3>
+            <p class="article-meta">Published: 2025-07-15 · 7 minute read</p>
+          </header>
+          <p>
+            Even static HTML sites benefit from automation. GitHub Actions build and push the site, while Cloudflare Pages acts as a hot standby. Rollbacks are documented so downtime stays under a minute.
+          </p>
+          <p>
+            The post includes the full workflow YAML, cache strategy, environment variable handling, and Slack alerts for failed runs. Release time dropped from four minutes to under one.
+          </p>
+          <p>
+            A closing checklist covers robots.txt updates, sitemap submissions, and ad script versioning so shipping remains predictable after ads go live.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Designing ad-friendly dark themes</h3>
+            <p class="article-meta">Published: 2025-10-18 · 5 minute read</p>
+          </header>
+          <p>
+            Dark UI can pass AdSense review when contrast, font sizing, and whitespace are treated as first-class citizens. Every ad surface keeps at least a 4.5:1 contrast ratio and 24px padding so the experience stays readable even with contextual ads injected.
+          </p>
+          <p>
+            Before inserting any scripts, I ran Lighthouse and axe DevTools audits. After adding ad code, performance scores still sat above 90 thanks to delayed decoration scripts via `requestIdleCallback`, which kept CLS under 0.02.
+          </p>
+          <p>
+            The snippet below shows how IntersectionObserver gates animations until a section is visible, reducing CPU spikes on mobile.
+          </p>
+          <pre><code class="language-js">const sections = document.querySelectorAll('[data-observe]');
+const observer = new IntersectionObserver((entries) => {
+	entries.forEach((entry) => {
+		if (entry.isIntersecting) {
+			entry.target.classList.add('is-visible');
+			observer.unobserve(entry.target);
+		}
+	});
+}, { threshold: 0.35 });
+
+sections.forEach((section) => observer.observe(section));
+</code></pre>
+          <p>
+            The same pattern ships to the Report Tools suite and the WalkWithMe chatbot so each subdomain maintains accessibility, speed, and measurable value for advertisers.
+          </p>
         </article>
       </section>
 
       <section id="experiments">
         <div class="section-heading">
           <h2>Experiments · Active builds</h2>
-          <p>Rapid prototypes in progress. Expect frequent commits and rough edges.</p>
+          <p>Weekend prototypes that evolve monthly. Most are exploratory and intentionally rough around the edges.</p>
         </div>
 
-        <div class="feature-grid project-grid">
-          <article class="feature-card project-card">
-            <h3>Starter: WAS Ops Manual</h3>
-            <p>
-              Drafting a guide for developers stepping into backend operations. Covers thread pool tuning, graceful shutdowns,
-              and monitoring recipes built around Tomcat, Spring Boot, and nginx.
-            </p>
+        <div class="pill-grid">
+          <article class="pill-card">
+            <strong>Pinball Game</strong>
+            <p>A neon-themed pinball made with Canvas and Matter.js. Gravity and bounce curves were tuned dozens of times to nail keyboard responsiveness.<br>(Progress stalled while refining the physics model)</p>
           </article>
-          <article class="feature-card project-card">
-            <h3>Starter: Knowledge Base Reboot</h3>
-            <p>
-              Converting scattered Notion pages into a structured site with topic landing pages, glossaries, and interactive checklists.
-            </p>
+          <article class="pill-card">
+            <strong>OCR</strong>
+            <p>Client-side scanner that swaps between Tesseract and PaddleOCR to read receipts and handwritten notes, followed by custom post-processing.<br>(Open-source OCR accuracy remains inconsistent)</p>
           </article>
-          <article class="feature-card project-card">
-            <h3>Starter: Classroom Copilot</h3>
-            <p>
-              Testing lesson plan summarization and quick reference sheets for teachers. Experiments with multi-turn prompts and guardrail prompts.
-            </p>
+          <article class="pill-card">
+            <strong>Syntax Medic</strong>
+            <p>An instant grammar fixer for weekly status notes. Multiple rule sets fight for priority, so conflict resolution is still ongoing.<br>(Frequent rule edits created noisy regressions)</p>
           </article>
+        </div>
+      </section>
+
+      <section id="toolkit">
+        <div class="section-heading">
+          <h2>Tools on the desk</h2>
+          <p>Mixing front-end, back-end, and hosted services depending on the prototype at hand.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>DBeaver + Eclipse</h3>
+            <p>Schema planning and API development happen side by side with shared database workspaces.</p>
+          </article>
+          <article class="feature-card">
+            <h3>VS Code</h3>
+            <p>Multicursor editing, REST Client, and Git Graph accelerate commit-driven experiments.</p>
+          </article>
+          <article class="feature-card">
+            <h3>AWS + Cloudflare</h3>
+            <p>AWS handles deployment and monitoring, while Cloudflare Workers and DNS manage proxies and CORS.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Google SMTP Relay</h3>
+            <p>Custom domain email routes through Workspace relay so deliverability and archiving stay centralized.</p>
+          </article>
+          <article class="feature-card">
+            <h3>GitHub Copilot</h3>
+            <p>Reduces boilerplate during rapid iterations and drafts test cases for new modules.</p>
+          </article>
+          <article class="feature-card">
+            <h3>OpenAI API</h3>
+            <p>Runs translation, summarization, and text cleanup flows with a Worker proxy to reduce latency.</p>
+          </article>
+        </div>
+
+        <div class="stat-board">
+          <div class="stat">
+            <strong>5</strong>
+            <span>Programming languages mixed over the past 3 months</span>
+          </div>
+          <div class="stat">
+            <strong>02:17</strong>
+            <span>Average first commit timestamp (KST)</span>
+          </div>
+          <div class="stat">
+            <strong>7</strong>
+            <span>Domains currently under management</span>
+          </div>
         </div>
       </section>
 
@@ -510,8 +661,10 @@
 
         <div class="footer-links">
           <a href="#network">Network</a>
+          <a href="#experiments">Experiments</a>
           <a href="#guides">Guides</a>
           <a href="#articles">Articles</a>
+          <a href="#toolkit">Toolkit</a>
           <a href="#log">Signal Log</a>
           <a href="#contact">Contact</a>
         </div>

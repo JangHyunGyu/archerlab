@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://archerlab.dev/</loc>
-    <lastmod>2025-10-20</lastmod>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ko" href="https://archerlab.dev/" />
@@ -11,7 +11,7 @@
   </url>
   <url>
     <loc>https://archerlab.dev/index-en.html</loc>
-    <lastmod>2025-10-20</lastmod>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ko" href="https://archerlab.dev/" />
@@ -19,50 +19,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://archerlab.dev/index-en.html" />
   </url>
   <url>
-    <loc>https://archerlab.dev/privacy.html</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/privacy.html</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/terms.html</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/terms.html</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#guides</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#guides</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#articles</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#articles</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#experiments</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#experiments</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#toolkit</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#toolkit</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#log</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#log</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://archerlab.dev/#contact</loc>
-    <lastmod>2025-10-12</lastmod>
+  <loc>https://archerlab.dev/#contact</loc>
+  <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
