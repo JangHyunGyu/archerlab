@@ -19,6 +19,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://archerlab.dev/index-en.html" />
   </url>
   <url>
+    <loc>https://itstory.archerlab.dev/</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://itstory.archerlab.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://itstory.archerlab.dev/index-en.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://itstory.archerlab.dev/index-en.html" />
+  </url>
+  <url>
+    <loc>https://walkwithme.archerlab.dev/</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://walkwithme.archerlab.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://walkwithme.archerlab.dev/index-en.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://walkwithme.archerlab.dev/index-en.html" />
+  </url>
+  <url>
   <loc>https://archerlab.dev/privacy.html</loc>
   <lastmod>2025-10-21</lastmod>
     <changefreq>monthly</changefreq>
