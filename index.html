@@ -52,64 +52,197 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "ArcherLab",
-        "url": "https://archerlab.dev/",
-        "description": "ArcherLab은 프로토타입을 만들고 기록하는 테스트존입니다.",
-        "inLanguage": "ko-KR",
-        "publisher": {
-          "@type": "Person",
-          "name": "장현규",
-          "url": "https://archerlab.dev/"
-        },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://archerlab.dev/?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ArcherLab",
-        "url": "https://archerlab.dev/",
-        "logo": "https://archerlab.dev/assets/images/archerlab_mini_logo.png",
-        "sameAs": [
-          "https://itstory.archerlab.dev/",
-          "https://walkwithme.archerlab.dev/",
-          "https://github.com/JangHyunGyu"
-        ],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "email": "hyungyu@archerlab.dev"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "ArcherLab · 개인 개발 로그",
-        "description": "ArcherLab은 프로토타입을 만들고 기록하는 테스트존입니다.",
-        "datePublished": "2025-09-29",
-        "dateModified": "2025-10-12",
-        "inLanguage": "ko-KR",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://archerlab.dev/"
-        },
-        "author": {
-          "@type": "Person",
-          "name": "장현규",
-          "url": "https://archerlab.dev/"
-        },
-        "publisher": {
-          "@type": "Person",
-          "name": "장현규"
-        }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://archerlab.dev/#organization",
+            "name": "ArcherLab",
+            "url": "https://archerlab.dev/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://archerlab.dev/assets/images/archerlab_mini_logo.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://itstory.archerlab.dev/",
+              "https://walkwithme.archerlab.dev/",
+              "https://github.com/JangHyunGyu"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hyungyu@archerlab.dev",
+              "availableLanguage": ["ko", "en"]
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://archerlab.dev/#founder",
+            "name": "장현규",
+            "alternateName": "Hyungyu Jang",
+            "url": "https://archerlab.dev/",
+            "sameAs": [
+              "https://github.com/JangHyunGyu"
+            ],
+            "worksFor": {
+              "@id": "https://archerlab.dev/#organization"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://archerlab.dev/#website",
+            "url": "https://archerlab.dev/",
+            "name": "ArcherLab",
+            "description": "ArcherLab은 프로토타입을 만들고 기록하는 테스트존입니다.",
+            "inLanguage": "ko-KR",
+            "publisher": {
+              "@id": "https://archerlab.dev/#organization"
+            },
+            "creator": {
+              "@id": "https://archerlab.dev/#founder"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://archerlab.dev/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": ["Blog", "CreativeWorkSeries"],
+            "@id": "https://archerlab.dev/#blog",
+            "name": "ArcherLab 개발 로그",
+            "headline": "Logic × Design, in practice",
+            "description": "프론트엔드, 백엔드, 실험용 툴킷을 기록하는 ArcherLab의 개인 개발 블로그입니다.",
+            "inLanguage": "ko-KR",
+            "isAccessibleForFree": true,
+            "creator": {
+              "@id": "https://archerlab.dev/#founder"
+            },
+            "publisher": {
+              "@id": "https://archerlab.dev/#organization"
+            },
+            "url": "https://archerlab.dev/",
+            "datePublished": "2025-09-29",
+            "dateModified": "2025-10-12",
+            "keywords": [
+              "개발 블로그",
+              "웹 실험",
+              "사이드 프로젝트",
+              "개발 도구"
+            ],
+            "about": {
+              "@id": "https://archerlab.dev/#sections"
+            }
+          },
+          {
+            "@type": ["WebPage", "CollectionPage"],
+            "@id": "https://archerlab.dev/#home",
+            "url": "https://archerlab.dev/",
+            "name": "ArcherLab 홈 허브",
+            "inLanguage": "ko-KR",
+            "isPartOf": {
+              "@id": "https://archerlab.dev/#website"
+            },
+            "about": {
+              "@id": "https://archerlab.dev/#blog"
+            },
+            "mainEntity": {
+              "@id": "https://archerlab.dev/#blog"
+            },
+            "publisher": {
+              "@id": "https://archerlab.dev/#organization"
+            },
+            "breadcrumb": {
+              "@id": "https://archerlab.dev/#breadcrumb"
+            },
+            "hasPart": [
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#network-section",
+                "name": "Lab Network",
+                "url": "https://archerlab.dev/#network"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#guides-section",
+                "name": "Guides · Dev Playbook",
+                "url": "https://archerlab.dev/#guides"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#articles-section",
+                "name": "Articles",
+                "url": "https://archerlab.dev/#articles"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#experiments-section",
+                "name": "Experiments",
+                "url": "https://archerlab.dev/#experiments"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#log-section",
+                "name": "Signal Log",
+                "url": "https://archerlab.dev/#log"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/#contact-section",
+                "name": "Contact",
+                "url": "https://archerlab.dev/#contact"
+              }
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://archerlab.dev/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "ArcherLab",
+                "item": "https://archerlab.dev/"
+              }
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://archerlab.dev/#sections",
+            "name": "ArcherLab 프로젝트 목록",
+            "itemListOrder": "http://schema.org/ItemListOrderAscending",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "IT Story Timeline",
+                  "url": "https://itstory.archerlab.dev/"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Walk with me",
+                  "url": "https://walkwithme.archerlab.dev/"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@type": "ItemList",
+                  "name": "Report Tools Suite",
+                  "url": "https://archerlab.dev/#network"
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
     <!-- 이 페이지가 일반 웹사이트임을 명시합니다. -->
