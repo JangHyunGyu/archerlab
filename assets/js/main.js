@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	};
 
-	const resolveActiveLanguage = () => normalizeLanguage(getStoredLanguage()) || currentLanguage || "ko";
+	const resolveActiveLanguage = () => currentLanguage || normalizeLanguage(getStoredLanguage()) || "ko";
 
 	const syncExternalLanguageLinks = () => {
 		const languageCode = resolveActiveLanguage();
