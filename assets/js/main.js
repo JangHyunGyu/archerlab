@@ -17,6 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		return null;
 	};
 
+	const detectBrowserLanguage = () => {
+		const candidate = Array.isArray(navigator.languages) && navigator.languages.length
+			? navigator.languages[0]
+			: navigator.language || navigator.userLanguage || "";
+		return normalizeLanguage(candidate);
+	};
+
 	const getStoredLanguage = () => {
 		try {
 			return localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -64,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const currentLanguage = normalizeLanguage(document.documentElement?.lang || "");
 	const storedLanguage = normalizeLanguage(getStoredLanguage());
+	const browserLanguage = detectBrowserLanguage();
 
 	languageSelects.forEach((select) => {
 		const optionForCurrent = findOptionByLanguage(select, currentLanguage);
@@ -72,11 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	if (storedLanguage && currentLanguage && storedLanguage !== currentLanguage) {
+	const preferredLanguage = storedLanguage || browserLanguage;
+
+	if (preferredLanguage && currentLanguage && preferredLanguage !== currentLanguage) {
 		const redirectSelect = languageSelects[0] || null;
-		const redirectOption = findOptionByLanguage(redirectSelect, storedLanguage);
+		const redirectOption = findOptionByLanguage(redirectSelect, preferredLanguage);
 		if (redirectOption) {
-			setStoredLanguage(storedLanguage);
+			setStoredLanguage(preferredLanguage);
 			window.location.replace(redirectOption.value);
 			return;
 		}
@@ -97,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	};
 
-	const resolveActiveLanguage = () => currentLanguage || normalizeLanguage(getStoredLanguage()) || "ko";
+	const resolveActiveLanguage = () => currentLanguage || normalizeLanguage(getStoredLanguage()) || browserLanguage || "ko";
 
 	const syncExternalLanguageLinks = () => {
 		const languageCode = resolveActiveLanguage();
