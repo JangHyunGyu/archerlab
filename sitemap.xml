@@ -28,13 +28,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://itstory.archerlab.dev/index-en.html" />
   </url>
   <url>
-  <loc>https://walkwithme.archerlab.dev/</loc>
+  <loc>https://chatbot.archerlab.dev/</loc>
   <lastmod>2025-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://walkwithme.archerlab.dev/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://walkwithme.archerlab.dev/index-en.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://walkwithme.archerlab.dev/index-en.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://chatbot.archerlab.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://chatbot.archerlab.dev/index-en.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://chatbot.archerlab.dev/index-en.html" />
   </url>
   <url>
   <loc>https://archerlab.dev/privacy.html</loc>

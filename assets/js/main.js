@@ -102,8 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			en: "https://itstory.archerlab.dev/index-en.html"
 		},
 		walkwithme: {
-			ko: "https://walkwithme.archerlab.dev",
-			en: "https://walkwithme.archerlab.dev/index-en.html"
+			ko: "https://chatbot.archerlab.dev",
+			en: "https://chatbot.archerlab.dev/index-en.html"
 		}
 	};
 
