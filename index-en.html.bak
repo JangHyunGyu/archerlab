@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-6127088615561024" />
+  <title>ArcherLab - Web Development Projects for Beginners & Students</title>
+    <meta
+      name="description"
+      content="A prototype lab for students and beginners learning web development. Explore frontend and backend side project examples, coding experiments, and study notes."
+    />
+    <meta name="naver-site-verification" content="20c0036e816e482c099dd4396e7a79fb66b03d7a" />
+    <meta name="keywords" content="learn web development, coding projects for beginners, side project ideas, frontend portfolio examples, backend roadmap, web dev tutorials, student developer, coding experiments, ArcherLab" />
+  <meta property="og:title" content="ArcherLab - Web Development Projects for Beginners & Students" />
+    <meta
+      property="og:description"
+      content="A build log and tool archive embracing the motto 'Logic × Design, in Practice' to document every prototype cycle."
+    />
+    <link rel="canonical" href="https://archerlab.dev/index-en.html" />
+  <link rel="alternate" hreflang="ko" href="https://archerlab.dev/" />
+  <link rel="alternate" hreflang="en" href="https://archerlab.dev/index-en.html" />
+  <link rel="alternate" hreflang="x-default" href="https://archerlab.dev/index-en.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/archerlab_mini_logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/archerlab_mini_logo.png" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KDKK3ZZK50"></script>
+    <script src="assets/js/ga.js"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6127088615561024"
+      crossorigin="anonymous"
+    ></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://archerlab.dev/index-en.html#organization",
+            "name": "ArcherLab",
+            "url": "https://archerlab.dev/index-en.html",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://archerlab.dev/assets/images/archerlab_mini_logo.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://itstory.archerlab.dev/index-en.html",
+              "https://chatbot.archerlab.dev/index-en.html",
+              "https://github.com/JangHyunGyu"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hyungyu@archerlab.dev",
+              "availableLanguage": ["ko", "en"]
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://archerlab.dev/index-en.html#founder",
+            "name": "Hyungyu Jang",
+            "alternateName": "Jang Hyungyu",
+            "url": "https://archerlab.dev/index-en.html",
+            "sameAs": [
+              "https://github.com/JangHyunGyu"
+            ],
+            "worksFor": {
+              "@id": "https://archerlab.dev/index-en.html#organization"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://archerlab.dev/index-en.html#website",
+            "url": "https://archerlab.dev/index-en.html",
+            "name": "ArcherLab",
+            "description": "ArcherLab is a prototype lab built on the motto 'Logic × Design, in Practice,' documenting builds, notes, and tooling.",
+            "inLanguage": "en",
+            "publisher": {
+              "@id": "https://archerlab.dev/index-en.html#organization"
+            },
+            "creator": {
+              "@id": "https://archerlab.dev/index-en.html#founder"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://archerlab.dev/index-en.html?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": ["Blog", "CreativeWorkSeries"],
+            "@id": "https://archerlab.dev/index-en.html#blog",
+            "name": "ArcherLab build log",
+            "headline": "Logic × Design, in practice",
+            "description": "A personal log capturing prototypes, experiments, and tooling through the lens of 'Logic × Design, in Practice.'",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "creator": {
+              "@id": "https://archerlab.dev/index-en.html#founder"
+            },
+            "publisher": {
+              "@id": "https://archerlab.dev/index-en.html#organization"
+            },
+            "url": "https://archerlab.dev/index-en.html",
+            "datePublished": "2025-09-29",
+            "dateModified": "2025-10-12",
+            "keywords": [
+              "developer blog",
+              "web experiments",
+              "side projects",
+              "developer tools"
+            ],
+            "about": {
+              "@id": "https://archerlab.dev/index-en.html#sections"
+            }
+          },
+          {
+            "@type": ["WebPage", "CollectionPage"],
+            "@id": "https://archerlab.dev/index-en.html#home",
+            "url": "https://archerlab.dev/index-en.html",
+            "name": "ArcherLab home hub",
+            "inLanguage": "en",
+            "isPartOf": {
+              "@id": "https://archerlab.dev/index-en.html#website"
+            },
+            "about": {
+              "@id": "https://archerlab.dev/index-en.html#blog"
+            },
+            "mainEntity": {
+              "@id": "https://archerlab.dev/index-en.html#blog"
+            },
+            "publisher": {
+              "@id": "https://archerlab.dev/index-en.html#organization"
+            },
+            "breadcrumb": {
+              "@id": "https://archerlab.dev/index-en.html#breadcrumb"
+            },
+            "hasPart": [
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#network-section",
+                "name": "Lab Network",
+                "url": "https://archerlab.dev/index-en.html#network"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#guides-section",
+                "name": "Guides · Dev Playbook",
+                "url": "https://archerlab.dev/index-en.html#guides"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#articles-section",
+                "name": "Articles",
+                "url": "https://archerlab.dev/index-en.html#articles"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#experiments-section",
+                "name": "Experiments",
+                "url": "https://archerlab.dev/index-en.html#experiments"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#log-section",
+                "name": "Signal Log",
+                "url": "https://archerlab.dev/index-en.html#log"
+              },
+              {
+                "@type": "WebPageElement",
+                "@id": "https://archerlab.dev/index-en.html#contact-section",
+                "name": "Contact",
+                "url": "https://archerlab.dev/index-en.html#contact"
+              }
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://archerlab.dev/index-en.html#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "ArcherLab",
+                "item": "https://archerlab.dev/index-en.html"
+              }
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://archerlab.dev/index-en.html#sections",
+            "name": "ArcherLab project highlights",
+            "itemListOrder": "http://schema.org/ItemListOrderAscending",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "IT Story Timeline",
+                  "url": "https://itstory.archerlab.dev/index-en.html"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Walk with me",
+                  "url": "https://chatbot.archerlab.dev/index-en.html"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@type": "ItemList",
+                  "name": "Report Tools Suite",
+                  "url": "https://archerlab.dev/index-en.html#network"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Golf Swing Master",
+                  "url": "https://golf.archerlab.dev/index-en.html"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "item": {
+                  "@type": "WebSite",
+                  "name": "Latin Dance Mate",
+                  "url": "https://latindance.kr/index-en.html"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "item": {
+                  "@type": "VideoGame",
+                  "name": "Cupid Visual Novel",
+                  "url": "https://cupid.archerlab.dev/index-en.html"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Harem Mate",
+                  "url": "https://harem.archerlab.dev/index-en.html"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <h1 class="sr-only">ArcherLab - Web Development Projects for Beginners & Students</h1>
+    <section class="sr-only" aria-label="ArcherLab Projects and Guides Overview">
+      <h2>Web Development Portfolio & Side Project Guide</h2>
+      <article>
+        <h3>IT History Timeline (IT Story)</h3>
+        <p>An interactive timeline project documenting the evolution of computers, operating systems, databases, networks, and web technologies.</p>
+      </article>
+      <article>
+        <h3>AI English Conversation Partner (Walk with me)</h3>
+        <p>A real-time English conversation practice tool using OpenAI GPT models, featuring voice recognition and role-playing scenarios.</p>
+      </article>
+      <article>
+        <h3>Web Development Tools & Reports (Report Tools)</h3>
+        <p>A collection of practical web utilities including work report formatters, number memory tests, Busan restaurant maps, and image masking tools.</p>
+      </article>
+      <article>
+        <h3>Developer Roadmap & Study Guides</h3>
+        <p>Learning roadmaps, tech stack recommendations, and coding study guides for students self-studying frontend and backend development.</p>
+      </article>
+    </section>
+    <header>
+      <div class="navbar">
+        <a class="logo" href="#top" aria-label="Move to the top of ArcherLab">
+          <img
+            class="logo-img"
+            src="assets/images/archerlab_mini_logo.png"
+            alt="ArcherLab logo"
+            width="48"
+            height="48"
+            decoding="async"
+          />
+          ArcherLab
+        </a>
+        <nav class="nav-links" aria-label="Primary menu">
+          <a href="#network">Network</a>
+          <a href="#identity">Identity</a>
+          <a href="#philosophy">Philosophy</a>
+          <a href="#guides">Guides</a>
+          <a href="#articles">Articles</a>
+          <a href="#experiments">Experiments</a>
+          <a href="#log">Signal Log</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="language-switch">
+          <select id="language-select-main-en" aria-label="Language" data-language-switch>
+            <option value="index.html" data-language-code="ko">한국어</option>
+            <option value="index-en.html" data-language-code="en" selected>English</option>
+          </select>
+        </div>
+        <a class="cta-btn" href="mailto:hyungyu@archerlab.dev" data-cta="header">Send a Signal</a>
+      </div>
+
+      <div class="hero">
+        <span class="hero-tag">♐ Sagittarius · Archer's Lab</span>
+        <h1>Logic × Design, in practice.</h1>
+        <p>
+          A secret study lit by candlelight, where code and interfaces are forged in the deep of night.
+          I frame the problem, prototype quickly, and shape interfaces with data requirements, usability checks, and deliberate visual choices.
+        </p>
+        <div class="hero-actions">
+          <a class="cta-btn" href="#identity" data-cta="hero">Identity</a>
+          <a class="ghost-btn" href="#experiments">Experiments</a>
+          <a class="ghost-btn" href="#articles">Articles</a>
+          <a
+            class="ghost-btn"
+            href="https://itstory.archerlab.dev/index-en.html"
+            target="_blank"
+            rel="noopener"
+            data-cta="hero-itstory"
+            data-language-link
+            data-link-key="itstory"
+          >IT Story</a>
+          <a
+            class="ghost-btn"
+            href="https://chatbot.archerlab.dev/index-en.html"
+            target="_blank"
+            rel="noopener"
+            data-cta="hero-chatbot"
+            data-language-link
+            data-link-key="walkwithme"
+          >Open Chatbot</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="network">
+        <div class="section-heading">
+          <h2>Lab Network</h2>
+          <p>The active experiments that orbit ArcherLab. Each project lists the focus keyword and supporting references.</p>
+        </div>
+
+        <div class="feature-grid project-grid">
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1200&q=80"
+                alt="Timeline interface with overlapping graphs and panels"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>A symbolic preview of the IT Story hub that chronicles internet history and backend shifts.</figcaption>
+            </figure>
+            <h3>IT Story Timeline</h3>
+            <p>
+              A curated collection of infrastructure launches, software rollouts, and backend transitions. I hand-crafted focus
+              traps, keyboard loops, and template cloning utilities so the modals stay accessible while keeping Core Web Vitals in the green.
+            </p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://itstory.archerlab.dev/index-en.html"
+                target="_blank"
+                rel="noopener"
+                data-language-link
+                data-link-key="itstory"
+              >Visit the timelines</a>
+              <a class="ghost-btn" href="https://github.com/JangHyunGyu/itstory" target="_blank" rel="noopener">Explore the source</a>
+              <a class="ghost-btn" href="https://developer.mozilla.org/docs/Web/API/HTMLTemplateElement" target="_blank" rel="noopener">Template API docs</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80"
+                alt="A workspace showing dashboards and reports"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>A symbolic dashboard view for the report automation toolkit.</figcaption>
+            </figure>
+            <h3>Report Tools Suite</h3>
+            <p>
+              A hub for four mini apps: report validation, reaction timing, a Busan food finder, and image masking. Structured data uses
+              the SoftwareApplication schema and every tool ships with the prevent-zoom script for mobile ergonomics. Leaflet, OpenCV,
+              and Tesseract work together for geo searches and OCR checks.
+            </p>
+            <div class="project-links">
+              <a class="ghost-btn" href="https://developers.google.com/search/docs/appearance/structured-data/software-app" target="_blank" rel="noopener">SoftwareApplication guide</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+                alt="Tablet with a calming chat interface"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>An emotive glimpse of the WalkWithMe chat companion.</figcaption>
+            </figure>
+            <h3>WalkWithMe Chat</h3>
+            <p>
+              A Cloudflare Worker bridges GPT-5 mini for a gentle care-focused chatbot. MAX_HISTORY rotation, viewport sync,
+              and CORS controls are documented so the UI and system prompt stay in sync.
+            </p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://chatbot.archerlab.dev/index-en.html"
+                target="_blank"
+                rel="noopener"
+                data-language-link
+                data-link-key="walkwithme"
+              >Open the chatbot</a>
+              <a class="ghost-btn" href="https://github.com/JangHyunGyu/chatbot" target="_blank" rel="noopener">View the Worker code</a>
+              <a class="ghost-btn" href="https://developers.cloudflare.com/workers" target="_blank" rel="noopener">Cloudflare Workers docs</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&w=1200&q=80"
+                alt="Golf swing on a green field"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>Symbolic image of AI golf swing analysis service.</figcaption>
+            </figure>
+            <h3>Golf Swing Master</h3>
+            <p>Upload your video and let AI analyze your golf swing posture, club trajectory, and balance. A free swing diagnosis service with HowTo schema for rich snippet exposure in search results.</p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://golf.archerlab.dev/index-en.html"
+                target="_blank"
+                rel="noopener"
+              >Start Analysis</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?auto=format&fit=crop&w=1200&q=80"
+                alt="Dynamic salsa dance couple"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>Symbolic image representing Latin Dance Mate's club finder.</figcaption>
+            </figure>
+            <h3>Latin Dance Mate</h3>
+            <p>A directory service gathering Latin dance clubs, salsa and bachata lessons by region. Supports Korean, English, and Spanish with SearchAction schema for optimized site search.</p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://latindance.kr/index-en.html"
+                target="_blank"
+                rel="noopener"
+              >Find Clubs</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=80"
+                alt="Anime-style school background with cherry blossoms"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>Atmospheric image representing Cupid visual novel.</figcaption>
+            </figure>
+            <h3>Cupid Visual Novel</h3>
+            <p>A free web visual novel game playable directly in your browser. Become the protagonist of a school romance and experience an exciting school life with Seoyeon and Yuna. VideoGame schema applied.</p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://cupid.archerlab.dev/index-en.html"
+                target="_blank"
+                rel="noopener"
+              >Start Game</a>
+            </div>
+          </article>
+
+          <article class="feature-card project-card">
+            <figure class="project-figure">
+              <img
+                src="https://images.unsplash.com/photo-1607604276583-c1a1e3e7e6b5?auto=format&fit=crop&w=1200&q=80"
+                alt="Colorful background with anime characters"
+                width="1200"
+                height="800"
+                loading="lazy"
+              />
+              <figcaption>Symbolic image of Harem Mate's heroine battle atmosphere.</figcaption>
+            </figure>
+            <h3>Harem Mate</h3>
+            <p>Experience fierce battles of love and jealousy among beautiful heroines in this real AI harem simulation. Features rich SoftwareApplication schema and structured data.</p>
+            <div class="project-links">
+              <a
+                class="ghost-btn"
+                href="https://harem.archerlab.dev/index-en.html"
+                target="_blank"
+                rel="noopener"
+              >Start Harem</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="identity">
+        <div class="section-heading">
+          <h2>ArcherLab Overview</h2>
+          <p>Archer, Lab, .dev—the trio that frames how I work.</p>
+        </div>
+
+        <div class="pill-grid">
+          <article class="pill-card identity-card">
+            <strong>♐ Archer</strong>
+            <p>The Sagittarius archer's focus. Aim at the target and release clean code.</p>
+          </article>
+          <article class="pill-card identity-card">
+            <strong>🕯️ Lab</strong>
+            <p>A candlelit secret study. Where ancient scrolls meet cutting-edge tech.</p>
+          </article>
+          <article class="pill-card identity-card">
+            <strong>✦ .dev</strong>
+            <p>Code forward. Prototype with browsers, editors, and repeatable scripts.</p>
+          </article>
+          <article class="pill-card identity-card">
+            <strong>❄ Nordic</strong>
+            <p>Scandinavian restraint. Balance warmth and darkness with elegant minimalism.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="philosophy">
+        <div class="section-heading">
+          <h2>Philosophy · Archer's Notes</h2>
+          <p>The phrases that keep my projects grounded.</p>
+        </div>
+
+        <div class="feature-grid philosophy-grid">
+          <article class="feature-card philosophy-card">
+            <blockquote>Technology is a tool, the user sets the bar.</blockquote>
+            <p>Design every interface against functionality, performance, and accessibility checklists.</p>
+          </article>
+          <article class="feature-card philosophy-card">
+            <blockquote>ArcherLab is a lab notebook.</blockquote>
+            <p>Drafts, detours, and failed attempts stay logged so I can revisit the trail.</p>
+          </article>
+          <article class="feature-card philosophy-card">
+            <blockquote>Structure scattered knowledge.</blockquote>
+            <p>Bundle fragmented experience into reusable documentation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="guides">
+        <div class="section-heading">
+          <h2>Guides · Dev Playbook</h2>
+          <p>Long-form build notes that survive ad reviews and still help visiting builders.</p>
+        </div>
+
+        <div class="feature-grid guides-grid">
+          <article class="feature-card guide-card">
+            <h3>Building an API proxy with Cloudflare Workers</h3>
+            <p>
+              I document how I wrapped the OpenAI API behind a Worker to reduce latency variance and isolate keys.
+              Environment variables, KV cache, route bindings, and failure monitoring are all broken down step by step.
+            </p>
+            <p>The appendix lists quota tiers, estimated cost tables, and a failure log for 522 incidents.</p>
+            <p>A Slack alert recipe and secret rotation timeline close the loop for production readiness.</p>
+          </article>
+          <article class="feature-card guide-card">
+            <h3>Interaction patterns without React</h3>
+            <p>
+              The hero timeline on this page, scroll observers, and the chatbot input locking are all written in vanilla JS.
+              I share how I split modules, debugged mobile keyboards, and kept bundle size tight without tooling.
+            </p>
+            <p>There is also a framework-free folder structure and sample commit log for teams who want to copy the approach.</p>
+            <p>Accessibility checklists accompany every component so audits stay simple.</p>
+          </article>
+          <article class="feature-card guide-card">
+            <h3>Optimizing images and fonts for a dev blog</h3>
+            <p>
+              Tips from working with Unsplash licensing, bulk WebP conversion, and preconnecting Google Fonts to reduce first paint.
+              I add CLS prevention tricks and contrast adjustments that keep ads readable in dark mode.
+            </p>
+            <p>CDN cache busting, quality comparisons, and the monitoring sheet are linked for reuse.</p>
+            <p>Performance metrics keep advertisers and readers aligned on expectations.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="articles">
+        <div class="section-heading">
+          <h2>Articles · Field Notes</h2>
+          <p>Deep dives updated monthly. Each combines code snippets with measured outcomes.</p>
+        </div>
+
+        <article class="longform">
+          <header>
+            <h3>Node.js + Worker dashboard</h3>
+            <p class="article-meta">Published: 2025-09-29 · 7 minute read</p>
+          </header>
+          <p>
+            I paired an internal Node.js Express app with a Cloudflare Worker proxy to safely expose dashboards outside the office.
+            Express owns API routes while the Worker filters incoming requests and passes only approved tokens down the line.
+          </p>
+          <p>
+            HMAC-signed tokens sit in Workers Secrets. If Worker failure climbs above 0.5%, Slack notifications fire immediately.
+            Grafana shows the proxy adds roughly 42ms latency on average compared to direct calls.
+          </p>
+          <p>
+            Architecture diagrams and the public repo are linked so reviewers see the site as a knowledge resource, not a thin landing page.
+          </p>
+          <aside class="insight-card" aria-label="Dashboard metrics">
+            <h4>Dashboard Operations Snapshot</h4>
+            <ul>
+              <li>Average latency: 184ms after Worker proxy (down from 226ms)</li>
+              <li>Daily token usage: 38k · error rate trimmed from 0.7% to 0.18%</li>
+              <li>Slack alert rule: trigger when 500/522 appears 3 times within 5 minutes</li>
+              <li>Deployment stack: GitHub Actions `deploy.yml` + Cloudflare `wrangler publish`</li>
+            </ul>
+          </aside>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Automating meeting notes with GPT-5 mini</h3>
+            <p class="article-meta">Published: 2025-09-10 · 6 minute read</p>
+          </header>
+          <p>
+            Weekly meetings used to generate hours of manual note-taking. The current pipeline records audio, sends it to AssemblyAI for transcription, and feeds summarization plus action-item prompts to GPT-5 mini so the recap feels human, not templated.
+          </p>
+          <p>
+            Vercel Cron triggers the workflow every Friday, while recursion guards prevent runaway retries. Success rate, token spend, and latency are logged to BigQuery so it is easy to alert when costs spike.
+          </p>
+          <p>
+            The article includes prompt templates, failure-case logs, and anonymized snippets so readers can adapt the flow without exposing private meeting data.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Accessibility checklist from real client work</h3>
+            <p class="article-meta">Published: 2025-08-18 · 8 minute read</p>
+          </header>
+          <p>
+            I walk through contrast audits for dark UI, keyboard navigation drills, and screen reader smoke tests that caught regressions before launch. Lighthouse and axe DevTools screenshots back each recommendation.
+          </p>
+          <p>
+            HTML snippets show how ARIA labels, skip links, and heading structure were applied. Before/after tables and downloadable checklists help teams copy the workflow.
+          </p>
+          <p>
+            The closing section covers how I plan email opt-in modules and social embeds so they remain accessible and ad-friendly on mobile.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Recording experiment data with PostgreSQL + Timescale</h3>
+            <p class="article-meta">Published: 2025-08-02 · 9 minute read</p>
+          </header>
+          <p>
+            Pinball physics experiments and chatbot latency tests needed a durable time-series store, so I rolled out TimescaleDB. Hypertables, compression policies, and Grafana dashboards are documented with screenshots and SQL snippets.
+          </p>
+          <p>
+            Continuous aggregates and AWS RDS backups keep historical analytics fast without ballooning storage. A Node.js ingestion script handles batching, retry logic, and observability hooks.
+          </p>
+          <p>
+            Troubleshooting notes at the end explain how index bloat and lock contention were solved before they became outages.
+          </p>
+          <aside class="insight-card insight-card--wide" aria-label="TimescaleDB checklist">
+            <h4>TimescaleDB Checklist</h4>
+            <ul>
+              <li>Chunk interval: 7 days (prod) / 1 day (stage) for predictable vacuum windows</li>
+              <li>Continuous aggregates refresh every 15 minutes via scheduled `REFRESH MATERIALIZED VIEW`</li>
+              <li>Alerts: disk usage ≥ 75% routes to PagerDuty, query latency ≥ 500ms pings Slack</li>
+              <li>Backups: weekly full, 6-hour WAL archive, 90-day retention in S3 Glacier</li>
+            </ul>
+          </aside>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Static deployments without Next.js</h3>
+            <p class="article-meta">Published: 2025-07-15 · 7 minute read</p>
+          </header>
+          <p>
+            Even static HTML sites benefit from automation. GitHub Actions build and push the site, while Cloudflare Pages acts as a hot standby. Rollbacks are documented so downtime stays under a minute.
+          </p>
+          <p>
+            The post includes the full workflow YAML, cache strategy, environment variable handling, and Slack alerts for failed runs. Release time dropped from four minutes to under one.
+          </p>
+          <p>
+            A closing checklist covers robots.txt updates, sitemap submissions, and ad script versioning so shipping remains predictable after ads go live.
+          </p>
+        </article>
+
+        <article class="longform">
+          <header>
+            <h3>Designing ad-friendly dark themes</h3>
+            <p class="article-meta">Published: 2025-10-18 · 5 minute read</p>
+          </header>
+          <p>
+            Dark UI can pass AdSense review when contrast, font sizing, and whitespace are treated as first-class citizens. Every ad surface keeps at least a 4.5:1 contrast ratio and 24px padding so the experience stays readable even with contextual ads injected.
+          </p>
+          <p>
+            Before inserting any scripts, I ran Lighthouse and axe DevTools audits. After adding ad code, performance scores still sat above 90 thanks to delayed decoration scripts via `requestIdleCallback`, which kept CLS under 0.02.
+          </p>
+          <p>
+            The snippet below shows how IntersectionObserver gates animations until a section is visible, reducing CPU spikes on mobile.
+          </p>
+          <pre><code class="language-js">const sections = document.querySelectorAll('[data-observe]');
+const observer = new IntersectionObserver((entries) => {
+	entries.forEach((entry) => {
+		if (entry.isIntersecting) {
+			entry.target.classList.add('is-visible');
+			observer.unobserve(entry.target);
+		}
+	});
+}, { threshold: 0.35 });
+
+sections.forEach((section) => observer.observe(section));
+</code></pre>
+          <p>
+            The same pattern ships to the Report Tools suite and the WalkWithMe chatbot so each subdomain maintains accessibility, speed, and measurable value for advertisers.
+          </p>
+        </article>
+      </section>
+
+      <section id="experiments">
+        <div class="section-heading">
+          <h2>Experiments · Active builds</h2>
+          <p>Weekend prototypes that evolve monthly. Most are exploratory and intentionally rough around the edges.</p>
+        </div>
+
+        <div class="pill-grid">
+          <article class="pill-card">
+            <strong>Pinball Game</strong>
+            <p>A neon-themed pinball made with Canvas and Matter.js. Gravity and bounce curves were tuned dozens of times to nail keyboard responsiveness.<br>(Progress stalled while refining the physics model)</p>
+          </article>
+          <article class="pill-card">
+            <strong>OCR</strong>
+            <p>Client-side scanner that swaps between Tesseract and PaddleOCR to read receipts and handwritten notes, followed by custom post-processing.<br>(Open-source OCR accuracy remains inconsistent)</p>
+          </article>
+          <article class="pill-card">
+            <strong>Syntax Medic</strong>
+            <p>An instant grammar fixer for weekly status notes. Multiple rule sets fight for priority, so conflict resolution is still ongoing.<br>(Frequent rule edits created noisy regressions)</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="toolkit">
+        <div class="section-heading">
+          <h2>Tools on the desk</h2>
+          <p>Mixing front-end, back-end, and hosted services depending on the prototype at hand.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>DBeaver + Eclipse</h3>
+            <p>Schema planning and API development happen side by side with shared database workspaces.</p>
+          </article>
+          <article class="feature-card">
+            <h3>VS Code</h3>
+            <p>Multicursor editing, REST Client, and Git Graph accelerate commit-driven experiments.</p>
+          </article>
+          <article class="feature-card">
+            <h3>AWS + Cloudflare</h3>
+            <p>AWS handles deployment and monitoring, while Cloudflare Workers and DNS manage proxies and CORS.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Google SMTP Relay</h3>
+            <p>Custom domain email routes through Workspace relay so deliverability and archiving stay centralized.</p>
+          </article>
+          <article class="feature-card">
+            <h3>GitHub Copilot</h3>
+            <p>Reduces boilerplate during rapid iterations and drafts test cases for new modules.</p>
+          </article>
+          <article class="feature-card">
+            <h3>OpenAI API</h3>
+            <p>Runs translation, summarization, and text cleanup flows with a Worker proxy to reduce latency.</p>
+          </article>
+        </div>
+
+        <div class="stat-board">
+          <div class="stat">
+            <strong>5</strong>
+            <span>Programming languages mixed over the past 3 months</span>
+          </div>
+          <div class="stat">
+            <strong>02:17</strong>
+            <span>Average first commit timestamp (KST)</span>
+          </div>
+          <div class="stat">
+            <strong>7</strong>
+            <span>Domains currently under management</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="log">
+        <div class="section-heading">
+          <h2>Signal Log</h2>
+          <p>Recent commits, tool switches, and observations worth noting.</p>
+        </div>
+
+        <div class="feature-grid log-grid">
+          <article class="feature-card log-card">
+            <time datetime="2025-10-12">2025.10.12</time>
+            <h3>Serverless &amp; Ingress timeline shipped</h3>
+            <p>Translated the web server timeline and tightened the modal focus trap ahead of the next accessibility review.</p>
+          </article>
+
+          <article class="feature-card log-card">
+            <time datetime="2025-10-05">2025.10.05</time>
+            <h3>Database timeline launched</h3>
+            <p>Wrote 20+ modal stories linking Codd, Chen, and modern lakehouse buzzwords with developer-friendly summaries.</p>
+          </article>
+
+          <article class="feature-card log-card">
+            <time datetime="2025-09-29">2025.09.29</time>
+            <h3>Home hub refresh</h3>
+            <p>Reworked hero copy, added structured data blocks, and cleaned up the CTA tracking attributes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-heading">
+          <h2>Contact</h2>
+          <p>Prefer a short note. Tell me the context you are in and how I could help.</p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="feature-card contact-card">
+            <div class="contact-mail">
+              <span class="contact-mail-label">Email</span>
+              <a class="contact-mail-address" href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a>
+            </div>
+            <dl class="contact-meta">
+              <div>
+                <dt>Operator</dt>
+                <dd>Hyungyu Jang · ArcherLab</dd>
+              </div>
+              <div>
+                <dt>Location</dt>
+                <dd>Daegu, Republic of Korea (remote studio)</dd>
+              </div>
+              <div>
+                <dt>Response Time</dt>
+                <dd>Replies within 24h on business days</dd>
+              </div>
+              <div>
+                <dt>Ads & Partnerships</dt>
+                <dd>Questions on Google AdSense placement or collaboration ideas are welcome via email.</dd>
+              </div>
+            </dl>
+            <div class="hero-actions contact-actions">
+              <a class="ghost-btn" href="mailto:hyungyu@archerlab.dev" data-cta="contact-email">Send a signal</a>
+              <a class="ghost-btn" href="https://newsletter.archerlab.dev" target="_blank" rel="noopener" data-cta="contact-newsletter">Join newsletter</a>
+            </div>
+          </article>
+          <article class="feature-card contact-card">
+            <h3>GitHub</h3>
+            <p>github.com/JangHyunGyu</p>
+            <a class="ghost-btn" href="https://github.com/JangHyunGyu" target="_blank" rel="noopener" data-cta="contact-github">Open profile</a>
+          </article>
+          <article class="feature-card contact-card">
+            <h3>Newsletter</h3>
+            <p>Monthly digest of new experiments and long-form notes.</p>
+            <a class="ghost-btn" href="https://newsletter.archerlab.dev" target="_blank" rel="noopener" data-cta="contact-newsletter">Subscribe</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="logo" href="#top" aria-label="Back to top">
+            <img
+              class="logo-img"
+              src="assets/images/archerlab_mini_logo.png"
+              alt="ArcherLab logo"
+              width="48"
+              height="48"
+              decoding="async"
+            />
+            ArcherLab
+          </a>
+          <p>Crafted by candlelight—prototypes, notes, and tools documented for the next build.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#network">Network</a>
+          <a href="#experiments">Experiments</a>
+          <a href="#guides">Guides</a>
+          <a href="#articles">Articles</a>
+          <a href="#toolkit">Toolkit</a>
+          <a href="#log">Signal Log</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="footer-meta">
+          <p>© <span id="year"></span> ArcherLab. Crafted by candlelight in Daegu.</p>
+          <div class="footer-legal">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="scroll-top" data-scroll-top aria-label="Scroll back to top" hidden>↑</button>
+    </footer>
+    <script src="assets/js/constellation.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+  <script type="text/javascript" src="https://wcs.pstatic.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if (!window.wcs_add) window.wcs_add = {};
+      window.wcs_add["wa"] = "1540dff9e211880";
+      if (window.location.protocol !== 'file:' && window.wcs) {
+        wcs_do();
+      }
+    </script>
+  </body>
+</html>
