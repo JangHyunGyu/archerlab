@@ -9,20 +9,21 @@
 
 	/* ── 궁수자리 별자리 좌표 (정규화: 0~1 범위) ─── */
 	/* 실제 궁수자리(Sagittarius) 주요 별 위치를 단순화한 데이터 */
+	/* PC에서 화면을 꽉 채우도록 확대 배치 */
 	const SAGITTARIUS_STARS = [
 		// 찻잔(Teapot) 형태의 핵심 별들
-		{ x: 0.42, y: 0.38, size: 2.8, brightness: 1.0 },   // Kaus Australis (ε Sgr)
-		{ x: 0.48, y: 0.32, size: 2.2, brightness: 0.9 },   // Kaus Media (δ Sgr)
-		{ x: 0.53, y: 0.28, size: 2.5, brightness: 0.95 },  // Kaus Borealis (λ Sgr)
-		{ x: 0.50, y: 0.22, size: 1.8, brightness: 0.8 },   // φ Sgr
-		{ x: 0.44, y: 0.24, size: 2.0, brightness: 0.85 },  // σ Sgr (Nunki)
-		{ x: 0.39, y: 0.30, size: 1.6, brightness: 0.75 },  // τ Sgr
-		{ x: 0.42, y: 0.38, size: 2.8, brightness: 1.0 },   // 다시 시작점 (닫기용)
+		{ x: 0.32, y: 0.68, size: 4.0, brightness: 1.0 },   // Kaus Australis (ε Sgr)
+		{ x: 0.45, y: 0.52, size: 3.2, brightness: 0.9 },   // Kaus Media (δ Sgr)
+		{ x: 0.58, y: 0.38, size: 3.6, brightness: 0.95 },  // Kaus Borealis (λ Sgr)
+		{ x: 0.52, y: 0.20, size: 2.8, brightness: 0.8 },   // φ Sgr
+		{ x: 0.35, y: 0.25, size: 3.0, brightness: 0.85 },  // σ Sgr (Nunki)
+		{ x: 0.22, y: 0.45, size: 2.4, brightness: 0.75 },  // τ Sgr
+		{ x: 0.32, y: 0.68, size: 4.0, brightness: 1.0 },   // 다시 시작점 (닫기용)
 		// 활과 화살 부분
-		{ x: 0.55, y: 0.35, size: 2.0, brightness: 0.85 },  // γ Sgr (화살 끝)
-		{ x: 0.60, y: 0.42, size: 1.5, brightness: 0.7 },   // 화살 머리
-		{ x: 0.35, y: 0.45, size: 1.8, brightness: 0.8 },   // 활 아래
-		{ x: 0.33, y: 0.35, size: 1.4, brightness: 0.65 },  // 활 위
+		{ x: 0.68, y: 0.55, size: 3.0, brightness: 0.85 },  // γ Sgr (화살 끝)
+		{ x: 0.82, y: 0.72, size: 2.2, brightness: 0.7 },   // 화살 머리
+		{ x: 0.18, y: 0.82, size: 2.8, brightness: 0.8 },   // 활 아래
+		{ x: 0.15, y: 0.55, size: 2.0, brightness: 0.65 },  // 활 위
 	];
 
 	/* 별자리 선을 연결하는 쌍 인덱스 */
@@ -33,7 +34,7 @@
 	];
 
 	/* ── 배경 별(랜덤) 데이터 ─────────────────────── */
-	const BACKGROUND_STAR_COUNT = 80;
+	const BACKGROUND_STAR_COUNT = 140;
 	const backgroundStars = [];
 
 	function generateBackgroundStars() {
