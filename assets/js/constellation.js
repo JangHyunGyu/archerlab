@@ -53,7 +53,8 @@
 	let canvas, ctx;
 	let width, height;
 	let mouseX = 0.5, mouseY = 0.5;
-	let scrollY = 0;
+	let targetMouseX = 0.5, targetMouseY = 0.5;
+	let scrollY = 0;  
 	let animationId;
 
 	function createCanvas() {
@@ -78,8 +79,8 @@
 
 	/* ── Parallax 좌표 계산 ───────────────────────── */
 	function parallax(star, depthFactor) {
-		const offsetX = (mouseX - 0.5) * depthFactor * 30;
-		const offsetY = (mouseY - 0.5) * depthFactor * 20;
+		const offsetX = (mouseX - 0.5) * depthFactor * 80;
+		const offsetY = (mouseY - 0.5) * depthFactor * 50;
 		const scrollOffset = scrollY * depthFactor * 0.03;
 		return {
 			x: star.x * width + offsetX,
@@ -91,29 +92,63 @@
 	function draw(timestamp) {
 		ctx.clearRect(0, 0, width, height);
 
-		// 1. 배경 별 (작고 반짝이는)
+		// 부드러운 마우스 보간 (lerp)
+		mouseX += (targetMouseX - mouseX) * 0.08;
+		mouseY += (targetMouseY - mouseY) * 0.08;
+
+		// 마우스 위치 (픽셀)
+		var mxPx = mouseX * width;
+		var myPx = mouseY * height;
+
+		// 1. 배경 별 (마우스 근처에서 밝아짐)
 		backgroundStars.forEach(function (star) {
 			var twinkle = Math.sin(timestamp * star.twinkleSpeed + star.twinkleOffset);
-			var alpha = star.brightness * (0.6 + 0.4 * twinkle);
 			var pos = parallax(star, 0.15);
 
+			// 마우스와의 거리 → 가까울수록 밝게
+			var dx = pos.x - mxPx;
+			var dy = pos.y - myPx;
+			var dist = Math.sqrt(dx * dx + dy * dy);
+			var proximity = Math.max(0, 1 - dist / 250);
+			var alpha = star.brightness * (0.6 + 0.4 * twinkle) + proximity * 0.6;
+			var size = star.size + proximity * 2;
+
 			ctx.beginPath();
-			ctx.arc(pos.x, pos.y, star.size, 0, Math.PI * 2);
-			ctx.fillStyle = "rgba(245, 222, 179, " + Math.max(0, alpha) + ")";
+			ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+			ctx.fillStyle = "rgba(245, 222, 179, " + Math.min(1, Math.max(0, alpha)) + ")";
 			ctx.fill();
+
+			// 마우스 가까울 때 글로우 추가
+			if (proximity > 0.1) {
+				var g = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, size * 4);
+				g.addColorStop(0, "rgba(232, 176, 74, " + (proximity * 0.3) + ")");
+				g.addColorStop(1, "rgba(232, 176, 74, 0)");
+				ctx.beginPath();
+				ctx.arc(pos.x, pos.y, size * 4, 0, Math.PI * 2);
+				ctx.fillStyle = g;
+				ctx.fill();
+			}
 		});
 
-		// 2. 궁수자리 별자리 선
-		ctx.strokeStyle = "rgba(232, 176, 74, 0.12)";
-		ctx.lineWidth = 1;
-		ctx.setLineDash([4, 6]);
-
+		// 2. 궁수자리 별자리 선 (마우스 근처에서 더 밝게)
 		CONSTELLATION_LINES.forEach(function (pair) {
 			var starA = SAGITTARIUS_STARS[pair[0]];
 			var starB = SAGITTARIUS_STARS[pair[1]];
 			var posA = parallax(starA, 0.25);
 			var posB = parallax(starB, 0.25);
 
+			// 선 중점과 마우스 거리
+			var midX = (posA.x + posB.x) / 2;
+			var midY = (posA.y + posB.y) / 2;
+			var dxL = midX - mxPx;
+			var dyL = midY - myPx;
+			var distL = Math.sqrt(dxL * dxL + dyL * dyL);
+			var lineProx = Math.max(0, 1 - distL / 300);
+			var lineAlpha = 0.12 + lineProx * 0.35;
+
+			ctx.strokeStyle = "rgba(232, 176, 74, " + lineAlpha + ")";
+			ctx.lineWidth = 1 + lineProx * 1.5;
+			ctx.setLineDash([4, 6]);
 			ctx.beginPath();
 			ctx.moveTo(posA.x, posA.y);
 			ctx.lineTo(posB.x, posB.y);
@@ -122,21 +157,27 @@
 
 		ctx.setLineDash([]);
 
-		// 3. 궁수자리 별 (글로우 포함)
+		// 3. 궁수자리 별 (마우스 근처 글로우 강화)
 		SAGITTARIUS_STARS.forEach(function (star, index) {
-			// 중복 닫기 포인트 제외
 			if (index === 6) return;
 
 			var twinkle = Math.sin(timestamp * 0.002 + index * 0.8);
-			var alpha = star.brightness * (0.7 + 0.3 * twinkle);
 			var pos = parallax(star, 0.25);
 
+			// 마우스 근접도
+			var dxS = pos.x - mxPx;
+			var dyS = pos.y - myPx;
+			var distS = Math.sqrt(dxS * dxS + dyS * dyS);
+			var proxS = Math.max(0, 1 - distS / 300);
+			var alpha = star.brightness * (0.7 + 0.3 * twinkle) + proxS * 0.4;
+			var glowRadius = star.size * (8 + proxS * 12);
+
 			// 글로우 (촛불 색)
-			var glow = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, star.size * 8);
-			glow.addColorStop(0, "rgba(232, 176, 74, " + (alpha * 0.2) + ")");
+			var glow = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, glowRadius);
+			glow.addColorStop(0, "rgba(232, 176, 74, " + (alpha * 0.25) + ")");
 			glow.addColorStop(1, "rgba(232, 176, 74, 0)");
 			ctx.beginPath();
-			ctx.arc(pos.x, pos.y, star.size * 8, 0, Math.PI * 2);
+			ctx.arc(pos.x, pos.y, glowRadius, 0, Math.PI * 2);
 			ctx.fillStyle = glow;
 			ctx.fill();
 
@@ -152,8 +193,8 @@
 
 	/* ── 이벤트 리스너 ────────────────────────────── */
 	function onMouseMove(e) {
-		mouseX = e.clientX / width;
-		mouseY = e.clientY / height;
+		targetMouseX = e.clientX / width;
+		targetMouseY = e.clientY / height;
 	}
 
 	function onScroll() {
