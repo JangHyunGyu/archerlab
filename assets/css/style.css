@@ -1439,7 +1439,31 @@ body::after {
 /* ── 20-b. Mobile (≤560px) ─────────────────────────── */
 @media (max-width: 560px) {
 	header {
-		padding: 1rem 1.2rem;
+		position: sticky;
+		top: 0;
+		z-index: 500;
+		background:
+			radial-gradient(ellipse at 50% 0%, rgba(232, 176, 74, 0.04) 0%, transparent 60%),
+			rgba(10, 12, 20, 0.95);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		padding: 0.75rem 1.2rem;
+		border-bottom: 1px solid rgba(232, 176, 74, 0.1);
+	}
+
+	footer {
+		position: sticky;
+		bottom: 0;
+		z-index: 500;
+		padding: 0.6rem 1.2rem;
+		border-top: 1px solid rgba(232, 176, 74, 0.15);
+		background: rgba(8, 10, 18, 0.97);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	footer::before {
+		display: none;
 	}
 
 	.navbar {
