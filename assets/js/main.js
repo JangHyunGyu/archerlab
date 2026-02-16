@@ -1,7 +1,6 @@
 // DOMContentLoaded 이벤트는 HTML 문서가 완전히 파싱되었을 때 발생합니다.
 document.addEventListener("DOMContentLoaded", () => {
 	const LANGUAGE_STORAGE_KEY = "archerlab:language";
-	const languageSelects = Array.from(document.querySelectorAll("[data-language-switch]"));
 
 	const normalizeLanguage = (value) => {
 		if (!value || typeof value !== "string") {
@@ -43,58 +42,93 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	};
 
-	const findOptionByLanguage = (select, languageCode) => {
-		if (!select || !languageCode) {
-			return null;
-		}
-		return (
-			Array.from(select.options || []).find((option) =>
-				normalizeLanguage(option.dataset?.languageCode || option.value)
-				=== languageCode
-			) || null
-		);
-	};
-
-	const getSelectedOption = (select) => {
-		if (!select) {
-			return null;
-		}
-		if (select.selectedOptions && select.selectedOptions.length) {
-			return select.selectedOptions[0];
-		}
-		const index = typeof select.selectedIndex === "number" ? select.selectedIndex : -1;
-		if (index < 0 || !select.options || !select.options.length) {
-			return null;
-		}
-		return select.options[index] || null;
-	};
-
 	const currentLanguage = normalizeLanguage(document.documentElement?.lang || "");
 	const storedLanguage = normalizeLanguage(getStoredLanguage());
 	const browserLanguage = detectBrowserLanguage();
 
-	languageSelects.forEach((select) => {
-		const optionForCurrent = findOptionByLanguage(select, currentLanguage);
-		if (optionForCurrent) {
-			select.value = optionForCurrent.value;
-		}
-	});
+	/* ── 커스텀 언어 드롭다운 ── */
+	const dropdowns = document.querySelectorAll("[data-lang-dropdown]");
 
+	// 자동 언어 리다이렉트 (첫 방문 시)
 	const preferredLanguage = storedLanguage || browserLanguage;
-
 	if (preferredLanguage && currentLanguage && preferredLanguage !== currentLanguage) {
-		const redirectSelect = languageSelects[0] || null;
-		const redirectOption = findOptionByLanguage(redirectSelect, preferredLanguage);
-		if (redirectOption) {
-			setStoredLanguage(preferredLanguage);
-			window.location.replace(redirectOption.value);
-			return;
+		const firstDropdown = dropdowns[0];
+		if (firstDropdown) {
+			const matchItem = firstDropdown.querySelector(`[data-lang-code="${preferredLanguage}"]`);
+			if (matchItem) {
+				setStoredLanguage(preferredLanguage);
+				window.location.replace(matchItem.dataset.langUrl);
+				return;
+			}
 		}
 	}
 
 	if (!storedLanguage && currentLanguage) {
 		setStoredLanguage(currentLanguage);
 	}
+
+	dropdowns.forEach((dropdown) => {
+		const toggle = dropdown.querySelector(".lang-dropdown__toggle");
+		const menu = dropdown.querySelector(".lang-dropdown__menu");
+		const items = dropdown.querySelectorAll(".lang-dropdown__item");
+
+		if (!toggle || !menu) return;
+
+		const open = () => {
+			dropdown.setAttribute("data-open", "");
+			toggle.setAttribute("aria-expanded", "true");
+		};
+
+		const close = () => {
+			dropdown.removeAttribute("data-open");
+			toggle.setAttribute("aria-expanded", "false");
+		};
+
+		const isOpen = () => dropdown.hasAttribute("data-open");
+
+		toggle.addEventListener("click", (e) => {
+			e.stopPropagation();
+			isOpen() ? close() : open();
+		});
+
+		// ESC 키로 닫기
+		dropdown.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && isOpen()) {
+				close();
+				toggle.focus();
+			}
+		});
+
+		// 외부 클릭 시 닫기
+		document.addEventListener("click", (e) => {
+			if (isOpen() && !dropdown.contains(e.target)) {
+				close();
+			}
+		});
+
+		// 항목 선택
+		items.forEach((item) => {
+			item.addEventListener("click", () => {
+				const langCode = item.dataset.langCode;
+				const langUrl = item.dataset.langUrl;
+				if (langCode) {
+					setStoredLanguage(langCode);
+				}
+				if (langUrl) {
+					window.location.href = langUrl;
+				}
+			});
+
+			// 키보드 접근성
+			item.setAttribute("tabindex", "0");
+			item.addEventListener("keydown", (e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					item.click();
+				}
+			});
+		});
+	});
 
 	const languageLinkTargets = {
 		itstory: {
@@ -129,24 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 
 	syncExternalLanguageLinks();
-
-	languageSelects.forEach((select) => {
-		select.addEventListener("change", (event) => {
-			const target = event.target;
-			const destination = target?.value;
-			const selectedOption = getSelectedOption(target);
-			const selectedLanguageCode = normalizeLanguage(
-				selectedOption?.dataset?.languageCode || selectedOption?.value || ""
-			);
-			if (selectedLanguageCode) {
-				setStoredLanguage(selectedLanguageCode);
-			}
-			if (!destination) {
-				return;
-			}
-			window.location.href = destination;
-		});
-	});
 
 	// 푸터 연도를 채울 span 요소를 id로 선택합니다.
 	const yearEl = document.getElementById("year");

@@ -132,11 +132,20 @@
         <a class="logo" href="#top" aria-label="Move to the top of ArcherLab">
           ArcherLab
         </a>
-        <div class="language-switch">
-          <select id="language-select-main-en" aria-label="Language" data-language-switch>
-            <option value="index.html" data-language-code="ko">한국어</option>
-            <option value="index-en.html" data-language-code="en" selected>English</option>
-          </select>
+        <div class="lang-dropdown" data-lang-dropdown>
+          <button type="button" class="lang-dropdown__toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+            <svg class="lang-dropdown__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+            <span class="lang-dropdown__label">English</span>
+            <svg class="lang-dropdown__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="lang-dropdown__menu" role="listbox">
+            <li class="lang-dropdown__item" role="option" aria-selected="false" data-lang-code="ko" data-lang-url="index.html">
+              <span class="lang-dropdown__flag">🇰🇷</span> 한국어
+            </li>
+            <li class="lang-dropdown__item active" role="option" aria-selected="true" data-lang-code="en" data-lang-url="index-en.html">
+              <span class="lang-dropdown__flag">🇺🇸</span> English
+            </li>
+          </ul>
         </div>
       </div>
     </header>
