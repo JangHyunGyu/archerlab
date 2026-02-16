@@ -46,6 +46,7 @@
 
 /* ── 2. Body & Global ─────────────────────────────── */
 html {
+	touch-action: pan-x pan-y;
 	background:
 		radial-gradient(ellipse at 50% 0%, rgba(232, 176, 74, 0.06) 0%, transparent 60%),
 		radial-gradient(circle at 20% 80%, rgba(212, 149, 58, 0.04), transparent 50%),
