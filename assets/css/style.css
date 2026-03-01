@@ -396,9 +396,8 @@ section {
 
 /* ── Hub Grid (Project Link Cards) ────────────────── */
 .hub-grid {
-	display: grid;
-	gap: 0.9rem;
-	grid-template-columns: repeat(2, 1fr);
+	columns: 2;
+	column-gap: 0.9rem;
 }
 
 .hub-card {
@@ -408,6 +407,8 @@ section {
 	align-items: start;
 	gap: 0;
 	padding: 0;
+	margin-bottom: 0.9rem;
+	break-inside: avoid;
 	border-radius: var(--radius-lg);
 	background: linear-gradient(150deg, rgba(22, 26, 40, 0.94), rgba(14, 17, 30, 0.97));
 	backdrop-filter: none;
@@ -1381,10 +1382,14 @@ body::after {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	/* 태블릿: 2열 + 이미지 비율 3:2로 콤팩트하게 */
+	/* 태블릿: 2열 세로 흐름 유지 */
 	.hub-grid {
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1rem;
+		columns: 2;
+		column-gap: 1rem;
+	}
+
+	.hub-card {
+		margin-bottom: 1rem;
 	}
 
 	.hub-thumb {
@@ -1495,8 +1500,8 @@ body::after {
 
 	/* ── 모바일 허브 그리드: 가로형 리스트 ── */
 	.hub-grid {
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
+		columns: 1;
+		column-gap: 0;
 	}
 
 	/* 모든 카드: 가로형(이미지 왼쪽 + 텍스트 오른쪽) */
@@ -1504,6 +1509,8 @@ body::after {
 		grid-template-columns: 100px 1fr;
 		grid-template-rows: 1fr;
 		align-items: center;
+		margin-bottom: 0.75rem;
+		break-inside: avoid;
 		border-radius: var(--radius-sm);
 	}
 
