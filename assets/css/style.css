@@ -1493,6 +1493,7 @@ body::after {
 	.hub-grid {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1rem;
+		perspective: 1000px;
 	}
 
 	.hub-card {
@@ -1609,6 +1610,7 @@ body::after {
 	.hub-grid {
 		grid-template-columns: 1fr;
 		gap: 0.75rem;
+		perspective: none;
 	}
 
 	/* 모든 카드: 가로형(이미지 왼쪽 + 텍스트 오른쪽) */
@@ -1617,6 +1619,12 @@ body::after {
 		grid-template-rows: 1fr;
 		align-items: center;
 		border-radius: var(--radius-sm);
+		transform: none !important;
+	}
+
+	.hub-card::before,
+	.hub-card::after {
+		display: none;
 	}
 
 	.hub-thumb {
@@ -1627,9 +1635,14 @@ body::after {
 		border-radius: var(--radius-sm) 0 0 var(--radius-sm);
 	}
 
+	.hub-card:hover .hub-thumb {
+		transform: none;
+	}
+
 	.hub-body {
 		padding: 0.7rem 1rem;
 		align-content: center;
+		background: transparent;
 	}
 
 	.hub-card strong {
