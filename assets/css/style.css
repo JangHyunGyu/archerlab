@@ -399,16 +399,9 @@ section {
 	display: grid;
 	gap: 1.2rem;
 	grid-template-columns: repeat(4, 1fr);
-	perspective: 1200px;
 }
 
 .hub-card {
-	--_tilt-x: 0deg;
-	--_tilt-y: 0deg;
-	--_glare-x: 50%;
-	--_glare-y: 50%;
-	--_glare-opacity: 0;
-
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: auto auto;
@@ -431,31 +424,9 @@ section {
 	text-decoration: none;
 	overflow: hidden;
 	position: relative;
-	transform-style: preserve-3d;
-	transform: rotateX(var(--_tilt-x)) rotateY(var(--_tilt-y));
 	transition:
-		transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99),
 		box-shadow 0.4s ease,
 		border-color 0.3s ease;
-	will-change: transform, box-shadow;
-}
-
-/* 광택 오버레이 (글래스 반사 효과) */
-.hub-card::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: 3;
-	border-radius: inherit;
-	background: radial-gradient(
-		ellipse 300px 300px at var(--_glare-x) var(--_glare-y),
-		rgba(245, 222, 179, 0.12),
-		transparent 70%
-	);
-	opacity: var(--_glare-opacity);
-	pointer-events: none;
-	transition: opacity 0.4s ease;
-	mix-blend-mode: screen;
 }
 
 /* 상단 엣지 하이라이트 (입체감 강화) */
@@ -1493,7 +1464,6 @@ body::after {
 	.hub-grid {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1rem;
-		perspective: 1000px;
 	}
 
 	.hub-card {
@@ -1610,7 +1580,6 @@ body::after {
 	.hub-grid {
 		grid-template-columns: 1fr;
 		gap: 0.75rem;
-		perspective: none;
 	}
 
 	/* 모든 카드: 가로형(이미지 왼쪽 + 텍스트 오른쪽) */
@@ -1619,10 +1588,8 @@ body::after {
 		grid-template-rows: 1fr;
 		align-items: center;
 		border-radius: var(--radius-sm);
-		transform: none !important;
 	}
 
-	.hub-card::before,
 	.hub-card::after {
 		display: none;
 	}
