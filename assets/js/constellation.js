@@ -234,7 +234,7 @@
 		Object.assign(cv.style, {
 			position: "fixed", top: "0", left: "0",
 			width: "100%", height: "100%",
-			pointerEvents: "none", zIndex: "10", opacity: "0.75",
+			pointerEvents: "none", zIndex: "10", opacity: "0.28",
 		});
 		document.body.prepend(cv);
 
