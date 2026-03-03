@@ -203,4 +203,41 @@ document.addEventListener("DOMContentLoaded", () => {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		});
 	}
+
+	/* ── 3D 틸트 + 글래어 효과 (hub-card) ── */
+	const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+	if (!isTouchDevice) {
+		const cards = document.querySelectorAll(".hub-card");
+		const MAX_TILT = 8; // degrees
+
+		cards.forEach((card) => {
+			card.addEventListener("mouseenter", () => {
+				card.style.transition = "transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.3s ease";
+			});
+
+			card.addEventListener("mousemove", (e) => {
+				const rect = card.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+				const cx = rect.width / 2;
+				const cy = rect.height / 2;
+
+				const rotateY = ((x - cx) / cx) * MAX_TILT;
+				const rotateX = ((cy - y) / cy) * MAX_TILT;
+
+				card.style.setProperty("--_tilt-x", rotateX + "deg");
+				card.style.setProperty("--_tilt-y", rotateY + "deg");
+				card.style.setProperty("--_glare-x", (x / rect.width * 100) + "%");
+				card.style.setProperty("--_glare-y", (y / rect.height * 100) + "%");
+				card.style.setProperty("--_glare-opacity", "1");
+			});
+
+			card.addEventListener("mouseleave", () => {
+				card.style.transition = "transform 0.5s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease, border-color 0.3s ease";
+				card.style.setProperty("--_tilt-x", "0deg");
+				card.style.setProperty("--_tilt-y", "0deg");
+				card.style.setProperty("--_glare-opacity", "0");
+			});
+		});
+	}
 });
