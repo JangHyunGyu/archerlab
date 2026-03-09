@@ -166,6 +166,8 @@ header {
 	cursor: pointer;
 	transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .lang-dropdown__toggle:hover,
