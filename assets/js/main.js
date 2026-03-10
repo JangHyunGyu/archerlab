@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const dropdowns = document.querySelectorAll("[data-lang-dropdown]");
 
 	// 자동 언어 리다이렉트 (첫 방문 시)
+	if (/bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent)) return;
 	const preferredLanguage = storedLanguage || browserLanguage;
 	if (preferredLanguage && currentLanguage && preferredLanguage !== currentLanguage) {
 		const firstDropdown = dropdowns[0];
@@ -133,11 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	const languageLinkTargets = {
 		itstory: {
 			ko: "https://itstory.archerlab.dev",
-			en: "https://itstory.archerlab.dev/index-en.html"
+			en: "https://itstory.archerlab.dev/index-en"
 		},
 		walkwithme: {
 			ko: "https://chatbot.archerlab.dev",
-			en: "https://chatbot.archerlab.dev/index-en.html"
+			en: "https://chatbot.archerlab.dev/index-en"
 		}
 	};
 
