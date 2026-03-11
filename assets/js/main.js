@@ -173,6 +173,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		yearEl.textContent = new Date().getFullYear();
 	}
 
+	/* ── 카테고리 탭 필터 ── */
+	const tabBtns = document.querySelectorAll('.tab-btn');
+	const hubCards = document.querySelectorAll('.hub-card');
+
+	tabBtns.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const tab = btn.dataset.tab;
+
+			tabBtns.forEach((b) => b.classList.remove('active'));
+			btn.classList.add('active');
+
+			hubCards.forEach((card) => {
+				if (tab === 'all' || card.dataset.category === tab) {
+					card.removeAttribute('hidden');
+				} else {
+					card.setAttribute('hidden', '');
+				}
+			});
+		});
+	});
+
 	const scrollTopButton = document.querySelector('[data-scroll-top]');
 	if (scrollTopButton) {
 		const toggleScrollTop = () => {
