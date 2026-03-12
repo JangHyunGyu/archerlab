@@ -194,6 +194,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	/* ── 이미지 라이트박스 ── */
+	const lightbox = document.getElementById('lightbox');
+	const lightboxImg = document.getElementById('lightbox-img');
+	if (lightbox && lightboxImg) {
+		const closeLightbox = () => lightbox.setAttribute('hidden', '');
+
+		document.querySelectorAll('[data-lightbox]').forEach((img) => {
+			img.addEventListener('click', (e) => {
+				e.stopPropagation();
+				lightboxImg.src = img.src;
+				lightboxImg.alt = img.alt;
+				lightbox.removeAttribute('hidden');
+			});
+		});
+
+		lightbox.addEventListener('click', closeLightbox);
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeLightbox();
+		});
+	}
+
 	const scrollTopButton = document.querySelector('[data-scroll-top]');
 	if (scrollTopButton) {
 		const toggleScrollTop = () => {
