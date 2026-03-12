@@ -585,9 +585,9 @@ section {
 /* ── Coming Soon Banner Card ────────────────── */
 .hub-card--banner {
 	grid-column: 1 / -1;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 280px 1fr;
 	grid-template-rows: 1fr;
-	align-items: stretch;
+	align-items: center;
 	cursor: default;
 	border-color: rgba(232, 176, 74, 0.22);
 	background: linear-gradient(135deg, #0d0f1e 0%, #12152a 55%, #160f2a 100%);
@@ -606,8 +606,8 @@ section {
 }
 
 .hub-banner-img {
-	width: 100%;
-	aspect-ratio: 1 / 1;
+	width: 280px;
+	height: 280px;
 	object-fit: contain;
 	border-radius: var(--radius-lg) 0 0 var(--radius-lg);
 	background: linear-gradient(135deg, #080b18 0%, #0e1226 100%);
