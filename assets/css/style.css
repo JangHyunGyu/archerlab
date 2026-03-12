@@ -436,6 +436,68 @@ section {
 	display: none;
 }
 
+/* ── Coming Soon Banner Card ────────────────── */
+.hub-card--banner {
+	grid-column: 1 / -1;
+	grid-template-columns: 220px 1fr;
+	grid-template-rows: 1fr;
+	align-items: center;
+	cursor: default;
+	border-color: rgba(232, 176, 74, 0.22);
+	background: linear-gradient(135deg, #0d0f1e 0%, #12152a 55%, #160f2a 100%);
+	position: relative;
+	overflow: hidden;
+	min-height: 140px;
+}
+
+.hub-card--banner::after {
+	background: none;
+}
+
+.hub-card--banner:hover {
+	border-color: rgba(232, 176, 74, 0.35);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 0 40px rgba(232, 176, 74, 0.07);
+	transform: none;
+}
+
+.hub-banner-img {
+	width: 220px;
+	height: 140px;
+	object-fit: cover;
+	border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+	flex-shrink: 0;
+}
+
+.hub-banner-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	background: rgba(232, 176, 74, 0.12);
+	border: 1px solid rgba(232, 176, 74, 0.38);
+	color: var(--accent);
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	padding: 0.22rem 0.65rem;
+	border-radius: 100px;
+	margin-bottom: 0.45rem;
+}
+
+.hub-banner-badge::before {
+	content: "";
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--accent);
+	animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+	0%, 100% { opacity: 1; transform: scale(1); }
+	50% { opacity: 0.35; transform: scale(0.65); }
+}
+
 /* ── Hub Grid (Project Link Cards) ────────────────── */
 .hub-grid {
 	display: grid;
@@ -1632,6 +1694,17 @@ body::after {
 		border-radius: var(--radius-sm);
 	}
 
+	.hub-card--banner {
+		grid-template-columns: 100px 1fr;
+		min-height: unset;
+	}
+
+	.hub-card--banner .hub-banner-img {
+		width: 100px;
+		height: 100px;
+		border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+	}
+
 	.hub-card::after {
 		display: none;
 	}
@@ -1720,6 +1793,15 @@ body::after {
 
 	.hub-card {
 		grid-template-columns: 80px 1fr;
+	}
+
+	.hub-card--banner {
+		grid-template-columns: 80px 1fr;
+	}
+
+	.hub-card--banner .hub-banner-img {
+		width: 80px;
+		height: 80px;
 	}
 
 	.hub-card .hub-thumb {
