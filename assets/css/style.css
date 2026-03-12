@@ -625,9 +625,7 @@ section {
 	background: none;
 }
 
-.hub-card--banner:hover {
-	border-color: rgba(232, 176, 74, 0.35);
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 0 40px rgba(232, 176, 74, 0.07);
+.hub-card--banner:hover .hub-thumb {
 	transform: none;
 }
 
