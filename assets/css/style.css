@@ -52,6 +52,25 @@ html {
 		radial-gradient(circle at 20% 80%, rgba(212, 149, 58, 0.04), transparent 50%),
 		radial-gradient(circle at 80% 20%, rgba(180, 140, 80, 0.03), transparent 50%),
 		var(--bg);
+	scrollbar-width: thin;
+	scrollbar-color: rgba(232, 176, 74, 0.25) transparent;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(232, 176, 74, 0.25);
+	border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(232, 176, 74, 0.4);
 }
 
 body {
@@ -77,8 +96,14 @@ header {
 	padding: clamp(1.2rem, 2.5vw, 2rem) clamp(2.5rem, 6vw, 8rem) clamp(0.8rem, 1.5vw, 1.2rem);
 	display: grid;
 	gap: clamp(1rem, 2vw, 1.5rem);
-	position: relative;
+	position: sticky;
+	top: 0;
 	z-index: 200;
+	background:
+		radial-gradient(circle at 50% 0%, rgba(232, 176, 74, 0.04), transparent 60%),
+		rgba(10, 12, 20, 0.95);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
 }
 
 .navbar {
@@ -1161,12 +1186,14 @@ footer {
 	background:
 		radial-gradient(circle at 12% 8%, rgba(232, 176, 74, 0.06), transparent 52%),
 		radial-gradient(circle at 88% 92%, rgba(212, 149, 58, 0.08), transparent 48%),
-		rgba(8, 10, 18, 0.92);
-	backdrop-filter: none;
-	-webkit-backdrop-filter: none;
+		rgba(8, 10, 18, 0.95);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
 	color: rgba(240, 232, 216, 0.9);
-	padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 5.5rem);
-	position: relative;
+	padding: 0.8rem clamp(1.5rem, 5vw, 5.5rem);
+	position: sticky;
+	bottom: 0;
+	z-index: 200;
 	isolation: isolate;
 	margin-top: auto;
 }
