@@ -8,9 +8,10 @@
     <title>ArcherLab - Web Dev Side Project Hub</title>
     <meta
       name="description"
-      content="ArcherLab is a personal dev hub combining frontend, backend, and AI to build prototypes and log experiments. Six side projects and counting."
+      content="ArcherLab is a personal dev hub combining frontend, backend, and AI to build prototypes and log experiments. Seven side projects and counting."
     />
     <meta name="naver-site-verification" content="20c0036e816e482c099dd4396e7a79fb66b03d7a" />
+    <meta name="naver-site-verification" content="f8672a0a716a4b201186cafdab40fd24359bcb45" />
     <meta name="keywords" content="learn web development, coding projects for beginners, side project ideas, frontend portfolio examples, backend roadmap, web dev tutorials, student developer, coding experiments, ArcherLab" />
     <meta property="og:title" content="ArcherLab" />
     <meta
@@ -100,14 +101,16 @@
             "name": "ArcherLab project highlights",
             "itemListOrder": "http://schema.org/ItemListOrderAscending",
             "itemListElement": [
-              { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "Blockpang", "url": "https://game.archerlab.dev/blockpang/" } },
-              { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "Harem Mate", "url": "https://harem.archerlab.dev/index-en" } },
-              { "@type": "ListItem", "position": 3, "item": { "@type": "VideoGame", "name": "Cupid Visual Novel", "url": "https://cupid.archerlab.dev/index-en" } },
-              { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Walk with me", "url": "https://chatbot.archerlab.dev/index-en" } },
-              { "@type": "ListItem", "position": 5, "item": { "@type": "VideoGame", "name": "Shadow Survival", "url": "https://game.archerlab.dev/solo-leveling/" } },
-              { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "Golf Swing Master", "url": "https://golf.archerlab.dev/index-en" } },
-              { "@type": "ListItem", "position": 7, "item": { "@type": "WebSite", "name": "Latin Dance Mate", "url": "https://latindance.kr/index-en" } },
-              { "@type": "ListItem", "position": 8, "item": { "@type": "CreativeWork", "name": "IT Story Timeline", "url": "https://itstory.archerlab.dev/index-en" } }
+              { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "Slime Volley", "url": "https://game.archerlab.dev/slimevolley/" } },
+              { "@type": "ListItem", "position": 2, "item": { "@type": "VideoGame", "name": "Blockpang", "url": "https://game.archerlab.dev/blockpang/" } },
+              { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Harem Mate", "url": "https://harem.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 4, "item": { "@type": "VideoGame", "name": "Cupid Visual Novel", "url": "https://cupid.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Walk with me", "url": "https://chatbot.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 6, "item": { "@type": "VideoGame", "name": "Shadow Survival", "url": "https://game.archerlab.dev/solo-leveling/" } },
+              { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "Golf Swing Master", "url": "https://golf.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 8, "item": { "@type": "WebSite", "name": "Latin Dance Mate", "url": "https://latindance.kr/index-en" } },
+              { "@type": "ListItem", "position": 9, "item": { "@type": "CreativeWork", "name": "IT Story Timeline", "url": "https://itstory.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 10, "item": { "@type": "WebApplication", "name": "HN Top 10", "url": "https://news.archerlab.dev/hn" } }
             ]
           }
         ]
@@ -126,8 +129,10 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"
+      media="print" onload="this.media='all'"
     />
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"></noscript>
     <link rel="stylesheet" href="assets/css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js"></script>
   </head>
@@ -160,8 +165,41 @@
     <main>
       <section id="projects" aria-label="Project list">
 
+        <nav class="tab-bar" aria-label="Category filter">
+          <button type="button" class="tab-btn active" data-tab="all">All</button>
+          <button type="button" class="tab-btn" data-tab="게임">Games</button>
+          <button type="button" class="tab-btn" data-tab="커뮤니티">Community</button>
+          <button type="button" class="tab-btn" data-tab="유틸">Utilities</button>
+          <button type="button" class="tab-btn" data-tab="정보">Info</button>
+        </nav>
+
         <div class="hub-grid">
-          <a class="hub-card" href="https://game.archerlab.dev/blockpang/" target="_blank" rel="noopener">
+          <div class="hub-card hub-card--banner" data-category="all">
+            <img class="hub-thumb hub-banner-img" src="assets/images/nevergrad_link.png" alt="Nevergrad — Coming Soon" loading="lazy" data-lightbox />
+            <div class="hub-body">
+              <span class="hub-banner-badge">Coming April 2026</span>
+              <strong>Nevergrad — 5 Days of Records</strong>
+              <p>The first day of transfer, everything was perfect. Too perfect to be real.</p>
+            </div>
+          </div>
+
+          <a class="hub-card" href="https://chat.archerlab.dev" target="_blank" rel="noopener" data-category="커뮤니티">
+            <img class="hub-thumb" src="assets/images/chat_link.png" alt="Real-time Chat Service" loading="lazy" />
+            <div class="hub-body">
+              <strong>Chat</strong>
+              <p>Real-time chat service. Create public or private rooms, lobby chat, host transfer, and PWA support.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/slimevolley/" target="_blank" rel="noopener" data-category="게임">
+            <img class="hub-thumb" src="assets/images/slimevolley_link.png" alt="Slime Volley Multiplayer Game" loading="lazy" />
+            <div class="hub-body">
+              <strong>Slime Volley</strong>
+              <p>Slime volleyball! Online multiplayer from 1v1 to 4v4. Practice mode with bots also available — free web game.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/blockpang/" target="_blank" rel="noopener" data-category="게임">
             <img class="hub-thumb" src="assets/images/blox_pang_link.png?v=1" alt="Blockpang Puzzle Game" loading="lazy" />
             <div class="hub-body">
               <strong>Blockpang</strong>
@@ -169,7 +207,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://harem.archerlab.dev/index-en" target="_blank" rel="noopener">
+          <a class="hub-card" href="https://harem.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="커뮤니티">
             <img class="hub-thumb" src="assets/images/harem_link.png?v=2" alt="Harem Mate" loading="lazy" />
             <div class="hub-body">
               <strong>Harem Mate</strong>
@@ -177,7 +215,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://cupid.archerlab.dev/index-en" target="_blank" rel="noopener">
+          <a class="hub-card" href="https://cupid.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="게임">
             <img class="hub-thumb" src="assets/images/cupid_link.png?v=2" alt="Cupid Visual Novel" loading="lazy" />
             <div class="hub-body">
               <strong>Cupid</strong>
@@ -185,7 +223,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://chatbot.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="walkwithme">
+          <a class="hub-card" href="https://chatbot.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="walkwithme" data-category="커뮤니티">
             <img class="hub-thumb" src="assets/images/chatbot_link.png?v=2" alt="Mate Chatbot" loading="lazy" />
             <div class="hub-body">
               <strong>Mate</strong>
@@ -193,7 +231,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://game.archerlab.dev/solo-leveling/" target="_blank" rel="noopener">
+          <a class="hub-card" href="https://game.archerlab.dev/solo-leveling/" target="_blank" rel="noopener" data-category="게임">
             <img class="hub-thumb" src="assets/images/solo-leveling_link.png?v=2" alt="Shadow Survival Web Game" loading="lazy" />
             <div class="hub-body">
               <strong>Shadow Survival</strong>
@@ -201,7 +239,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://golf.archerlab.dev/index-en" target="_blank" rel="noopener">
+          <a class="hub-card" href="https://golf.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="유틸">
             <img class="hub-thumb" src="assets/images/golf_link.png?v=2" alt="Golf Swing Master" loading="lazy" />
             <div class="hub-body">
               <strong>Golf Swing Master</strong>
@@ -209,7 +247,7 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://latindance.kr/index-en" target="_blank" rel="noopener">
+          <a class="hub-card" href="https://latindance.kr/index-en" target="_blank" rel="noopener" data-category="유틸">
             <img class="hub-thumb" src="assets/images/latindance_link.png?v=2" alt="Latin Dance Mate" loading="lazy" />
             <div class="hub-body">
               <strong>Latin Dance Mate</strong>
@@ -217,13 +255,22 @@
             </div>
           </a>
 
-          <a class="hub-card" href="https://itstory.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="itstory">
+          <a class="hub-card" href="https://itstory.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="itstory" data-category="정보">
             <img class="hub-thumb" src="assets/images/itstory_link.png?v=2" alt="IT Story Timeline" loading="lazy" />
             <div class="hub-body">
               <strong>IT Story</strong>
               <p>Explore the complete history of IT — computers, the web, operating systems, databases, and networks in interactive timelines.</p>
             </div>
           </a>
+
+          <a class="hub-card" href="https://news.archerlab.dev" target="_blank" rel="noopener" data-category="정보">
+            <img class="hub-thumb" src="assets/images/news_link.png" alt="Daily Hacker News Top 10" loading="lazy" />
+            <div class="hub-body">
+              <strong>Daily Hacker News Top 10</strong>
+              <p>Top 10 Hacker News stories translated and summarized daily. Auto-updated every night at 11 PM KST.</p>
+            </div>
+          </a>
+
         </div>
       </section>
     </main>
@@ -243,6 +290,11 @@
         </nav>
       </div>
     </footer>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <div class="lightbox__backdrop"></div>
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+    </div>
 
     <button type="button" class="scroll-top" data-scroll-top aria-label="Scroll back to top" hidden>↑</button>
     <script src="assets/js/constellation.js" defer></script>
