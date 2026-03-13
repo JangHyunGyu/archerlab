@@ -669,6 +669,61 @@ section {
 	50% { opacity: 0.35; transform: scale(0.65); }
 }
 
+/* ── Like Button (하트) ──────────────────────── */
+.like-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	background: rgba(232, 176, 74, 0.08);
+	border: 1px solid rgba(232, 176, 74, 0.18);
+	border-radius: 100px;
+	padding: 0.25rem 0.7rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-top: 0.6rem;
+}
+
+.like-btn:hover {
+	background: rgba(232, 176, 74, 0.18);
+	border-color: rgba(232, 176, 74, 0.4);
+	transform: scale(1.05);
+}
+
+.like-btn:active {
+	transform: scale(0.95);
+}
+
+.like-heart {
+	font-size: 1rem;
+	color: rgba(232, 176, 74, 0.4);
+	transition: all 0.3s ease;
+	line-height: 1;
+}
+
+.like-btn.liked .like-heart {
+	color: #ff3b5c;
+	filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.5));
+	animation: heart-pop 0.4s ease;
+}
+
+@keyframes heart-pop {
+	0% { transform: scale(1); }
+	30% { transform: scale(1.4); }
+	60% { transform: scale(0.9); }
+	100% { transform: scale(1); }
+}
+
+.like-count {
+	font-size: 0.75rem;
+	color: var(--ink-soft);
+	letter-spacing: 0.02em;
+	min-width: 1ch;
+}
+
+.like-btn.liked .like-count {
+	color: var(--ink);
+}
+
 [data-lightbox] {
 	cursor: zoom-in;
 }
