@@ -54,6 +54,7 @@ html {
 		var(--bg);
 	scrollbar-width: thin;
 	scrollbar-color: rgba(232, 176, 74, 0.25) transparent;
+	scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar {
