@@ -669,28 +669,17 @@ section {
 	50% { opacity: 0.35; transform: scale(0.65); }
 }
 
-/* ── Like Button (하트) ──────────────────────── */
-.like-btn {
+/* ── Like (하트) — 배너 카드 클릭 ──────────────── */
+.hub-card--banner {
+	cursor: pointer;
+}
+
+.like-indicator {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.35rem;
-	background: rgba(232, 176, 74, 0.08);
-	border: 1px solid rgba(232, 176, 74, 0.18);
-	border-radius: 100px;
-	padding: 0.25rem 0.7rem;
-	cursor: pointer;
-	transition: all 0.3s ease;
 	margin-top: 0.6rem;
-}
-
-.like-btn:hover {
-	background: rgba(232, 176, 74, 0.18);
-	border-color: rgba(232, 176, 74, 0.4);
-	transform: scale(1.05);
-}
-
-.like-btn:active {
-	transform: scale(0.95);
+	pointer-events: none;
 }
 
 .like-heart {
@@ -700,7 +689,7 @@ section {
 	line-height: 1;
 }
 
-.like-btn.liked .like-heart {
+.hub-card--banner.liked .like-heart {
 	color: #ff3b5c;
 	filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.5));
 	animation: heart-pop 0.4s ease;
@@ -720,7 +709,7 @@ section {
 	min-width: 1ch;
 }
 
-.like-btn.liked .like-count {
+.hub-card--banner.liked .like-count {
 	color: var(--ink);
 }
 

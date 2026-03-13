@@ -215,16 +215,16 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	/* ── 하트(좋아요) 버튼 ── */
-	const likeBtn = document.getElementById('like-btn');
+	/* ── 하트(좋아요) — 배너 카드 클릭 ── */
+	const bannerCard = document.querySelector('.hub-card--banner');
 	const likeCountEl = document.getElementById('like-count');
-	if (likeBtn && likeCountEl) {
+	if (bannerCard && likeCountEl) {
 		const LIKE_KEY = 'nevergrad_liked';
 		const API = 'https://chatbot-api.yama5993.workers.dev/likes';
 		const headers = { 'Content-Type': 'application/json', 'x-app-id': 'nevergrad' };
 
 		if (localStorage.getItem(LIKE_KEY) === '1') {
-			likeBtn.classList.add('liked');
+			bannerCard.classList.add('liked');
 		}
 
 		fetch(API + '?app_id=nevergrad', { headers })
@@ -232,12 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
 			.then(d => { likeCountEl.textContent = d.count || 0; })
 			.catch(() => {});
 
-		likeBtn.addEventListener('click', async (e) => {
-			e.stopPropagation();
+		bannerCard.addEventListener('click', async (e) => {
+			if (e.target.closest('[data-lightbox]')) return;
+
 			const wasLiked = localStorage.getItem(LIKE_KEY) === '1';
 			const delta = wasLiked ? -1 : 1;
 
-			likeBtn.classList.toggle('liked');
+			bannerCard.classList.toggle('liked');
 			likeCountEl.textContent = Math.max(0, parseInt(likeCountEl.textContent || '0') + delta);
 			localStorage.setItem(LIKE_KEY, wasLiked ? '0' : '1');
 
