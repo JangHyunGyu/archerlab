@@ -472,12 +472,15 @@ section {
 }
 
 @media (min-width: 1440px) {
+	main {
+		max-width: 90vw;
+	}
 	.hub-grid {
 		grid-template-columns: repeat(6, 1fr);
 	}
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1800px) {
 	.hub-grid {
 		grid-template-columns: repeat(8, 1fr);
 	}
