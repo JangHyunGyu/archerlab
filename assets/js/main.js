@@ -200,11 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (lightbox && lightboxImg) {
 		const closeLightbox = () => lightbox.setAttribute('hidden', '');
 
-		document.querySelectorAll('[data-lightbox]').forEach((img) => {
-			img.addEventListener('click', (e) => {
+		document.querySelectorAll('[data-lightbox]').forEach((el) => {
+			el.addEventListener('click', (e) => {
 				e.stopPropagation();
-				lightboxImg.src = img.src;
-				lightboxImg.alt = img.alt;
+				const target = el.tagName === 'IMG' ? el : el.querySelector('img');
+				if (!target) return;
+				lightboxImg.src = target.src;
+				lightboxImg.alt = target.alt;
 				lightbox.removeAttribute('hidden');
 			});
 		});
