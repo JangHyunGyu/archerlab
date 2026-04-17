@@ -423,7 +423,7 @@ section {
 
 /* ── Hub Hero ─────────────────────────────────────── */
 .hub-hero {
-	display: grid;
+	display: none;
 	gap: clamp(1rem, 2vw, 1.4rem);
 	padding: clamp(2rem, 5vw, 4.2rem) 0 clamp(1.2rem, 3vw, 2rem);
 	max-width: 860px;
