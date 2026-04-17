@@ -6,7 +6,6 @@ ArcherLab is a personal dev hub by an indie developer. It combines frontend, bac
 
 ## Projects
 - Cupid: Browser-based visual novel (dating sim) — play instantly, no install needed. 6 languages supported.
-- Harem Mate: AI character chat & roleplay game — interactive conversations with AI characters.
 - HN Top 10: Daily Korean translation/summary of Hacker News top 10 stories.
 - Golf Swing Analyzer: AI-powered golf swing analysis tool.
 - IT History Timeline: Interactive timeline of IT history milestones.
@@ -14,7 +13,6 @@ ArcherLab is a personal dev hub by an indie developer. It combines frontend, bac
 ## Links
 - Main site: https://archerlab.dev
 - Cupid: https://cupid.archerlab.dev
-- Harem Mate: https://harem.archerlab.dev
 - HN News: https://news.archerlab.dev/hn
 
 ## Languages
