@@ -194,6 +194,22 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	/* ── data-href 클릭 핸들러 (AdSense 재검토 중 <a> 대체용) ── */
+	document.querySelectorAll('[data-href]').forEach((el) => {
+		const openTarget = () => window.open(el.dataset.href, '_blank', 'noopener');
+		el.style.cursor = 'pointer';
+		el.addEventListener('click', openTarget);
+		el.addEventListener('auxclick', (e) => {
+			if (e.button === 1) openTarget();
+		});
+		el.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				openTarget();
+			}
+		});
+	});
+
 	/* ── 이미지 라이트박스 ── */
 	const lightbox = document.getElementById('lightbox');
 	const lightboxImg = document.getElementById('lightbox-img');
