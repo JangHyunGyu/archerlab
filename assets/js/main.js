@@ -215,15 +215,25 @@ document.addEventListener("DOMContentLoaded", () => {
 	const lightboxImg = document.getElementById('lightbox-img');
 	if (lightbox && lightboxImg) {
 		const closeLightbox = () => lightbox.setAttribute('hidden', '');
+		const openLightbox = (el, e) => {
+			e.stopPropagation();
+			const target = el.tagName === 'IMG' ? el : el.querySelector('img');
+			if (!target) return;
+			lightboxImg.src = target.src;
+			lightboxImg.alt = target.alt;
+			lightbox.removeAttribute('hidden');
+		};
 
 		document.querySelectorAll('[data-lightbox]').forEach((el) => {
 			el.addEventListener('click', (e) => {
-				e.stopPropagation();
-				const target = el.tagName === 'IMG' ? el : el.querySelector('img');
-				if (!target) return;
-				lightboxImg.src = target.src;
-				lightboxImg.alt = target.alt;
-				lightbox.removeAttribute('hidden');
+				openLightbox(el, e);
+			});
+
+			el.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					openLightbox(el, e);
+				}
 			});
 		});
 
