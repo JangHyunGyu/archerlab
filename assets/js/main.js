@@ -165,6 +165,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	syncExternalLanguageLinks();
 
+	const enableImageClickBursts = () => {
+		const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+		if (reduceMotion) {
+			return;
+		}
+
+		const interactiveSelector = [
+			"a",
+			"button",
+			"[role='button']",
+			".hub-card",
+			".lang-dropdown__item"
+		].join(",");
+
+		document.addEventListener("pointerdown", (event) => {
+			if (event.button !== 0 || !(event.target instanceof Element)) {
+				return;
+			}
+
+			const target = event.target.closest(interactiveSelector);
+			if (!target || target.closest(".lightbox")) {
+				return;
+			}
+
+			const burst = document.createElement("span");
+			burst.className = "ui-click-burst";
+			burst.style.left = `${event.clientX}px`;
+			burst.style.top = `${event.clientY}px`;
+			document.body.appendChild(burst);
+			burst.addEventListener("animationend", () => burst.remove(), { once: true });
+		}, { passive: true });
+	};
+
+	enableImageClickBursts();
+
 	// 푸터 연도를 채울 span 요소를 id로 선택합니다.
 	const yearEl = document.getElementById("year");
 	// 요소가 존재하는 경우에만 값을 업데이트해 오류를 방지합니다.
