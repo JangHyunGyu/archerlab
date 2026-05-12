@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	/* ── data-href 클릭 핸들러 (AdSense 재검토 중 <a> 대체용) ── */
+	/* ── data-href 클릭 핸들러 ── */
 	document.querySelectorAll('[data-href]').forEach((el) => {
 		const openTarget = () => window.open(el.dataset.href, '_blank', 'noopener');
 		el.style.cursor = 'pointer';
