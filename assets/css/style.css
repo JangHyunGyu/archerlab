@@ -894,6 +894,8 @@ section {
 	display: grid;
 	gap: 0.3rem;
 	align-content: center;
+	justify-items: start;
+	min-width: 0;
 	position: relative;
 	z-index: 2;
 	background: linear-gradient(
@@ -971,6 +973,8 @@ section {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.4rem;
+	width: fit-content;
+	justify-self: start;
 	background: rgba(232, 176, 74, 0.12);
 	border: 1px solid rgba(232, 176, 74, 0.38);
 	color: var(--accent);
