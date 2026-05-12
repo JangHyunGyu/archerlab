@@ -40,10 +40,11 @@
 	--glow-candle: 0 0 60px rgba(232, 176, 74, 0.15), 0 0 120px rgba(212, 149, 58, 0.08);
 
 	/* Image UI assets */
-	--ui-surface-img: url("../images/ui/archerlab-ui-surface.webp");
-	--ui-frame-img: url("../images/ui/archerlab-ui-frame.webp");
-	--ui-hover-img: url("../images/ui/archerlab-ui-hover-glow.webp");
-	--ui-click-img: url("../images/ui/archerlab-ui-click-burst.webp");
+	--ui-surface-img: url("../images/ui/archerlab-ui-surface-v2.webp");
+	--ui-frame-img: url("../images/ui/archerlab-ui-frame-v2.webp");
+	--ui-hover-img: url("../images/ui/archerlab-ui-hover-glow-v2.webp");
+	--ui-click-img: url("../images/ui/archerlab-ui-click-burst-v2.webp");
+	--icon-check-img: url("../images/ui/icons/icon-check.svg");
 }
 
 * {
@@ -236,7 +237,9 @@ header {
 }
 
 .lang-dropdown__icon {
-	color: var(--accent);
+	width: 1.125rem;
+	height: 1.125rem;
+	display: block;
 	flex-shrink: 0;
 }
 
@@ -331,15 +334,20 @@ header {
 }
 
 .lang-dropdown__item.active::after {
-	content: "✓";
+	content: "";
 	margin-left: auto;
-	font-size: 0.85rem;
-	color: var(--accent);
+	width: 1rem;
+	height: 1rem;
+	background: var(--icon-check-img) center / contain no-repeat;
+	flex-shrink: 0;
 }
 
 .lang-dropdown__flag {
-	font-size: 1.15rem;
-	line-height: 1;
+	width: 1.6rem;
+	height: 1.2rem;
+	display: block;
+	flex-shrink: 0;
+	filter: drop-shadow(0 0 8px rgba(232, 176, 74, 0.16));
 }
 
 /* ── 4. CTA & Ghost Buttons ───────────────────────── */
@@ -1780,11 +1788,22 @@ footer::before {
 	content: "";
 	position: absolute;
 	inset: -85%;
+	z-index: 0;
 	background: var(--ui-hover-img) center / cover no-repeat;
 	mix-blend-mode: screen;
 	opacity: 0.38;
 	transition: opacity 0.22s ease, transform 0.28s ease;
 	pointer-events: none;
+}
+
+.scroll-top__icon {
+	position: relative;
+	z-index: 1;
+	width: 1.35rem;
+	height: 1.35rem;
+	display: block;
+	pointer-events: none;
+	filter: drop-shadow(0 0 8px rgba(232, 176, 74, 0.32));
 }
 
 .scroll-top:is(:hover, :focus-visible) {

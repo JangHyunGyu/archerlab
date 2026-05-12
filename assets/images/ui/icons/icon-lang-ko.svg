@@ -1,0 +1,5 @@
+<svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="30" height="22" rx="4" fill="#0A0C14" stroke="#D4953A" stroke-width="1.4"/>
+  <path d="M5 6.5h22M5 17.5h22" stroke="#D4953A" stroke-width=".8" opacity=".38"/>
+  <text x="16" y="15.2" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="8.8" font-weight="800" letter-spacing="1.1" fill="#F5DEB3">KO</text>
+</svg>
