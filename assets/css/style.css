@@ -44,7 +44,7 @@
 	--ui-frame-img: url("../images/ui/archerlab-ui-frame-v2.webp");
 	--ui-hover-img: url("../images/ui/archerlab-ui-hover-glow-v2.webp");
 	--ui-click-img: url("../images/ui/archerlab-ui-click-burst-v2.webp");
-	--icon-check-img: url("../images/ui/icons/icon-check.svg");
+	--icon-check-img: url("../images/ui/icons/icon-check.webp");
 }
 
 * {
@@ -343,11 +343,12 @@ header {
 }
 
 .lang-dropdown__flag {
-	width: 1.6rem;
-	height: 1.2rem;
+	width: 1.35rem;
+	height: 1.35rem;
 	display: block;
 	flex-shrink: 0;
 	filter: drop-shadow(0 0 8px rgba(232, 176, 74, 0.16));
+	border-radius: 50%;
 }
 
 /* ── 4. CTA & Ghost Buttons ───────────────────────── */
