@@ -931,10 +931,11 @@ section {
 
 /* ── Nevergrad Banner Card ────────────────── */
 .hub-card--banner {
-	grid-column: 1 / -1;
-	grid-template-columns: 280px 1fr;
-	grid-template-rows: 1fr;
+	grid-column: span 2;
+	grid-template-columns: minmax(170px, 42%) minmax(0, 1fr);
+	grid-template-rows: auto;
 	align-items: center;
+	min-height: 224px;
 	cursor: pointer;
 	border-color: rgba(232, 176, 74, 0.22);
 	background:
@@ -948,9 +949,9 @@ section {
 
 .hub-card--banner::before {
 	background:
-		var(--ui-frame-img) center / 100% 100% no-repeat,
+		linear-gradient(90deg, rgba(245, 222, 179, 0.14), transparent 54%),
 		var(--ui-hover-img) center / 120% 80% no-repeat;
-	opacity: 0.3;
+	opacity: 0.18;
 }
 
 .hub-card--banner::after {
@@ -961,12 +962,33 @@ section {
 	transform: none;
 }
 
-.hub-banner-img {
-	width: 280px;
-	height: 280px;
-	object-fit: contain;
-	border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+.hub-card--banner picture {
+	align-self: stretch;
+	display: block;
+	overflow: hidden;
 	background: linear-gradient(135deg, #080b18 0%, #0e1226 100%);
+}
+
+.hub-banner-img {
+	width: 100%;
+	height: 100%;
+	min-height: 224px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+	background: transparent;
+}
+
+.hub-card--banner .hub-body {
+	min-height: 224px;
+	padding: 1.35rem 1.5rem;
+	justify-content: center;
+}
+
+@media (min-width: 1440px) {
+	.hub-card--banner {
+		grid-column: span 3;
+	}
 }
 
 .hub-banner-badge {
@@ -2123,14 +2145,20 @@ body::after {
 	}
 
 	.hub-card--banner {
+		grid-column: 1 / -1;
 		grid-template-columns: 100px 1fr;
 		min-height: unset;
 	}
 
 	.hub-card--banner .hub-banner-img {
-		width: 100px;
-		height: 100px;
+		width: 100%;
+		height: 100%;
+		min-height: 100%;
 		border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+	}
+
+	.hub-card--banner .hub-body {
+		min-height: unset;
 	}
 
 	.hub-card::after {
@@ -2232,8 +2260,9 @@ body::after {
 	}
 
 	.hub-card--banner .hub-banner-img {
-		width: 80px;
-		height: 80px;
+		width: 100%;
+		height: 100%;
+		min-height: 100%;
 	}
 
 	.hub-card .hub-thumb {
