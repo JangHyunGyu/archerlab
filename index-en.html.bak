@@ -272,7 +272,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+      href="assets/vendor/pretendard/pretendard.css"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
