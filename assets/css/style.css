@@ -1141,12 +1141,6 @@ body.app-launcher-open {
 	display: none;
 }
 
-.app-launcher:fullscreen {
-	width: 100vw;
-	height: 100vh;
-	background: #000;
-}
-
 .app-launcher__frame {
 	width: 100%;
 	height: 100%;

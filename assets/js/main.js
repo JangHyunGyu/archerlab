@@ -257,27 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		return event.button === undefined || event.button === 0;
 	};
 
-	const requestLauncherFullscreen = (launcher) => {
-		if (!launcher) {
-			return;
-		}
-		try {
-			let result = null;
-			if (launcher.requestFullscreen) {
-				result = launcher.requestFullscreen({ navigationUI: "hide" });
-			} else if (launcher.webkitRequestFullscreen) {
-				result = launcher.webkitRequestFullscreen();
-			} else if (launcher.msRequestFullscreen) {
-				result = launcher.msRequestFullscreen();
-			}
-			if (result && typeof result.catch === "function") {
-				result.catch(() => {});
-			}
-		} catch (error) {
-			// Fullscreen is best effort; the fixed launcher still works when the browser refuses it.
-		}
-	};
-
 	const closeAppLauncher = (launcher, options = {}) => {
 		if (!launcher) {
 			return;
@@ -288,18 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		launcher.setAttribute("hidden", "");
 		document.body.classList.remove("app-launcher-open");
-		const activeFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-		if (activeFullscreen === launcher) {
-			const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
-			try {
-				const result = exitFullscreen?.call(document);
-				if (result && typeof result.catch === "function") {
-					result.catch(() => {});
-				}
-			} catch (error) {
-				// Ignore exit failures; the launcher has already been hidden.
-			}
-		}
 		if (!options.fromHistory && launcherHistoryActive) {
 			launcherHistoryActive = false;
 			history.back();
@@ -317,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		launcher.className = "app-launcher";
 		launcher.setAttribute("hidden", "");
 		launcher.innerHTML = `
-			<iframe class="app-launcher__frame" title="ArcherLab app launcher" allow="accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; fullscreen; gamepad; gyroscope; microphone; camera; payment; screen-wake-lock; xr-spatial-tracking" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+			<iframe class="app-launcher__frame" title="ArcherLab app launcher" allow="accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; gamepad; gyroscope; microphone; camera; payment; screen-wake-lock; xr-spatial-tracking" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 		`;
 
 		document.addEventListener("keydown", (event) => {
@@ -365,8 +332,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		launcher.removeAttribute("hidden");
 		document.body.classList.add("app-launcher-open");
-
-		requestLauncherFullscreen(launcher);
 
 		if (frame) {
 			frame.src = url;
