@@ -229,11 +229,165 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	let launcherHistoryActive = false;
+
+	const isMobileLauncherViewport = () => {
+		const coarsePointer = window.matchMedia?.("(pointer: coarse)")?.matches;
+		const narrowViewport = window.matchMedia?.("(max-width: 820px)")?.matches;
+		return Boolean(coarsePointer || narrowViewport);
+	};
+
+	const getHubTargetUrl = (el) => {
+		if (!el) {
+			return "";
+		}
+		if (el.dataset?.href) {
+			return el.dataset.href;
+		}
+		return el.href || "";
+	};
+
+	const isPlainPrimaryClick = (event) => {
+		if (!event) {
+			return true;
+		}
+		if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+			return false;
+		}
+		return event.button === undefined || event.button === 0;
+	};
+
+	const requestLauncherFullscreen = (launcher) => {
+		if (!launcher) {
+			return;
+		}
+		try {
+			let result = null;
+			if (launcher.requestFullscreen) {
+				result = launcher.requestFullscreen({ navigationUI: "hide" });
+			} else if (launcher.webkitRequestFullscreen) {
+				result = launcher.webkitRequestFullscreen();
+			} else if (launcher.msRequestFullscreen) {
+				result = launcher.msRequestFullscreen();
+			}
+			if (result && typeof result.catch === "function") {
+				result.catch(() => {});
+			}
+		} catch (error) {
+			// Fullscreen is best effort; the fixed launcher still works when the browser refuses it.
+		}
+	};
+
+	const closeAppLauncher = (launcher, options = {}) => {
+		if (!launcher) {
+			return;
+		}
+		const frame = launcher.querySelector(".app-launcher__frame");
+		if (frame) {
+			frame.src = "about:blank";
+		}
+		launcher.setAttribute("hidden", "");
+		document.body.classList.remove("app-launcher-open");
+		const activeFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+		if (activeFullscreen === launcher) {
+			const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+			try {
+				const result = exitFullscreen?.call(document);
+				if (result && typeof result.catch === "function") {
+					result.catch(() => {});
+				}
+			} catch (error) {
+				// Ignore exit failures; the launcher has already been hidden.
+			}
+		}
+		if (!options.fromHistory && launcherHistoryActive) {
+			launcherHistoryActive = false;
+			history.back();
+		}
+	};
+
+	const ensureAppLauncher = () => {
+		let launcher = document.getElementById("app-launcher");
+		if (launcher) {
+			return launcher;
+		}
+
+		launcher = document.createElement("div");
+		launcher.id = "app-launcher";
+		launcher.className = "app-launcher";
+		launcher.setAttribute("hidden", "");
+		launcher.innerHTML = `
+			<iframe class="app-launcher__frame" title="ArcherLab app launcher" allow="accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; fullscreen; gamepad; gyroscope; microphone; camera; payment; screen-wake-lock; xr-spatial-tracking" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+		`;
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape" && !launcher.hasAttribute("hidden")) {
+				closeAppLauncher(launcher);
+			}
+		});
+
+		window.addEventListener("popstate", () => {
+			if (!launcher.hasAttribute("hidden") && launcherHistoryActive) {
+				launcherHistoryActive = false;
+				closeAppLauncher(launcher, { fromHistory: true });
+			}
+		});
+
+		document.body.appendChild(launcher);
+		return launcher;
+	};
+
+	const launchLinkedApp = (el, event) => {
+		if (!isMobileLauncherViewport() || !isPlainPrimaryClick(event)) {
+			return false;
+		}
+
+		const url = getHubTargetUrl(el);
+		if (!url) {
+			return false;
+		}
+
+		event?.preventDefault?.();
+		const launcher = ensureAppLauncher();
+		const frame = launcher.querySelector(".app-launcher__frame");
+		if (frame) {
+			frame.src = "about:blank";
+		}
+
+		if (!launcherHistoryActive) {
+			try {
+				history.pushState({ appLauncher: true }, "", window.location.href);
+				launcherHistoryActive = true;
+			} catch (error) {
+				launcherHistoryActive = false;
+			}
+		}
+
+		launcher.removeAttribute("hidden");
+		document.body.classList.add("app-launcher-open");
+
+		requestLauncherFullscreen(launcher);
+
+		if (frame) {
+			frame.src = url;
+		}
+		return true;
+	};
+
+	document.querySelectorAll('.hub-card[href]').forEach((el) => {
+		el.addEventListener('click', (event) => {
+			launchLinkedApp(el, event);
+		});
+	});
+
 	/* ── data-href 클릭 핸들러 ── */
 	document.querySelectorAll('[data-href]').forEach((el) => {
 		const openTarget = () => window.open(el.dataset.href, '_blank', 'noopener');
 		el.style.cursor = 'pointer';
 		el.addEventListener('click', (event) => {
+			if (launchLinkedApp(el, event)) {
+				return;
+			}
 			openTarget();
 		});
 		el.addEventListener('auxclick', (e) => {
@@ -242,6 +396,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		el.addEventListener('keydown', (e) => {
 			if (e.key === 'Enter' || e.key === ' ') {
 				e.preventDefault();
+				if (launchLinkedApp(el, e)) {
+					return;
+				}
 				openTarget();
 			}
 		});
