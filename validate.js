@@ -37,6 +37,7 @@ const requiredFiles = [
   'sitemap.xml',
   'robots.txt',
   'favicon.svg',
+  'site.webmanifest',
   'ads.txt',
   'llms.txt',
   'assets/css/style.css',
@@ -48,6 +49,11 @@ const requiredFiles = [
   'assets/images/archerlab_mini_logo.png',
   'assets/images/archerlab_full_logo.png',
   'assets/images/archerlab_logo.png',
+  'assets/images/archerlab_favicon_16.png',
+  'assets/images/archerlab_favicon_32.png',
+  'assets/images/archerlab_favicon_180.png',
+  'assets/images/archerlab_favicon_192.png',
+  'assets/images/archerlab_favicon_512.png',
 ];
 
 for (const f of requiredFiles) {

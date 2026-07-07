@@ -1,11 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ArcherLab mark">
 	<defs>
-		<linearGradient id="grad" x1="0%" y1="100%" x2="100%" y2="0%">
-			<stop offset="0%" stop-color="#0b0d17" />
-			<stop offset="100%" stop-color="#1f2937" />
+		<radialGradient id="bg" cx="50%" cy="46%" r="58%">
+			<stop offset="0%" stop-color="#05070c" />
+			<stop offset="100%" stop-color="#000000" />
+		</radialGradient>
+		<linearGradient id="lavender" x1="16%" y1="88%" x2="88%" y2="14%">
+			<stop offset="0%" stop-color="#a855f7" />
+			<stop offset="100%" stop-color="#f5d0fe" />
 		</linearGradient>
+		<linearGradient id="violet" x1="8%" y1="50%" x2="92%" y2="50%">
+			<stop offset="0%" stop-color="#7c3aed" />
+			<stop offset="55%" stop-color="#c026d3" />
+			<stop offset="100%" stop-color="#e879f9" />
+		</linearGradient>
+		<filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+			<feGaussianBlur stdDeviation="1.6" result="blur" />
+			<feMerge>
+				<feMergeNode in="blur" />
+				<feMergeNode in="SourceGraphic" />
+			</feMerge>
+		</filter>
 	</defs>
-	<rect width="64" height="64" rx="12" fill="url(#grad)" />
-	<path d="M18 47l14-30 14 30h-7l-7-16-7 16z" fill="#38bdf8" />
-	<path d="M28 37h8l-4 10z" fill="#f9fafb" />
+	<rect width="64" height="64" rx="12" fill="url(#bg)" />
+	<path d="M15 55 31.4 8h7.5l16.3 47h-9.4L35 21.4 29.6 36h8.6l2.8 8.1H26.6L22.9 55z" fill="url(#lavender)" filter="url(#glow)" />
+	<path d="M6 28.8h39v-6.2L61 32 45 41.4v-6.2H6z" fill="url(#violet)" filter="url(#glow)" />
+	<path d="M2.8 32 11.2 24h9.1L14 32l6.3 8h-9.1z" fill="url(#violet)" filter="url(#glow)" />
 </svg>
