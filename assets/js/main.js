@@ -213,11 +213,16 @@ document.addEventListener("DOMContentLoaded", () => {
 	const hubCards = document.querySelectorAll('.hub-card');
 
 	tabBtns.forEach((btn) => {
+		btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
 		btn.addEventListener('click', () => {
 			const tab = btn.dataset.tab;
 
-			tabBtns.forEach((b) => b.classList.remove('active'));
+			tabBtns.forEach((b) => {
+				b.classList.remove('active');
+				b.setAttribute('aria-pressed', 'false');
+			});
 			btn.classList.add('active');
+			btn.setAttribute('aria-pressed', 'true');
 
 			hubCards.forEach((card) => {
 				if (tab === 'all' || card.dataset.category === tab) {
