@@ -158,7 +158,6 @@ body > header {
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-height: 42px;
   color: var(--text);
   font-family: var(--font-display);
@@ -167,16 +166,6 @@ body > header {
   line-height: 1;
   letter-spacing: -0.035em;
   transition: opacity 160ms ease;
-}
-
-.logo::before {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  content: "";
-  border-radius: 50%;
-  background: url("../images/archerlab_mini_logo.png") center / cover no-repeat;
-  box-shadow: 0 0 22px rgba(208, 160, 91, 0.12);
 }
 
 .logo:hover {
@@ -809,14 +798,7 @@ body.app-launcher-open {
   }
 
   .logo {
-    gap: 8px;
     font-size: 16px;
-  }
-
-  .logo::before {
-    width: 29px;
-    height: 29px;
-    flex-basis: 29px;
   }
 
   .lang-dropdown__toggle {
