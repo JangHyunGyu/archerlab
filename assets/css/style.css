@@ -319,18 +319,20 @@ main {
   height: 37px;
   padding: 0 16px;
   cursor: pointer;
+  border: 1px solid transparent;
   border-radius: 9px;
-  color: var(--muted);
-  background: transparent;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.018);
   font-size: 13px;
   font-weight: 650;
   letter-spacing: -0.02em;
-  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .tab-btn:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(213, 179, 116, 0.14);
+  background: rgba(213, 179, 116, 0.07);
 }
 
 .tab-btn:active {
@@ -338,9 +340,10 @@ main {
 }
 
 .tab-btn.active {
-  color: #17110a;
-  background: linear-gradient(135deg, #c99148, #efd49b);
-  box-shadow: 0 7px 24px rgba(208, 160, 91, 0.18), inset 0 1px rgba(255, 255, 255, 0.38);
+  color: #f5e8ce;
+  border-color: rgba(226, 192, 128, 0.42);
+  background: linear-gradient(135deg, rgba(185, 125, 59, 0.32), rgba(226, 192, 128, 0.16));
+  box-shadow: 0 5px 16px rgba(208, 160, 91, 0.09), inset 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .hub-grid {
@@ -428,33 +431,38 @@ main {
 .hub-body {
   position: relative;
   display: flex;
-  min-height: 132px;
+  min-height: 154px;
   padding: 19px 20px 20px;
   flex-direction: column;
 }
 
 .hub-body strong {
-  display: block;
+  display: -webkit-box;
   overflow: hidden;
   color: var(--text);
   font-size: clamp(16px, 1.15vw, 19px);
   font-weight: 680;
   line-height: 1.35;
   letter-spacing: -0.035em;
-  text-overflow: ellipsis;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .hub-body p {
   display: -webkit-box;
   margin: 8px 0 0;
   overflow: hidden;
-  color: var(--muted);
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 14px;
   font-weight: 430;
-  line-height: 1.62;
+  line-height: 1.65;
   letter-spacing: -0.012em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .hub-card[hidden] {
@@ -750,7 +758,7 @@ body.app-launcher-open {
   }
 
   .hub-body {
-    min-height: 126px;
+    min-height: 148px;
   }
 }
 
@@ -812,7 +820,7 @@ body.app-launcher-open {
   }
 
   .hub-card {
-    min-height: 116px;
+    min-height: 138px;
     flex-direction: row;
   }
 
@@ -829,20 +837,19 @@ body.app-launcher-open {
   .hub-body {
     justify-content: center;
     min-width: 0;
-    min-height: 114px;
-    padding: 15px;
+    min-height: 136px;
+    padding: 14px 15px;
   }
 
   .hub-body strong {
     font-size: 15px;
-    white-space: nowrap;
   }
 
   .hub-body p {
     margin-top: 6px;
-    font-size: 12px;
-    line-height: 1.55;
-    -webkit-line-clamp: 2;
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-line-clamp: 3;
   }
 
   .footer-simple {
@@ -879,13 +886,22 @@ body.app-launcher-open {
 }
 
 @media (max-width: 380px) {
+  .hub-card {
+    min-height: 158px;
+  }
+
   .hub-card picture {
     width: 106px;
     flex-basis: 106px;
   }
 
   .hub-body {
+    min-height: 156px;
     padding-left: 13px;
+  }
+
+  .hub-body p {
+    -webkit-line-clamp: 4;
   }
 }
 
