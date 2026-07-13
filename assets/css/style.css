@@ -378,29 +378,6 @@ main {
   transition: opacity 240ms ease, filter 240ms ease;
 }
 
-.hub-card::after {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  content: "↗";
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 50%;
-  opacity: 0;
-  color: #17110a;
-  background: linear-gradient(135deg, #e4bd7c, #f6e5bd);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-  font-family: var(--font-display);
-  font-size: 15px;
-  line-height: 1;
-  transform: translateY(6px);
-  transition: opacity 200ms ease, transform 240ms var(--ease);
-}
-
 .hub-card:hover {
   z-index: 2;
   border-color: var(--line-strong);
@@ -415,11 +392,6 @@ main {
 .hub-card:hover::before {
   opacity: 0.76;
   filter: brightness(1.12);
-}
-
-.hub-card:hover::after {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .hub-card picture {
@@ -844,22 +816,6 @@ body.app-launcher-open {
     flex-direction: row;
   }
 
-  .hub-card::after {
-    top: auto;
-    right: 12px;
-    bottom: 12px;
-    width: 29px;
-    height: 29px;
-    opacity: 1;
-    z-index: 5;
-    color: #17110a;
-    border-color: rgba(239, 212, 155, 0.52);
-    background: linear-gradient(135deg, #d8aa66, #f0d8a7);
-    box-shadow: none;
-    font-size: 13px;
-    transform: none;
-  }
-
   .hub-card:hover {
     transform: translateY(-2px);
   }
@@ -874,7 +830,7 @@ body.app-launcher-open {
     justify-content: center;
     min-width: 0;
     min-height: 114px;
-    padding: 15px 44px 15px 15px;
+    padding: 15px;
   }
 
   .hub-body strong {
