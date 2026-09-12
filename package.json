@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "build": "node tools/build-site.cjs",
-    "test": "node validate.js && npm run build"
+    "test": "node tests/browser-check.test.cjs && node validate.js && npm run build"
   }
 }
