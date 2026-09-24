@@ -1,50 +1,463 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ArcherLab - Web Dev Side Project Hub</title>
-<link rel="canonical" href="https://archerlab.dev/index-en" />
-</head>
-<body>
-<header>
-  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a></p>
-  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer">https://twelve.tools</a></p>
-</header>
-<main id="app"><p>Loading…</p></main>
-<footer style="margin:24px 12px">
-  <a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>
-</footer>
-<script>
-fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae22d8b6ba2d95236719/index-en.html")
-  .then(function (r) { return r.text(); })
-  .then(function (html) {
-    var doc = new DOMParser().parseFromString(html, "text/html");
-    var remoteMain = doc.querySelector("main") || doc.body;
-    var app = document.getElementById("app");
-    if (app && remoteMain) {
-      app.innerHTML = "";
-      Array.from(remoteMain.childNodes).forEach(function (n) {
-        app.appendChild(document.importNode(n, true));
-      });
-      Array.from(doc.head.querySelectorAll("link,style")).forEach(function (el) {
-        document.head.appendChild(document.importNode(el, true));
-      });
-      Array.from(doc.querySelectorAll("script[src]")).forEach(function (el) {
-        var s = document.createElement("script");
-        s.src = el.src;
-        if (el.defer) s.defer = true;
-        document.body.appendChild(s);
-      });
-      var importedFoot = app.querySelector(".footer-simple");
-      if (importedFoot && !importedFoot.querySelector('[href="https://twelve.tools"]')) {
-        var nav = document.createElement("nav");
-        nav.innerHTML = '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>';
-        importedFoot.appendChild(nav);
+  <head>
+    <script src="assets/js/browser-check.js?v=1.1.0" defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW5fb25seSI6dHJ1ZX0=">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <title>ArcherLab - Web Dev Side Project Hub</title>
+    <meta
+      name="description"
+      content="ArcherLab is a personal dev hub combining frontend, backend, and AI to build prototypes and log experiments. 19 side projects and counting."
+    />
+    <meta name="naver-site-verification" content="20c0036e816e482c099dd4396e7a79fb66b03d7a" />
+    <meta name="naver-site-verification" content="f8672a0a716a4b201186cafdab40fd24359bcb45" />
+    <meta name="keywords" content="web developer side project ideas 2026, coding portfolio examples showcase, frontend project ideas beginner collection, toy project ideas for developers, self taught developer portfolio site, HTML CSS JS project examples free, indie web developer projects, side project inspiration programmers, browser game developer showcase, ArcherLab" />
+    <meta property="og:title" content="ArcherLab - Web Dev Side Project Hub" />
+    <meta
+      property="og:description"
+      content="AI chatbot, golf swing analyzer, visual novel games, IT history timeline and more — explore side projects built with web tech."
+    />
+    <link rel="canonical" href="https://archerlab.dev/index-en" />
+    <link rel="alternate" hreflang="ko" href="https://archerlab.dev/" />
+    <link rel="alternate" hreflang="en" href="https://archerlab.dev/index-en" />
+    <link rel="alternate" hreflang="x-default" href="https://archerlab.dev/index-en" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/archerlab_favicon_32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/archerlab_favicon_16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/archerlab_favicon_180.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MTBCHM8DYM"></script>
+    <script src="assets/js/ga.js?v=20260403"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://archerlab.dev/index-en#organization",
+            "name": "ArcherLab",
+            "url": "https://archerlab.dev/index-en",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://archerlab.dev/assets/images/archerlab_favicon_512.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://itstory.archerlab.dev/index-en",
+              "https://chatbot.archerlab.dev/index-en",
+              "https://github.com/JangHyunGyu"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hyungyu@archerlab.dev",
+              "availableLanguage": ["ko", "en"]
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://archerlab.dev/index-en#founder",
+            "name": "Hyungyu Jang",
+            "alternateName": "Jang Hyungyu",
+            "url": "https://archerlab.dev/index-en",
+            "sameAs": ["https://github.com/JangHyunGyu"],
+            "worksFor": { "@id": "https://archerlab.dev/index-en#organization" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://archerlab.dev/index-en#website",
+            "url": "https://archerlab.dev/index-en",
+            "name": "ArcherLab",
+            "description": "ArcherLab is a prototype lab built on the motto 'Logic × Design, in Practice,' documenting builds, notes, and tooling.",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://archerlab.dev/index-en#organization" },
+            "creator": { "@id": "https://archerlab.dev/index-en#founder" }
+          },
+          {
+            "@type": ["WebPage", "CollectionPage"],
+            "@id": "https://archerlab.dev/index-en#home",
+            "url": "https://archerlab.dev/index-en",
+            "name": "ArcherLab Home Hub",
+            "inLanguage": "en",
+            "isPartOf": { "@id": "https://archerlab.dev/index-en#website" },
+            "publisher": { "@id": "https://archerlab.dev/index-en#organization" },
+            "breadcrumb": { "@id": "https://archerlab.dev/index-en#breadcrumb" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://archerlab.dev/index-en#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ArcherLab", "item": "https://archerlab.dev/index-en" }
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://archerlab.dev/index-en#sections",
+            "name": "ArcherLab project highlights",
+            "itemListOrder": "http://schema.org/ItemListOrderAscending",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "LUMEN SHIFT", "url": "https://game.archerlab.dev/lumen-shift/" } },
+              { "@type": "ListItem", "position": 2, "item": { "@type": "VideoGame", "name": "Jelly Pang!", "url": "https://game.archerlab.dev/jelly-pang-2048/" } },
+              { "@type": "ListItem", "position": 3, "item": { "@type": "VideoGame", "name": "School Zombie Defense", "url": "https://game.archerlab.dev/school-zombie-defense/" } },
+              { "@type": "ListItem", "position": 4, "item": { "@type": "VideoGame", "name": "Jewelria", "url": "https://game.archerlab.dev/jewelria/" } },
+              { "@type": "ListItem", "position": 5, "item": { "@type": "VideoGame", "name": "Parking Escape", "url": "https://game.archerlab.dev/parking-escape/" } },
+              { "@type": "ListItem", "position": 6, "item": { "@type": "VideoGame", "name": "Nevergrad", "url": "https://nevergrad.archerlab.dev/en/" } },
+              { "@type": "ListItem", "position": 7, "item": { "@type": "VideoGame", "name": "Cat Tower", "url": "https://game.archerlab.dev/cat-tower/" } },
+              { "@type": "ListItem", "position": 8, "item": { "@type": "WebApplication", "name": "Karma", "url": "https://karma.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 9, "item": { "@type": "VideoGame", "name": "Slime Volley", "url": "https://game.archerlab.dev/slimevolley/" } },
+              { "@type": "ListItem", "position": 10, "item": { "@type": "VideoGame", "name": "Blockpang", "url": "https://game.archerlab.dev/blockpang/" } },
+              { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "Harem Mate", "url": "https://harem.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 12, "item": { "@type": "VideoGame", "name": "Cupid Visual Novel", "url": "https://cupid.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "Walk with me", "url": "https://chatbot.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 14, "item": { "@type": "VideoGame", "name": "Shadow Survival", "url": "https://game.archerlab.dev/solo-leveling/" } },
+              { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Golf Swing Master", "url": "https://golf.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 16, "item": { "@type": "WebSite", "name": "Latin Dance Mate", "url": "https://latindance.kr/index-en" } },
+              { "@type": "ListItem", "position": 17, "item": { "@type": "CreativeWork", "name": "IT Story Timeline", "url": "https://itstory.archerlab.dev/index-en" } },
+              { "@type": "ListItem", "position": 18, "item": { "@type": "WebApplication", "name": "HN Top 10", "url": "https://news.archerlab.dev/hn" } },
+              { "@type": "ListItem", "position": 19, "item": { "@type": "WebApplication", "name": "Chat", "url": "https://chat.archerlab.dev/" } }
+            ]
+          }
+        ]
       }
-    }
-  })
-  .catch(function () {});
-</script>
-</body>
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://archerlab.dev/index-en" />
+    <meta property="og:image" content="https://archerlab.dev/assets/images/archerlab_kakao.png" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="ArcherLab" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ArcherLab - Web Dev Side Project Hub" />
+    <meta name="twitter:description" content="AI chatbot, golf swing analyzer, visual novel games, IT history timeline and more — explore side projects built with web tech." />
+    <meta name="twitter:image" content="https://archerlab.dev/assets/images/archerlab_kakao.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/pretendard/pretendard.css"
+      media="print" onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="assets/vendor/pretendard/pretendard.css"></noscript>
+    <link rel="stylesheet" href="assets/css/style.css?v=20260713-1" />
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js" defer></script>
+  <script src="assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
+      <style>
+      .footer-directories { display:flex; align-items:center; margin-top:10px; }
+      .footer-directories img { display:block; height:38px; width:auto; opacity:0.9; }
+</style>
+  </head>
+  <body>
+    <h1 class="sr-only">ArcherLab - Web Dev Side Project Hub</h1>
+
+    <header>
+      <div class="navbar">
+        <a class="logo" href="#top" aria-label="Move to the top of ArcherLab">
+          ArcherLab
+        </a>
+        <div class="lang-dropdown" data-lang-dropdown>
+          <button type="button" class="lang-dropdown__toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+            <img class="lang-dropdown__icon" src="assets/images/ui/icons/icon-language.webp" alt="" aria-hidden="true" width="18" height="18" />
+            <span class="lang-dropdown__label">English</span>
+            <svg class="lang-dropdown__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="lang-dropdown__menu" role="listbox">
+            <li class="lang-dropdown__item" role="option" aria-selected="false" data-lang-code="ko" data-lang-url="/">
+              <img class="lang-dropdown__flag" src="assets/images/ui/icons/icon-lang-ko.webp" alt="" aria-hidden="true" width="32" height="32" /> 한국어
+            </li>
+            <li class="lang-dropdown__item active" role="option" aria-selected="true" data-lang-code="en" data-lang-url="index-en">
+              <img class="lang-dropdown__flag" src="assets/images/ui/icons/icon-lang-en.webp" alt="" aria-hidden="true" width="32" height="32" /> English
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="projects" aria-label="Project list">
+
+        <div class="hub-hero">
+          <span class="hub-hero__tag">Logic × Design, in Practice</span>
+          <h2 class="hub-hero__title">
+            <span>Prototyping ideas,</span>
+            <span>documenting experiments.</span>
+          </h2>
+          <p class="hub-hero__desc">
+            19 side projects by one developer — from frontend tinkering to AI experiments, all shipped and logged.
+          </p>
+          <div class="hub-hero__meta">
+            <span><strong>19</strong>Projects</span>
+            <span><strong>5</strong>Categories</span>
+            <span><strong>2026</strong>Active</span>
+          </div>
+        </div>
+
+        <nav class="tab-bar" aria-label="Category filter">
+          <button type="button" class="tab-btn active" data-tab="all">All</button>
+          <button type="button" class="tab-btn" data-tab="게임">Games</button>
+          <button type="button" class="tab-btn" data-tab="커뮤니티">Community</button>
+          <button type="button" class="tab-btn" data-tab="유틸">Utilities</button>
+          <button type="button" class="tab-btn" data-tab="정보">Info</button>
+        </nav>
+
+        <div class="hub-grid">
+          <a class="hub-card" href="https://game.archerlab.dev/lumen-shift/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/lumen-shift-link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/lumen-shift-link.png?v=3" alt="LUMEN SHIFT luminous block puzzle game" width="1280" height="1280" loading="eager" fetchpriority="high" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>LUMEN SHIFT</strong>
+              <p>An immersive block puzzle where luminous particle stages react to line clears, drops, and rhythm pulses.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/jelly-pang-2048/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/jelly-pang-main-link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/jelly-pang-main-link.png?v=1" alt="Jelly Pang jelly merge puzzle game" width="1024" height="1024" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>Jelly Pang!</strong>
+              <p>Slide squishy jellies, merge matching ranks, and chase the Hall of Fame in this merge puzzle.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/school-zombie-defense/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/school-zombie-defense_link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/school-zombie-defense_link.png?v=1" alt="School Zombie Defense browser defense shooter" width="1254" height="1254" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>School Zombie Defense</strong>
+              <p>Recruit student defenders and hold the ruined school hallway against waves of zombies.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/jewelria/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/jewelria_link.webp?v=2" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/jewelria_link.png?v=2" alt="Jewelria - Gem Match-3 Puzzle Game" width="1024" height="1024" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>Jewelria</strong>
+              <p>Swap rubies, sapphires and emeralds to set off chain combos in this free gem match-3 puzzle. Play right in your browser.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/parking-escape/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/parking_escape_link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/parking_escape_link.png?v=1" alt="Parking Escape parking lot puzzle game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Parking Escape</strong>
+              <p>Slide cars through a packed parking lot and guide the red car out through the exit.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://nevergrad.archerlab.dev/en/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/nevergrad_link.webp?v=20260909-1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/nevergrad_link.png?v=20260909-1" alt="Nevergrad story game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Nevergrad — 5 Days of Records</strong>
+              <p>The first day of transfer, everything was perfect. Too perfect to be real.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/cat-tower/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/cat-tower_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/cat-tower_link.png?v=3" alt="Cat Tower - Merge Puzzle Game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Cat Tower</strong>
+              <p>Merge identical cats to evolve! 10 tiers from kitten all the way to the legendary Savannah in this physics puzzle.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://karma.archerlab.dev" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/karma_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/karma_link.png" alt="Karma - Saju & Compatibility Matching" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Karma</strong>
+              <p>AI-powered fortune telling platform. Explore Saju, compatibility, horoscope, face &amp; palm reading all in one place.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/slimevolley/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/slimevolley_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/slimevolley_link.png" alt="Slime Volley Multiplayer Game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Slime Volley</strong>
+              <p>Slime volleyball! Online multiplayer from 1v1 to 4v4. Practice mode with bots also available — free web game.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/blockpang/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/blox_pang_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/blox_pang_link.png?v=1" alt="Blockpang Puzzle Game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Blockpang</strong>
+              <p>Place blocks, clear lines, chase a new high score. A bite-sized web puzzle for idle five minutes.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://harem.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/harem_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/harem_link.png?v=3" alt="Harem Mate" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Harem Mate</strong>
+              <p>Choose from diverse characters and build your own roleplay stories through immersive one-on-one or group chats.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://cupid.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/cupid_link.webp?v=4" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/cupid_link.png?v=4" alt="Cupid Visual Novel" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Cupid</strong>
+              <p>A five-day school romance with three heroines — Seoyeon, Yuna, and Dain. A browser-native visual novel you can start in a click.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://chatbot.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="walkwithme" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/chatbot_link.webp?v=4" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/chatbot_link.png?v=4" alt="Mate Chatbot" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Mate</strong>
+              <p>A gentle companion for checking in, easing your mind, and sorting through emotions at your own pace.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/solo-leveling/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/solo-leveling_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/solo-leveling_link.png?v=3" alt="Shadow Survival Web Game" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Shadow Survival</strong>
+              <p>Command a shadow army, wipe out monsters, die and return stronger. A roguelite 2D dungeon crawler.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://golf.archerlab.dev/index-en" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/golf_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/golf_link.png?v=2" alt="Golf Swing Master" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Golf Swing Master</strong>
+              <p>Upload a swing clip and AI breaks it down frame by frame, returning pro-level coaching feedback.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://latindance.kr/index-en" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/latindance_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/latindance_link.png?v=2" alt="Latin Dance Mate" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Latin Dance Mate</strong>
+              <p>Find English-friendly Latin dance clubs, salsa &amp; bachata social schedules, and improve with AI motion analysis.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://itstory.archerlab.dev/index-en" target="_blank" rel="noopener" data-language-link data-link-key="itstory" data-category="정보">
+            <picture>
+              <source srcset="assets/images/itstory_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/itstory_link.png?v=2" alt="IT Story Timeline" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>IT Story</strong>
+              <p>Explore the complete history of IT — computers, the web, operating systems, databases, and networks in interactive timelines.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://news.archerlab.dev" target="_blank" rel="noopener" data-category="정보">
+            <picture>
+              <source srcset="assets/images/news_link.webp?v=6" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/news_link.png?v=6" alt="Daily Hacker News Top 10" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Daily Hacker News Top 10</strong>
+              <p>Top 10 Hacker News stories translated and summarized daily. Auto-updated every night at 11 PM KST.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://chat.archerlab.dev" target="_blank" rel="noopener" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/chat_link.webp?v=6" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/chat_link.png?v=6" alt="Real-time Chat Service" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>Chat</strong>
+              <p>Real-time chat service. Create public or private rooms, lobby chat, host transfer, and PWA support.</p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-simple">
+        <div class="footer-left">
+          <span>© <span id="year"></span> ArcherLab · Daegu, Korea</span>
+          <nav class="footer-contact" aria-label="Contact">
+            <a href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a>
+            <a href="https://github.com/JangHyunGyu" target="_blank" rel="noopener">GitHub</a>
+          </nav>
+        </div>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="privacy">Privacy</a>
+          <a href="terms">Terms</a>
+        </nav>
+        <nav class="footer-directories" aria-label="Directories">
+          <a href="https://twelve.tools" target="_blank" rel="noopener">
+            <img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" loading="lazy" />
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <div class="lightbox__backdrop"></div>
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+    </div>
+
+    <button type="button" class="scroll-top" data-scroll-top aria-label="Scroll back to top" hidden>
+      <img class="scroll-top__icon" src="assets/images/ui/icons/icon-arrow-up.webp" alt="" aria-hidden="true" width="32" height="32" />
+    </button>
+    <script src="assets/js/constellation.js?v=20260712-2" defer></script>
+    <script src="assets/js/main.js?v=20260712-2" defer></script>
+    <script type="text/javascript" src="https://wcs.pstatic.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if (!window.wcs_add) window.wcs_add = {};
+      window.wcs_add["wa"] = "1540dff9e211880";
+      if (window.location.protocol !== 'file:' && window.wcs) {
+        wcs_do();
+      }
+    </script>
+  </body>
 </html>
