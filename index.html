@@ -1,50 +1,461 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ArcherLab - 웹 개발 사이드 프로젝트 허브</title>
-<link rel="canonical" href="https://archerlab.dev/" />
-</head>
-<body>
-<header>
-  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a></p>
-  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer">https://twelve.tools</a></p>
-</header>
-<main id="app"><p>Loading…</p></main>
-<footer style="margin:24px 12px">
-  <a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>
-</footer>
-<script>
-fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae22d8b6ba2d95236719/index.html")
-  .then(function (r) { return r.text(); })
-  .then(function (html) {
-    var doc = new DOMParser().parseFromString(html, "text/html");
-    var remoteMain = doc.querySelector("main") || doc.body;
-    var app = document.getElementById("app");
-    if (app && remoteMain) {
-      app.innerHTML = "";
-      Array.from(remoteMain.childNodes).forEach(function (n) {
-        app.appendChild(document.importNode(n, true));
-      });
-      Array.from(doc.head.querySelectorAll("link,style")).forEach(function (el) {
-        document.head.appendChild(document.importNode(el, true));
-      });
-      Array.from(doc.querySelectorAll("script[src]")).forEach(function (el) {
-        var s = document.createElement("script");
-        s.src = el.src;
-        if (el.defer) s.defer = true;
-        document.body.appendChild(s);
-      });
-      var importedFoot = app.querySelector(".footer-simple");
-      if (importedFoot && !importedFoot.querySelector('[href="https://twelve.tools"]')) {
-        var nav = document.createElement("nav");
-        nav.innerHTML = '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>';
-        importedFoot.appendChild(nav);
+  <head>
+    <script src="assets/js/browser-check.js?v=1.1.0" defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <title>ArcherLab - 웹 개발 사이드 프로젝트 허브</title>
+    <meta
+      name="description"
+      content="ArcherLab은 프론트엔드·백엔드·AI를 조합해 프로토타입을 만들고 기록하는 개인 개발 허브입니다. 19개 사이드 프로젝트를 운영합니다."
+    />
+    <meta name="naver-site-verification" content="20c0036e816e482c099dd4396e7a79fb66b03d7a" />
+    <meta name="naver-site-verification" content="f8672a0a716a4b201186cafdab40fd24359bcb45" />
+    <meta name="keywords" content="웹 개발 사이드 프로젝트 아이디어 2026, 코딩 포트폴리오 예제 사이트 모음, 프론트엔드 프로젝트 모음 초보 추천, 토이 프로젝트 추천 개발자 영감, 웹 개발 독학 프로젝트 모음 사이트, HTML CSS JS 프로젝트 예제 모음, 개발자 포트폴리오 사이트 모음, 브라우저 게임 개발 포트폴리오, ArcherLab" />
+    <meta property="og:title" content="ArcherLab - 웹 개발 사이드 프로젝트 허브" />
+    <meta
+      property="og:description"
+      content="AI 심리상담 챗봇, 골프 스윙 분석, 웹 미연시 게임, IT 역사 타임라인까지 — 다양한 사이드 프로젝트를 만나보세요."
+    />
+    <link rel="canonical" href="https://archerlab.dev/" />
+    <link rel="alternate" hreflang="ko" href="https://archerlab.dev/" />
+    <link rel="alternate" hreflang="en" href="https://archerlab.dev/index-en" />
+    <link rel="alternate" hreflang="x-default" href="https://archerlab.dev/index-en" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/archerlab_favicon_32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/archerlab_favicon_16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/archerlab_favicon_180.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MTBCHM8DYM"></script>
+    <script src="assets/js/ga.js?v=20260403"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://archerlab.dev/#organization",
+            "name": "ArcherLab",
+            "url": "https://archerlab.dev/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://archerlab.dev/assets/images/archerlab_favicon_512.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://itstory.archerlab.dev/",
+              "https://chatbot.archerlab.dev/",
+              "https://github.com/JangHyunGyu"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hyungyu@archerlab.dev",
+              "availableLanguage": ["ko", "en"]
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://archerlab.dev/#founder",
+            "name": "장현규",
+            "alternateName": "Hyungyu Jang",
+            "url": "https://archerlab.dev/",
+            "sameAs": ["https://github.com/JangHyunGyu"],
+            "worksFor": { "@id": "https://archerlab.dev/#organization" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://archerlab.dev/#website",
+            "url": "https://archerlab.dev/",
+            "name": "ArcherLab",
+            "description": "ArcherLab은 'Logic × Design, in Practice' 모토로 프로토타입을 설계하고 실험 로그를 기록하는 개발 허브입니다.",
+            "inLanguage": "ko-KR",
+            "publisher": { "@id": "https://archerlab.dev/#organization" },
+            "creator": { "@id": "https://archerlab.dev/#founder" }
+          },
+          {
+            "@type": ["WebPage", "CollectionPage"],
+            "@id": "https://archerlab.dev/#home",
+            "url": "https://archerlab.dev/",
+            "name": "ArcherLab 홈 허브",
+            "inLanguage": "ko-KR",
+            "isPartOf": { "@id": "https://archerlab.dev/#website" },
+            "publisher": { "@id": "https://archerlab.dev/#organization" },
+            "breadcrumb": { "@id": "https://archerlab.dev/#breadcrumb" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://archerlab.dev/#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "ArcherLab", "item": "https://archerlab.dev/" }
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://archerlab.dev/#sections",
+            "name": "ArcherLab 프로젝트 목록",
+            "itemListOrder": "http://schema.org/ItemListOrderAscending",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "item": { "@type": "VideoGame", "name": "루멘 쉬프트", "alternateName": "LUMEN SHIFT", "url": "https://game.archerlab.dev/lumen-shift/" } },
+              { "@type": "ListItem", "position": 2, "item": { "@type": "VideoGame", "name": "Jelly Pang!", "url": "https://game.archerlab.dev/jelly-pang-2048/" } },
+              { "@type": "ListItem", "position": 3, "item": { "@type": "VideoGame", "name": "스쿨 언데드 디펜스", "url": "https://game.archerlab.dev/school-zombie-defense/" } },
+              { "@type": "ListItem", "position": 4, "item": { "@type": "VideoGame", "name": "Jewelria", "url": "https://game.archerlab.dev/jewelria/" } },
+              { "@type": "ListItem", "position": 5, "item": { "@type": "VideoGame", "name": "주차장 탈출", "url": "https://game.archerlab.dev/parking-escape/" } },
+              { "@type": "ListItem", "position": 6, "item": { "@type": "VideoGame", "name": "졸업하지 못한 교실", "url": "https://nevergrad.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 7, "item": { "@type": "VideoGame", "name": "Cat Tower", "url": "https://game.archerlab.dev/cat-tower/" } },
+              { "@type": "ListItem", "position": 8, "item": { "@type": "WebApplication", "name": "Karma", "url": "https://karma.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 9, "item": { "@type": "VideoGame", "name": "Slime Volley", "url": "https://game.archerlab.dev/slimevolley/" } },
+              { "@type": "ListItem", "position": 10, "item": { "@type": "VideoGame", "name": "Blockpang", "url": "https://game.archerlab.dev/blockpang/" } },
+              { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "Harem Mate", "url": "https://harem.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 12, "item": { "@type": "VideoGame", "name": "Cupid Visual Novel", "url": "https://cupid.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 13, "item": { "@type": "SoftwareApplication", "name": "Walk with me", "url": "https://chatbot.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 14, "item": { "@type": "VideoGame", "name": "Shadow Survival", "url": "https://game.archerlab.dev/solo-leveling/" } },
+              { "@type": "ListItem", "position": 15, "item": { "@type": "SoftwareApplication", "name": "Golf Swing Master", "url": "https://golf.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 16, "item": { "@type": "WebSite", "name": "Latin Dance Mate", "url": "https://latindance.kr/" } },
+              { "@type": "ListItem", "position": 17, "item": { "@type": "CreativeWork", "name": "IT Story Timeline", "url": "https://itstory.archerlab.dev/" } },
+              { "@type": "ListItem", "position": 18, "item": { "@type": "WebApplication", "name": "HN 탑10", "url": "https://news.archerlab.dev/hn" } },
+              { "@type": "ListItem", "position": 19, "item": { "@type": "WebApplication", "name": "Chat", "url": "https://chat.archerlab.dev/" } }
+            ]
+          }
+        ]
       }
-    }
-  })
-  .catch(function () {});
-</script>
-</body>
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://archerlab.dev/" />
+    <meta property="og:image" content="https://archerlab.dev/assets/images/archerlab_kakao.png" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:site_name" content="ArcherLab" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ArcherLab - 웹 개발 사이드 프로젝트 허브" />
+    <meta name="twitter:description" content="AI 심리상담 챗봇, 골프 스윙 분석, 웹 미연시 게임, IT 역사 타임라인까지 — 다양한 사이드 프로젝트를 만나보세요." />
+    <meta name="twitter:image" content="https://archerlab.dev/assets/images/archerlab_kakao.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/pretendard/pretendard.css"
+      media="print" onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="assets/vendor/pretendard/pretendard.css"></noscript>
+    <link rel="stylesheet" href="assets/css/style.css?v=20260713-1" />
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js" defer></script>
+  <script src="assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
+      <style>
+      .footer-directories { display:flex; align-items:center; margin-top:10px; }
+      .footer-directories img { display:block; height:38px; width:auto; opacity:0.9; }
+</style>
+  </head>
+  <body>
+    <h1 class="sr-only">ArcherLab - 웹 개발 사이드 프로젝트 허브</h1>
+
+    <header>
+      <div class="navbar">
+        <a class="logo" href="#top" aria-label="ArcherLab 메인으로 이동">
+          ArcherLab
+        </a>
+        <div class="lang-dropdown" data-lang-dropdown>
+          <button type="button" class="lang-dropdown__toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="언어 선택">
+            <img class="lang-dropdown__icon" src="assets/images/ui/icons/icon-language.webp" alt="" aria-hidden="true" width="18" height="18" />
+            <span class="lang-dropdown__label">한국어</span>
+            <svg class="lang-dropdown__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="lang-dropdown__menu" role="listbox">
+            <li class="lang-dropdown__item active" role="option" aria-selected="true" data-lang-code="ko" data-lang-url="/">
+              <img class="lang-dropdown__flag" src="assets/images/ui/icons/icon-lang-ko.webp" alt="" aria-hidden="true" width="32" height="32" /> 한국어
+            </li>
+            <li class="lang-dropdown__item" role="option" aria-selected="false" data-lang-code="en" data-lang-url="index-en">
+              <img class="lang-dropdown__flag" src="assets/images/ui/icons/icon-lang-en.webp" alt="" aria-hidden="true" width="32" height="32" /> English
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="projects" aria-label="프로젝트 목록">
+
+        <div class="hub-hero">
+          <span class="hub-hero__tag">Logic × Design, in Practice</span>
+          <h2 class="hub-hero__title">
+            <span>프로토타입을 만들고,</span>
+            <span>실험 로그를 기록합니다.</span>
+          </h2>
+          <p class="hub-hero__desc">
+            19개의 사이드 프로젝트, 한 명의 개발자. 프론트엔드부터 AI까지 실험하고 출시한 기록들.
+          </p>
+          <div class="hub-hero__meta">
+            <span><strong>19</strong>Projects</span>
+            <span><strong>5</strong>Categories</span>
+            <span><strong>2026</strong>Active</span>
+          </div>
+        </div>
+
+        <nav class="tab-bar" aria-label="카테고리 필터">
+          <button type="button" class="tab-btn active" data-tab="all">전체</button>
+          <button type="button" class="tab-btn" data-tab="게임">게임</button>
+          <button type="button" class="tab-btn" data-tab="커뮤니티">커뮤니티</button>
+          <button type="button" class="tab-btn" data-tab="유틸">유틸</button>
+          <button type="button" class="tab-btn" data-tab="정보">정보</button>
+        </nav>
+
+        <div class="hub-grid">
+          <a class="hub-card" href="https://game.archerlab.dev/lumen-shift/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/lumen-shift-link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/lumen-shift-link.png?v=3" alt="루멘 쉬프트 빛 반응 블록 퍼즐 게임" width="1280" height="1280" loading="eager" fetchpriority="high" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>루멘 쉬프트</strong>
+              <p>빛과 리듬에 반응하는 입자 무대에서 라인을 정리하고 스테이지를 넘기는 몰입형 블록 퍼즐.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/jelly-pang-2048/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/jelly-pang-main-link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/jelly-pang-main-link.png?v=1" alt="젤리팡 젤리 합치기 퍼즐 게임" width="1024" height="1024" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>젤리팡</strong>
+              <p>말랑한 젤리를 밀어 합치고 명예의 전당 점수에 도전하는 머지 퍼즐.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/school-zombie-defense/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/school-zombie-defense_link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/school-zombie-defense_link.png?v=1" alt="스쿨 언데드 디펜스 좀비 디펜스 게임" width="1254" height="1254" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>스쿨 언데드 디펜스</strong>
+              <p>무너진 학교 복도에서 학생 디펜더를 모아 좀비를 막아내는 브라우저 디펜스 슈팅.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/jewelria/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/jewelria_link.webp?v=2" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/jewelria_link.png?v=2" alt="쥬얼리아 보석 매치3 퍼즐 게임" width="1024" height="1024" loading="eager" decoding="async" />
+            </picture>
+            <div class="hub-body">
+              <strong>쥬얼리아</strong>
+              <p>루비·사파이어·에메랄드를 스왑해 연쇄 콤보를 터뜨리는 무료 보석 매치3 퍼즐. 브라우저에서 바로 플레이.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/parking-escape/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/parking_escape_link.webp?v=1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/parking_escape_link.png?v=1" alt="주차장 탈출 주차장 차 빼기 퍼즐 게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>주차장 탈출</strong>
+              <p>막힌 주차장에서 차량을 밀어 빨간 차를 출구까지 빼내는 고퀄리티 차 빼기 퍼즐.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://nevergrad.archerlab.dev/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/nevergrad_link.webp?v=20260909-1" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/nevergrad_link.png?v=20260909-1" alt="졸업하지 못한 교실 스토리 게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>졸업하지 못한 교실 — 5일의 기록</strong>
+              <p>전학 첫날, 모든 것이 완벽했다. 너무 완벽해서 이상할 정도로.</p>
+            </div>
+          </a>
+          <a class="hub-card" href="https://game.archerlab.dev/cat-tower/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/cat-tower_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/cat-tower_link.png?v=3" alt="고양이 타워 합성 퍼즐 게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>고양이 타워</strong>
+              <p>같은 고양이 둘이 닿으면 진화! 새끼 고양이부터 전설의 사바나까지 10단계 합성 물리 퍼즐.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://karma.archerlab.dev" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/karma_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/karma_link.png" alt="Karma 사주 궁합 매칭" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>카르마</strong>
+              <p>사주·궁합·운세·관상·손금 분석 플랫폼. 나의 운명을 확인하고 궁합 매칭을 경험하세요.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/slimevolley/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/slimevolley_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/slimevolley_link.png" alt="슬라임 배구 멀티플레이어 게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>슬라임 배구</strong>
+              <p>슬라임 배구! 1:1부터 4:4까지 온라인 멀티플레이. 봇 상대 연습 모드도 지원하는 무료 웹게임.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/blockpang/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/blox_pang_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/blox_pang_link.png?v=1" alt="블럭팡 웹게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>블럭팡</strong>
+              <p>블록을 배치해 줄을 채우고 최고 점수에 도전하는 웹 퍼즐. 빈 시간 5분이면 충분합니다.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://harem.archerlab.dev" target="_blank" rel="noopener" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/harem_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/harem_link.png?v=3" alt="하렘 메이트" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>하렘 메이트</strong>
+              <p>다양한 캐릭터를 선택해 대화하고, 취향에 맞는 관계와 스토리를 만들어가는 롤플레이 채팅.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://cupid.archerlab.dev" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/cupid_link.webp?v=4" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/cupid_link.png?v=4" alt="Cupid 비주얼 노벨" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>큐피드</strong>
+              <p>서연·유나·다인, 세 히로인과 펼쳐지는 5일간의 학원 로맨스. 브라우저에서 바로 시작하는 웹 미연시.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://chatbot.archerlab.dev" target="_blank" rel="noopener" data-language-link data-link-key="walkwithme" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/chatbot_link.webp?v=4" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/chatbot_link.png?v=4" alt="Mate 챗봇" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>메이트</strong>
+              <p>마음이 지칠 때 편하게 대화하며 감정을 정리할 수 있는 감정 케어 챗봇.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://game.archerlab.dev/solo-leveling/" target="_blank" rel="noopener" data-category="게임">
+            <picture>
+              <source srcset="assets/images/solo-leveling_link.webp?v=3" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/solo-leveling_link.png?v=3" alt="그림자 서바이벌 웹게임" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>그림자 서바이벌</strong>
+              <p>그림자 군단을 이끌고 몬스터를 쓸어버리는 2D 던전 서바이벌. 죽고 또 죽으며 강해집니다.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://golf.archerlab.dev" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/golf_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/golf_link.png?v=2" alt="골프 스윙 마스터" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>골프 스윙 마스터</strong>
+              <p>스윙 영상을 올리면 AI가 프레임별로 분석해 프로급 코칭 피드백을 돌려줍니다.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://latindance.kr" target="_blank" rel="noopener" data-category="유틸">
+            <picture>
+              <source srcset="assets/images/latindance_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/latindance_link.png?v=2" alt="라틴댄스 메이트" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>라틴댄스 메이트</strong>
+              <p>내 주변 라틴댄스 동호회 찾기부터 AI 모션 분석까지. 살사·바차타 강습 정보를 한곳에서 확인하세요.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://itstory.archerlab.dev" target="_blank" rel="noopener" data-language-link data-link-key="itstory" data-category="정보">
+            <picture>
+              <source srcset="assets/images/itstory_link.webp" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/itstory_link.png?v=2" alt="IT 스토리 타임라인" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>IT 스토리</strong>
+              <p>IT 역사, 컴퓨터, 웹, 운영체제, 데이터베이스, 네트워크의 발전 과정을 한눈에 보는 인터랙티브 연대기입니다.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://news.archerlab.dev" target="_blank" rel="noopener" data-category="정보">
+            <picture>
+              <source srcset="assets/images/news_link.webp?v=6" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/news_link.png?v=6" alt="오늘의 Hacker News 탑10" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>오늘의 Hacker News 탑10</strong>
+              <p>Hacker News 탑10 기사를 매일 한국어로 번역 · 요약해서 보여주는 뉴스 서비스. 매일 밤 11시 자동 업데이트.</p>
+            </div>
+          </a>
+
+          <a class="hub-card" href="https://chat.archerlab.dev" target="_blank" rel="noopener" data-category="커뮤니티">
+            <picture>
+              <source srcset="assets/images/chat_link.webp?v=6" type="image/webp" />
+              <img class="hub-thumb" src="assets/images/chat_link.png?v=6" alt="실시간 채팅 서비스" loading="lazy" />
+            </picture>
+            <div class="hub-body">
+              <strong>채팅</strong>
+              <p>실시간 채팅 서비스. 공개방·비밀방 개설, 로비 채팅, 방장 권한 이전, PWA 설치 지원.</p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-simple">
+        <div class="footer-left">
+          <span>© <span id="year"></span> ArcherLab</span>
+          <nav class="footer-contact" aria-label="연락처">
+            <a href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a>
+          </nav>
+        </div>
+        <nav class="footer-legal" aria-label="정책 문서">
+          <a href="privacy">개인정보처리방침</a>
+          <a href="terms">이용약관</a>
+        </nav>
+        <nav class="footer-directories" aria-label="디렉터리">
+          <a href="https://twelve.tools" target="_blank" rel="noopener">
+            <img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" loading="lazy" />
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <div class="lightbox__backdrop"></div>
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+    </div>
+
+    <button type="button" class="scroll-top" data-scroll-top aria-label="맨 위로 이동" hidden>
+      <img class="scroll-top__icon" src="assets/images/ui/icons/icon-arrow-up.webp" alt="" aria-hidden="true" width="32" height="32" />
+    </button>
+    <script src="assets/js/constellation.js?v=20260712-2" defer></script>
+    <script src="assets/js/main.js?v=20260712-2" defer></script>
+    <script type="text/javascript" src="https://wcs.pstatic.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if (!window.wcs_add) window.wcs_add = {};
+      window.wcs_add["wa"] = "1540dff9e211880";
+      if (window.location.protocol !== 'file:' && window.wcs) {
+        wcs_do();
+      }
+    </script>
+  </body>
 </html>
