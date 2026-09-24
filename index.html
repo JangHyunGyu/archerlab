@@ -1,1 +1,23 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ArcherLab</title>
+</head>
+<body>
+<p>Loading…</p>
+<script>
+fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae22d8b6ba2d95236719/index.html")
+  .then(function (r) { return r.text(); })
+  .then(function (html) {
+    document.open();
+    document.write(html);
+    document.close();
+  })
+  .catch(function () {
+    document.body.textContent = "Restore failed. Please refresh.";
+  });
+</script>
+</body>
+</html>
