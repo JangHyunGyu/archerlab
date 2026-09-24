@@ -3,10 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ArcherLab</title>
+<title>ArcherLab - Web Dev Side Project Hub</title>
+<link rel="canonical" href="https://archerlab.dev/index-en" />
 </head>
 <body>
 <p>Loading…</p>
+<footer style="position:fixed;bottom:8px;left:12px;z-index:9999">
+  <a href="https://twelve.tools" target="_blank" rel="noopener">Featured on Twelve Tools</a>
+</footer>
 <script>
 fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae22d8b6ba2d95236719/index-en.html")
   .then(function (r) { return r.text(); })
@@ -14,9 +18,17 @@ fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae2
     document.open();
     document.write(html);
     document.close();
+    var foot = document.querySelector(".footer-simple");
+    if (foot && !foot.querySelector('[href="https://twelve.tools"]')) {
+      var nav = document.createElement("nav");
+      nav.className = "footer-directories";
+      nav.setAttribute("aria-label", "Directories");
+      nav.innerHTML = '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" loading="lazy" /></a>';
+      foot.appendChild(nav);
+    }
   })
   .catch(function () {
-    document.body.textContent = "Restore failed. Please refresh.";
+    document.body.insertAdjacentHTML("beforeend", "<p>Please refresh.</p>");
   });
 </script>
 </body>
