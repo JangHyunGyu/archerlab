@@ -7,29 +7,44 @@
 <link rel="canonical" href="https://archerlab.dev/index-en" />
 </head>
 <body>
-<p>Loading…</p>
-<footer style="position:fixed;bottom:8px;left:12px;z-index:9999">
-  <a href="https://twelve.tools" target="_blank" rel="noopener">Featured on Twelve Tools</a>
+<header>
+  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a></p>
+  <p><a href="https://twelve.tools" target="_blank" rel="noopener noreferrer">https://twelve.tools</a></p>
+</header>
+<main id="app"><p>Loading…</p></main>
+<footer style="margin:24px 12px">
+  <a href="https://twelve.tools" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>
 </footer>
 <script>
 fetch("https://cdn.jsdelivr.net/gh/JangHyunGyu/archerlab@6a7a699d380d02cd2434ae22d8b6ba2d95236719/index-en.html")
   .then(function (r) { return r.text(); })
   .then(function (html) {
-    document.open();
-    document.write(html);
-    document.close();
-    var foot = document.querySelector(".footer-simple");
-    if (foot && !foot.querySelector('[href="https://twelve.tools"]')) {
-      var nav = document.createElement("nav");
-      nav.className = "footer-directories";
-      nav.setAttribute("aria-label", "Directories");
-      nav.innerHTML = '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" loading="lazy" /></a>';
-      foot.appendChild(nav);
+    var doc = new DOMParser().parseFromString(html, "text/html");
+    var remoteMain = doc.querySelector("main") || doc.body;
+    var app = document.getElementById("app");
+    if (app && remoteMain) {
+      app.innerHTML = "";
+      Array.from(remoteMain.childNodes).forEach(function (n) {
+        app.appendChild(document.importNode(n, true));
+      });
+      Array.from(doc.head.querySelectorAll("link,style")).forEach(function (el) {
+        document.head.appendChild(document.importNode(el, true));
+      });
+      Array.from(doc.querySelectorAll("script[src]")).forEach(function (el) {
+        var s = document.createElement("script");
+        s.src = el.src;
+        if (el.defer) s.defer = true;
+        document.body.appendChild(s);
+      });
+      var importedFoot = app.querySelector(".footer-simple");
+      if (importedFoot && !importedFoot.querySelector('[href="https://twelve.tools"]')) {
+        var nav = document.createElement("nav");
+        nav.innerHTML = '<a href="https://twelve.tools" target="_blank" rel="noopener"><img src="https://twelve.tools/badge0-dark.svg" alt="Featured on Twelve Tools" width="140" height="38" /></a>';
+        importedFoot.appendChild(nav);
+      }
     }
   })
-  .catch(function () {
-    document.body.insertAdjacentHTML("beforeend", "<p>Please refresh.</p>");
-  });
+  .catch(function () {});
 </script>
 </body>
 </html>
