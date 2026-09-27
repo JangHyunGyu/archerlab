@@ -415,6 +415,13 @@ main {
   background: linear-gradient(180deg, transparent 65%, rgba(8, 9, 12, 0.13));
 }
 
+/* Preserve the complete square illustration in the compact mobile card too. */
+.hub-card.water-sort-card picture {
+  aspect-ratio: 1 / 1;
+  height: auto;
+  align-self: center;
+}
+
 .hub-thumb {
   width: 100%;
   height: 100%;
