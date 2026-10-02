@@ -1,0 +1,115 @@
+# ArcherLab — full service description
+
+---
+
+## ArcherLab이란? 개발자 한 명이 만든 브라우저 기반 웹 서비스 허브 (ko)
+
+URL: https://archerlab.dev/seo/archerlab-about.html
+Last updated: 2026-10-02
+
+ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 19개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
+
+### 한눈에 보기
+- 운영자: 장현규(Hyungyu Jang), 1인 개발
+- 성격: 브라우저 기반 사이드 프로젝트 모음 (프로토타입과 실험 기록)
+- 프로젝트: 19개 — 게임, 커뮤니티, 유틸, 정보
+- 이용: 서비스별로 다르지만 대부분 무료이고 앱 설치가 필요 없습니다.
+- 언어: 한국어, 영어 (서비스별로 다름)
+- 문의: hyungyu@archerlab.dev
+- GitHub: github.com/JangHyunGyu
+
+### Who it is for / 대상
+- ArcherLab에 어떤 서비스가 있는지 한눈에 보고 싶은 분
+- 각 서비스가 무엇이고 어떻게 쓰는지 먼저 확인하고 싶은 분
+- 1인 개발 프로젝트가 궁금한 개발자
+
+### How to use / 이용 방법
+1. 아래 서비스 목록에서 관심 있는 서비스의 안내 페이지를 엽니다.
+2. 안내 페이지에서 무엇을 하는 서비스인지, 요금과 가입 여부, 자주 묻는 질문을 확인합니다.
+3. 마음에 들면 안내 페이지의 시작 버튼이나 서비스 이름 옆 링크로 서비스를 엽니다.
+
+### Features / 기능
+- 무료 브라우저 게임 포털과 개별 게임 10종
+- 학원 로맨스·미스터리 비주얼 노벨
+- AI 사주·운세, 골프 스윙 분석, 라틴댄스 영상 분석
+- Hacker News 한국어 요약, IT 역사 타임라인
+
+### Notes / 알아 둘 점
+- 하렘 메이트는 19세 이상 성인 전용입니다. 나머지 서비스는 연령 제한이 없지만 Mate는 전문 상담을 대신하지 않으며, 운세 서비스는 오락용 참고 자료입니다.
+
+### FAQ
+
+**ArcherLab은 어떤 곳인가요?**
+개발자 장현규가 만든 브라우저 기반 사이드 프로젝트를 모아 둔 허브입니다. 프로토타입을 만들고 실험 기록을 남기는 곳으로 운영합니다.
+
+**서비스는 무료인가요?**
+안내 페이지에 소개한 서비스는 모두 무료로 시작할 수 있고 대부분 가입과 설치가 필요 없습니다. 자세한 조건은 서비스별 안내 페이지를 확인하세요.
+
+**누가 만들었나요?**
+장현규 한 명이 기획, 개발, 운영을 맡고 있습니다. Cupid처럼 공동 제작자가 있는 작품도 있습니다.
+
+**문의는 어디로 하나요?**
+hyungyu@archerlab.dev로 보내 주세요.
+
+**가장 먼저 둘러볼 서비스는?**
+가볍게 시작하려면 Archerlab Games, 이야기를 좋아한다면 Cupid나 Nevergrad, 운세에 관심이 있으면 Karma가 있습니다.
+
+**영어 안내도 있나요?**
+네. HN 탑10을 제외한 서비스는 영어 안내 페이지가 있습니다.
+
+---
+
+## What is ArcherLab? A hub of browser-based web services by one developer (en)
+
+URL: https://archerlab.dev/seo/archerlab-about-en.html
+Last updated: 2026-10-02
+
+ArcherLab (archerlab.dev) is a hub of 19 side projects built by developer Hyungyu Jang, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary and IT history timelines, all usable in the browser without installing an app. Use the list below to jump to each service guide.
+
+### At a glance
+- Operator: Hyungyu Jang, solo developer
+- Nature: Collection of browser-based side projects (prototypes and experiment logs)
+- Projects: 19 across games, community, utilities and information
+- Use: Varies by service, but most are free and need no app install
+- Languages: Korean and English (varies by service)
+- Contact: hyungyu@archerlab.dev
+- GitHub: github.com/JangHyunGyu
+
+### Who it is for / 대상
+- Visitors who want an overview of what ArcherLab offers
+- People who want to know what each service is and how to use it before opening it
+- Developers curious about solo-built projects
+
+### How to use / 이용 방법
+1. Pick a service from the list below and open its guide.
+2. On the guide, check what the service does, its price, whether signup is needed, and the FAQ.
+3. Open the service from the button on the guide or from the link next to its name.
+
+### Features / 기능
+- A free browser game portal with 10 games
+- Visual novels: school romance and school mystery
+- AI saju and fortune, golf swing analysis and Latin dance video analysis
+- Hacker News summaries in Korean and IT history timelines
+
+### Notes / 알아 둘 점
+- Harem Mate is for adults aged 19 and over only. Mate does not replace professional counseling, and the fortune service is for entertainment.
+
+### FAQ
+
+**What is ArcherLab?**
+A hub of browser-based side projects built by developer Hyungyu Jang, run as a place to build prototypes and record experiments.
+
+**Are the services free?**
+Every service listed here can be started for free, and most need no signup or install. See each service guide for details.
+
+**Who makes them?**
+Hyungyu Jang handles planning, development and operation. Some projects, such as Cupid, have co-creators.
+
+**How do I get in touch?**
+Email hyungyu@archerlab.dev.
+
+**Where should I start?**
+Archerlab Games for a casual start, Cupid or Nevergrad for story games, and Karma for fortune readings.
+
+**Are there English guides?**
+Yes, for every service except HN Top 10, which is Korean only.

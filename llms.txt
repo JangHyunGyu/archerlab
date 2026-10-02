@@ -17,7 +17,7 @@ ArcherLab is a personal development hub by an indie developer. It combines front
 - [Blockpang](https://game.archerlab.dev/blockpang/)
 - [Harem Mate](https://harem.archerlab.dev/)
 - [Cupid Visual Novel](https://cupid.archerlab.dev/)
-- [Walk with me](https://chatbot.archerlab.dev/)
+- [Mate (메이트)](https://chatbot.archerlab.dev/)
 - [Shadow Survival](https://game.archerlab.dev/solo-leveling/)
 - [Golf Swing Master](https://golf.archerlab.dev/)
 - [Latin Dance Mate](https://latindance.kr/)
@@ -34,3 +34,9 @@ ArcherLab is a personal development hub by an indie developer. It combines front
 ## Languages
 - Korean
 - English
+
+## Service guide (what it is, pricing, how to use, FAQ)
+- Korean: https://archerlab.dev/seo/archerlab-about.html
+- English: https://archerlab.dev/seo/archerlab-about-en.html
+- Full text for AI systems: https://archerlab.dev/llms-full.txt
+- Last updated: 2026-10-02

@@ -62,4 +62,24 @@
     <priority>0.7</priority>
   </url>
 <!-- traffic-pages:end -->
+<!-- about-pages:start -->
+  <url>
+    <loc>https://archerlab.dev/seo/archerlab-about.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://archerlab.dev/seo/archerlab-about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://archerlab.dev/seo/archerlab-about-en.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://archerlab.dev/seo/archerlab-about-en.html"/>
+  </url>
+  <url>
+    <loc>https://archerlab.dev/seo/archerlab-about-en.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://archerlab.dev/seo/archerlab-about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://archerlab.dev/seo/archerlab-about-en.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://archerlab.dev/seo/archerlab-about-en.html"/>
+  </url>
+<!-- about-pages:end -->
 </urlset>

@@ -10,6 +10,7 @@ const rootFiles = [
   'CNAME',
   'favicon.svg',
   'llms.txt',
+  'llms-full.txt',
   'robots.txt',
   'site.webmanifest',
   'sitemap.xml'
