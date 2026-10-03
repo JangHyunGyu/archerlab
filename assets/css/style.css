@@ -415,13 +415,6 @@ main {
   background: linear-gradient(180deg, transparent 65%, rgba(8, 9, 12, 0.13));
 }
 
-/* Preserve the complete square illustration in the compact mobile card too. */
-.hub-card.water-sort-card picture {
-  aspect-ratio: 1 / 1;
-  height: auto;
-  align-self: center;
-}
-
 .hub-thumb {
   width: 100%;
   height: 100%;
@@ -470,6 +463,10 @@ main {
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+.hub-card.water-sort-card .hub-body p {
+  text-wrap: pretty;
 }
 
 .hub-card[hidden] {
@@ -859,6 +856,21 @@ body.app-launcher-open {
     -webkit-line-clamp: 3;
   }
 
+  /* The title is no longer baked into the Bubbly Lab art, so it fills the
+     compact thumbnail box like the other cards instead of being letterboxed. */
+  .hub-card.water-sort-card .hub-thumb {
+    object-position: 36% 50%;
+  }
+
+  /* Keep the right-hand text clear of the gold frame's edge and corner ornaments. */
+  .hub-card.water-sort-card .hub-body {
+    padding-right: 28px;
+  }
+
+  .hub-card.water-sort-card .hub-body p {
+    -webkit-line-clamp: 4;
+  }
+
   .footer-simple {
     align-items: flex-start;
     min-height: auto;
@@ -892,9 +904,22 @@ body.app-launcher-open {
   }
 }
 
+/* Wider phones/small tablets scale the frame's right-edge ornament up, so the
+   clear space on the right grows with the viewport. */
+@media (min-width: 440px) and (max-width: 560px) {
+  .hub-card.water-sort-card .hub-body {
+    padding-right: 11vw;
+  }
+}
+
 @media (max-width: 380px) {
   .hub-card {
     min-height: 158px;
+  }
+
+  /* The narrowest thumbnail shows ~68% of the square art; bias left to keep the mascot. */
+  .hub-card.water-sort-card .hub-thumb {
+    object-position: 18% 50%;
   }
 
   .hub-card picture {
