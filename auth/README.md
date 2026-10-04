@@ -14,7 +14,14 @@ The manually dispatched Service DNS routing workflow uses the repository's exist
 
 Before removing the former frontend Worker routes, deploy the session custom domain and confirm every linked HTML page includes its native `data-archerlab-account` script. Then remove frontend routes and revoke legacy child sessions with `DELETE FROM sessions WHERE parent_hash IS NOT NULL AND hash NOT LIKE 'gateway:%'`. Central sessions and new gateway sessions remain valid; replay of former frontend cookies is rejected by the distinct gateway hash prefix.
 
+If a frontend's Git deployment has not reached production, retain only that
+frontend's previous route until its native script is verified. The DNS readiness
+check leaves it proxied. This is a temporary rollout state; it must not hold back
+services whose native deployments have already passed validation.
+
 After DNS propagates, check each service's session POST through the sessions host and confirm its script adds no visible UI. Verify central sign-in and logout with real local sessions, and check the native hub link through public DNS. A forced address is only a diagnostic comparison and cannot prove the production path.
+
+See [PERFORMANCE.md](PERFORMANCE.md) for measured timings, layout coverage and the remaining Git integration dependency.
 
 ## Security boundary
 
