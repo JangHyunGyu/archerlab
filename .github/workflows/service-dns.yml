@@ -1,6 +1,15 @@
-name: Inspect service DNS
+name: Service DNS routing
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        default: inspect
+        options: [inspect, pages-direct, pages-proxied]
+      target:
+        type: choice
+        default: all-pages
+        options: [all-pages, golf.archerlab.dev, game.archerlab.dev, nevergrad.archerlab.dev, karma.archerlab.dev, harem.archerlab.dev, cupid.archerlab.dev, chatbot.archerlab.dev]
 
 permissions:
   contents: read
@@ -17,6 +26,8 @@ jobs:
       - name: Read service DNS records
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DNS_MODE: ${{ inputs.mode }}
+          DNS_TARGET: ${{ inputs.target }}
         run: python auth/scripts/dns-routing.py
       - uses: actions/upload-artifact@v4
         with:

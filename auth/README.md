@@ -2,15 +2,17 @@
 
 Self-hosted Google OIDC and passwordless email sign-in, with SSO for the services linked from archerlab.dev. Cloudflare hosts the Worker and D1 database and delivers transactional email; it does not manage user authentication.
 
-The Worker runs in front of the existing origins. It streams their responses, adds a small account control to linked HTML pages, and serves only its reserved `/_account/` endpoints locally. Existing Pages functions, game saves, anonymous sessions and app APIs keep their current behavior. Separate domains and unlisted projects have no routes. Unlisted games receive no account control or SSO return destination.
+The Worker streams existing origins and adds a deferred, silent session script to linked service HTML. The script never adds an account button, stylesheet, overlay, or layout observer. Its background work starts after load or during idle time. Guests use one account status request and stay on their service; signed-in users establish a host-only service session. Existing Pages functions, game saves, anonymous sessions and app APIs keep their current behavior. Separate domains and unlisted projects have no routes. Unlisted games receive no session script or SSO return destination.
 
-The hub also has a static account link, so its login entry remains visible before DNS proxying is enabled. Its private cross-origin status request only updates the label; it does not establish a service session or grant permissions. The gateway replaces this entry once active. `/account` displays account details for signed-in users and the sign-in form for guests.
+The hub owns the visible login and account entry, in its original navigation. It works with DNS-only hosting and is never replaced by injected UI. Its private cross-origin status request updates the label; it does not grant permissions. `/account` displays account details for signed-in users and the sign-in form for guests.
 
-## DNS prerequisite
+## Routing verification
 
-Worker routes require proxied DNS records. In the archerlab.dev zone, enable the orange cloud for `@`, `game`, `nevergrad`, `karma`, `harem`, `cupid`, `chatbot`, `golf`, `itstory`, `chat` and `news`, preserving each existing record's origin target. `account` is a Worker custom domain and Wrangler creates its DNS record automatically. A successful Worker deployment does not enable proxying on existing DNS-only records. Wrangler OAuth cannot edit ordinary DNS records; use the Cloudflare dashboard or a separate zone-scoped DNS Edit API token.
+Keep the hub's `@` records DNS-only. SSO does not require proxying the hub's pages and images. Service `/_account/` endpoints must reach this Worker through the Cloudflare network; verify them after changing DNS. `account` is a Worker custom domain and Wrangler manages its DNS. Existing service targets must be preserved. `news` is itself a Worker origin and cannot be changed to DNS-only like a Pages CNAME.
 
-After DNS propagates, check that each linked page includes `data-archerlab-account`, its `/_account/session` POST returns a private anonymous status, and the login link reaches account.archerlab.dev and can return as a guest. Perform these checks through public DNS, rather than a forced edge address.
+The manually dispatched Service DNS routing workflow uses the repository's existing Cloudflare credential. It defaults to read-only inspection. Changes are restricted to seven known Pages CNAMEs and update only `proxied`, after checking their exact targets. It preserves the account domain, unrelated projects, mail records, Worker origins, and the hub.
+
+After DNS propagates, check that each linked service page includes `data-archerlab-account`, its `/_account/session` POST returns private status, and its silent session script adds no visible UI. Verify central sign-in and logout with real local sessions, and check the native hub link through public DNS. A forced address is only a diagnostic comparison and cannot prove the production path.
 
 ## Security boundary
 

@@ -30,6 +30,12 @@ test('guest pages load without redirect, auth cookies do not reach upstream, HTM
   assert.doesNotMatch(await unlisted.text(), /data-archerlab-account/);
   assert.equal((await browser.request('https://photo.archerlab.dev/')).status, 404);
 });
+
+test('the hub uses its native account entry and preserves the upstream cache validator', async () => {
+  const response = await browser.request('https://archerlab.dev/');
+  assert.doesNotMatch(await response.text(), /data-archerlab-account/);
+  assert.equal(response.headers.get('ETag'), 'original');
+});
 test('status is private, cookies are host-only, Secure, HttpOnly and Lax', async () => {
   const result = await browser.json(account + '/api/status'); assert.equal(result.data.user, null);
   assert.equal(result.response.headers.get('Cache-Control'), 'no-store');

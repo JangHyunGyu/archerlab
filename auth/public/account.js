@@ -57,7 +57,11 @@
     $('send').disabled = !state.providers.email;
     $('email').disabled = !state.providers.email;
     $('signed-in').hidden = !state.user; $('sign-in').hidden = Boolean(state.user);
-    if (state.user) { $('member-name').textContent = state.user.name; $('member-email').textContent = state.user.email; }
+    if (state.user) {
+      $('member-name').textContent = state.user.name; $('member-email').textContent = state.user.email;
+      $('member-initial').textContent = Array.from(state.user.name.trim())[0]?.toLocaleUpperCase(language) || 'A';
+    }
+    $('guest').hidden = Boolean(state.user);
     if (state.target) { $('service-name').textContent = state.target.name; $('guest').href = state.target.returnUrl; }
     if (state.pendingEmail) { $('email').value = state.pendingEmail; notice(copy[language].pending); }
     else if (!state.user && !state.providers.google && !state.providers.email) notice(copy[language].unavailable);
@@ -77,7 +81,12 @@
   $('change-email').addEventListener('click', () => { $('email-form').hidden = false; $('code-form').hidden = true; challenge = null; notice(''); $('email').focus(); });
   $('code-form').addEventListener('submit', event => { event.preventDefault(); void action(async () => go((await api('/api/email/verify', { code: $('code').value, challenge })).redirect)); });
   $('google').addEventListener('click', () => void action(async () => go((await api('/auth/google/start', { request: params.get('request') })).redirect)));
-  $('logout').addEventListener('click', () => void action(async () => { await api('/api/logout', {}); await load(); notice(copy[language].loggedOut); }));
+  $('logout').addEventListener('click', () => void action(async () => {
+    await api('/api/logout', {});
+    challenge = null; resendAt = 0; $('code').value = '';
+    $('email-form').hidden = false; $('code-form').hidden = true;
+    await load(); notice(copy[language].loggedOut);
+  }));
   $('continue').addEventListener('click', () => location.assign(state?.target?.returnUrl || 'https://archerlab.dev/'));
   setInterval(() => { const remaining = Math.max(0, Math.ceil((resendAt - Date.now()) / 1000)); $('resend').disabled = busy || remaining > 0; $('resend').textContent = copy[language].resend + (remaining ? ` (${remaining}s)` : ''); }, 1000);
   translate(); void action(async () => { await load(); if (params.get('error')) notice(copy[language][params.get('error')] || copy[language].generic, true); });

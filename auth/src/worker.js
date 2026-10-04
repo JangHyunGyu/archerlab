@@ -337,7 +337,7 @@ async function originResponse(request) {
   const remaining = (headers.get('Cookie') || '').split(';').filter(part => !/^\s*__Host-al_/.test(part)).join(';');
   if (remaining) headers.set('Cookie', remaining); else headers.delete('Cookie');
   const upstream = await fetch(new Request(request, { headers }));
-  if (request.method !== 'GET' || upstream.status !== 200 || !linkedPage(new URL(request.url)) ||
+  if (new URL(request.url).hostname === 'archerlab.dev' || request.method !== 'GET' || upstream.status !== 200 || !linkedPage(new URL(request.url)) ||
       !upstream.headers.get('Content-Type')?.includes('text/html')) return upstream;
   const transformed = new HTMLRewriter().on('head', {
     element(element) { element.append('<script src="/_account/widget.js" defer data-archerlab-account></script>', { html: true }); }

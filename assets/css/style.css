@@ -214,6 +214,16 @@ body > header {
   flex: none;
 }
 
+.account-link[data-account-state="member"] {
+  color: var(--text);
+  border-color: rgba(208, 160, 91, 0.35);
+  background: rgba(208, 160, 91, 0.08);
+}
+
+.account-link[data-account-state="member"] svg {
+  color: var(--accent);
+}
+
 .lang-dropdown__toggle {
   display: inline-flex;
   align-items: center;

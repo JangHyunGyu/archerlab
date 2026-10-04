@@ -10,7 +10,7 @@
     let checking = false;
 
     async function refresh() {
-      if (checking || document.getElementById('archerlab-account')) return;
+      if (checking) return;
       checking = true;
       try {
         const response = await fetch('https://account.archerlab.dev/api/status', {
@@ -20,6 +20,10 @@
         const status = await response.json();
         label.textContent = status.user ? (korean ? '내 계정' : 'My account') : (korean ? '로그인' : 'Sign in');
         link.setAttribute('aria-label', label.textContent);
+        link.dataset.accountState = status.user ? 'member' : 'guest';
+        window.dispatchEvent(new CustomEvent('archerlab:session', {
+          detail: status.user ? { id: status.user.id, name: status.user.name } : null
+        }));
       } catch {
         // The static link remains available if the status request cannot complete.
       } finally {
