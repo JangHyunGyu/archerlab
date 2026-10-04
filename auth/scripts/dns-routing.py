@@ -1,4 +1,4 @@
-"""Inspect service DNS, or update only the proxy flag of registered Pages records."""
+"""Inspect service DNS, or update only the proxy flag of registered static hosts."""
 import json
 import os
 import urllib.error
@@ -12,6 +12,8 @@ HOSTS = ['archerlab.dev', 'game.archerlab.dev', 'nevergrad.archerlab.dev', 'karm
 PAGES = dict(zip(['game', 'nevergrad', 'karma', 'harem', 'cupid', 'chatbot', 'golf'],
                 ['archerlab-games', 'nevergrad', 'karma-f40', 'harem-csy', 'cupid-cc8', 'chatbot-9ss', 'golf-3xe']))
 PAGES = {name + '.archerlab.dev': target + '.pages.dev' for name, target in PAGES.items()}
+STATIC = {**PAGES, 'itstory.archerlab.dev': 'janghyungyu.github.io',
+          'chat.archerlab.dev': 'janghyungyu.github.io'}
 
 def api(path, body=None):
     request = urllib.request.Request('https://api.cloudflare.com/client/v4/' + path,
@@ -30,22 +32,24 @@ def api(path, body=None):
 def main():
     mode = os.environ.get('DNS_MODE', 'inspect')
     target = os.environ.get('DNS_TARGET', 'all-pages')
-    if mode not in ['inspect', 'pages-direct', 'pages-proxied'] or target not in ['all-pages', *PAGES]:
+    if mode not in ['inspect', 'pages-direct', 'pages-proxied', 'static-direct', 'static-proxied'] or target not in ['all-pages', 'all-static', *STATIC]:
         raise SystemExit('Unregistered DNS operation')
+    allowed = PAGES if mode.startswith('pages-') else STATIC
     records = []
     for host in HOSTS:
         matches = api('zones/' + ZONE + '/dns_records?' + urllib.parse.urlencode({'name': host}))
         for record in matches:
             if record['type'] not in ['A', 'AAAA', 'CNAME']:
                 continue
-            if mode != 'inspect' and host in PAGES and target in ['all-pages', host]:
-                if len(matches) != 1 or record['type'] != 'CNAME' or record['content'] != PAGES[host]:
+            selected = host == target or target == 'all-static' or (target == 'all-pages' and host in PAGES)
+            if mode != 'inspect' and host in allowed and selected:
+                if len(matches) != 1 or record['type'] != 'CNAME' or record['content'] != allowed[host]:
                     raise SystemExit('Unexpected DNS target for ' + host)
                 previous = record['proxied']
-                desired = mode == 'pages-proxied'
+                desired = mode.endswith('-proxied')
                 if previous != desired:
                     record = api('zones/' + ZONE + '/dns_records/' + record['id'], {'proxied': desired})
-                    if record['proxied'] != desired or record['content'] != PAGES[host]:
+                    if record['proxied'] != desired or record['content'] != allowed[host]:
                         raise SystemExit('DNS verification failed for ' + host)
                     print(json.dumps({'updated': host, 'previousProxied': previous, 'proxied': desired}))
             records.append({key: record.get(key) for key in ['id', 'name', 'type', 'content', 'proxied', 'ttl']})

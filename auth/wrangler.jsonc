@@ -19,6 +19,7 @@
   "triggers": { "crons": ["17 * * * *"] },
   "routes": [
     { "pattern": "account.archerlab.dev", "custom_domain": true },
+    { "pattern": "sessions.archerlab.dev", "custom_domain": true },
     { "pattern": "archerlab.dev/*", "zone_name": "archerlab.dev" },
     { "pattern": "game.archerlab.dev/*", "zone_name": "archerlab.dev" },
     { "pattern": "nevergrad.archerlab.dev/*", "zone_name": "archerlab.dev" },

@@ -2,6 +2,7 @@ import { before, after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium, firefox, webkit } from '@playwright/test';
 import { harness, account, service, Browser, emailLogin } from '../harness.mjs';
+import { SERVICES, GAMES, SESSIONS } from '../../src/services.js';
 
 let fixture; let engine;
 before(async () => {
@@ -12,7 +13,7 @@ before(async () => {
 });
 after(async () => { await engine?.close(); await fixture?.close(); });
 
-async function context(options = {}) {
+async function context(options = {}, issuedCookies = []) {
   const context = await engine.newContext({ locale: 'ko-KR', ...options });
   await context.route('**/*', async route => {
     const request = route.request();
@@ -25,7 +26,8 @@ async function context(options = {}) {
     const response = await fixture.mf.dispatchFetch(request.url(), { method: request.method(), headers,
       ...(request.postDataBuffer() ? { body: request.postDataBuffer() } : {}), redirect: 'manual' });
     const outputHeaders = Object.fromEntries(response.headers);
-    const cookies = response.headers.getSetCookie(); if (cookies.length) outputHeaders['set-cookie'] = cookies.join('\n');
+    const cookies = response.headers.getSetCookie(); issuedCookies.push(...cookies);
+    if (cookies.length) outputHeaders['set-cookie'] = cookies.join('\n');
     if (response.status === 303) {
       // Playwright does not intercept requests following an HTTP redirect. A new
       // document navigation keeps every hop inside the local test runtime.
@@ -38,8 +40,9 @@ async function context(options = {}) {
   return context;
 }
 
-test('central sign-in silently joins services without adding controls, and logout revokes both', async () => {
-  const ctx = await context({ viewport: { width: 390, height: 844 } }); const page = await ctx.newPage();
+test('central sign-in silently joins every linked service without controls and logout revokes their sessions', async () => {
+  const issuedCookies=[];
+  const ctx = await context({ viewport: { width: 390, height: 844 } },issuedCookies); const page = await ctx.newPage();
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   try {
     await page.goto(account + '/account?lang=ko');
@@ -54,9 +57,23 @@ test('central sign-in silently joins services without adding controls, and logou
     assert.equal(await page.locator('a,button').count(), 0);
     assert.equal((await page.evaluate(() => document.cookie)).includes('__Host-al_service'), false);
     await page.evaluate(() => localStorage.setItem('existing-game-save', 'preserved'));
-    await page.goto('https://cupid.archerlab.dev/');
-    await page.waitForFunction(() => Boolean(window.archerlabAccount?.user));
-    assert.equal(await page.locator('#archerlab-account').count(), 0);
+    const urls=Object.keys(SERVICES).filter(host=>!['archerlab.dev','game.archerlab.dev'].includes(host)).map(host=>'https://'+host+'/');
+    urls.push(...GAMES.map(game=>'https://game.archerlab.dev/'+game+'/'));
+    const identities=new Set();
+    for(const url of urls) {
+      await page.goto(url);await page.waitForFunction(()=>Boolean(window.archerlabAccount?.user));
+      identities.add(await page.evaluate(()=>window.archerlabAccount.user.id));
+      assert.equal(await page.locator('#archerlab-account').count(),0);
+      assert.equal(await page.locator('body').innerHTML(),'<h1>Guest page</h1>');
+    }
+    assert.equal(identities.size,1);
+    const cookies=await ctx.cookies(SESSIONS);
+    assert.equal(cookies.filter(cookie=>cookie.name.startsWith('__Host-al_service_')).length,10);
+    assert.ok(cookies.every(cookie=>cookie.secure&&cookie.httpOnly));
+    assert.ok(issuedCookies.length>0&&issuedCookies.every(cookie=>/; SameSite=Lax(?:;|$)/.test(cookie)));
+    // Windows WebKit's cookie inspection reports None for intercepted fetches.
+    // Verify its received policy above; other engines also expose the stored policy.
+    if(process.env.ACCOUNT_TEST_BROWSER!=='webkit')assert.ok(cookies.every(cookie=>cookie.sameSite==='Lax'));
     await page.goto(account + '/account?lang=ko');
     await page.getByRole('heading', { name: '내 계정', exact: true }).waitFor();
     await page.locator('#logout').click();
@@ -65,8 +82,13 @@ test('central sign-in silently joins services without adding controls, and logou
     assert.equal(await page.locator('#code-form').isVisible(), false);
     await page.goto(service + '/');
     assert.equal(await page.evaluate(() => window.archerlabAccount.ready), null);
-    const status = await page.evaluate(async () => (await fetch('/_account/session', { method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json'}, body:'{}' })).json());
-    assert.equal(status.user, null);
+    for(const key of ['game','nevergrad','karma','harem','cupid','chatbot','golf','itstory','news','chat']) {
+      await page.goto('https://'+key+'.archerlab.dev/'+(key==='game'?'jewelria/':''));
+      assert.equal(await page.evaluate(()=>window.archerlabAccount.ready),null);
+      const status=await page.evaluate(async key=>(await fetch('https://sessions.archerlab.dev/'+key+'/_account/session',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:'{}'})).json(),key);
+      assert.equal(status.user,null);
+    }
+    await page.goto(service+'/');
     assert.equal(await page.evaluate(() => localStorage.getItem('existing-game-save')), 'preserved');
     assert.deepEqual(errors, []);
   } finally { await ctx.close(); }
@@ -172,4 +194,19 @@ test('a guest stays on the service and silent SSO leaves the document untouched'
     assert.equal(requests.filter(url => url.endsWith('/_account/session')).length, 0);
     assert.equal(await page.locator('#archerlab-account').count(), 0);
   } finally { await ctx.close(); }
+});
+
+test('simultaneous service tabs keep independent browser proofs and sessions', async () => {
+  const member=new Browser(fixture.mf);await emailLogin(member,fixture,'parallel@example.com');
+  const ctx=await context();
+  await ctx.addCookies([...member.cookies.get(account)].map(([name,value])=>({name,value,domain:'account.archerlab.dev',path:'/',secure:true,httpOnly:true,sameSite:'Lax'})));
+  try {
+    const pages=await Promise.all(['harem','cupid'].map(async key=>{
+      const page=await ctx.newPage();await page.goto('https://'+key+'.archerlab.dev/');
+      await page.waitForFunction(()=>Boolean(window.archerlabAccount?.user));return page;
+    }));
+    assert.equal(await pages[0].evaluate(()=>window.archerlabAccount.user.id),await pages[1].evaluate(()=>window.archerlabAccount.user.id));
+    const jar=await ctx.cookies(SESSIONS);
+    for(const key of ['harem','cupid'])assert.ok(jar.some(cookie=>cookie.name==='__Host-al_service_'+key&&cookie.httpOnly));
+  } finally {await ctx.close();}
 });

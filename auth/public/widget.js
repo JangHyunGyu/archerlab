@@ -2,7 +2,11 @@
   'use strict';
   // The hub owns the visible account entry. Services only synchronize identity.
   if (location.hostname === 'archerlab.dev' || window.archerlabAccount) return;
+  const services = ['game', 'nevergrad', 'karma', 'harem', 'cupid', 'chatbot', 'golf', 'itstory', 'news', 'chat'];
+  const key = location.hostname.split('.')[0];
+  if (location.hostname !== `${key}.archerlab.dev` || !services.includes(key)) return;
   const account = 'https://account.archerlab.dev';
+  const sessionApi = `https://sessions.archerlab.dev/${key}`;
   let user = null;
   let pending = null;
   let resolveReady;
@@ -24,16 +28,16 @@
   async function synchronize() {
     try {
       // Guests need one background request and no service cookie or redirect.
-      const central = await api(account, '/api/status');
+      const central = await api(account, '/api/status', {});
       if (!central.user) { publish(null); return; }
-      const local = await api('', '/_account/session', {});
+      const local = await api(sessionApi, '/_account/session', {});
       if (local.user?.id === central.user.id) { publish(local.user); return; }
-      const prepared = await api('', '/_account/prepare', {
+      const prepared = await api(sessionApi, '/_account/prepare', {
         csrf: local.csrf, returnPath: location.pathname + location.search + location.hash
       });
       const ticket = await api(account, '/api/sso', { csrf: central.csrf, request: prepared.request });
-      await api('', '/_account/complete', { csrf: local.csrf, request: prepared.request, code: ticket.code });
-      publish((await api('', '/_account/session', {})).user);
+      await api(sessionApi, '/_account/complete', { csrf: local.csrf, request: prepared.request, code: ticket.code });
+      publish((await api(sessionApi, '/_account/session', {})).user);
     } catch { publish(null); }
     finally {
       resolveReady(user);

@@ -5,11 +5,11 @@ on:
       mode:
         type: choice
         default: inspect
-        options: [inspect, pages-direct, pages-proxied]
+        options: [inspect, pages-direct, pages-proxied, static-direct, static-proxied]
       target:
         type: choice
         default: all-pages
-        options: [all-pages, golf.archerlab.dev, game.archerlab.dev, nevergrad.archerlab.dev, karma.archerlab.dev, harem.archerlab.dev, cupid.archerlab.dev, chatbot.archerlab.dev]
+        options: [all-pages, all-static, golf.archerlab.dev, game.archerlab.dev, nevergrad.archerlab.dev, karma.archerlab.dev, harem.archerlab.dev, cupid.archerlab.dev, chatbot.archerlab.dev, itstory.archerlab.dev, chat.archerlab.dev]
 
 permissions:
   contents: read

@@ -1,4 +1,4 @@
-import { ACCOUNT, SERVICES, registered, linkedPage, returnPath } from './services.js';
+import { ACCOUNT, SESSIONS, SERVICES, registered, linkedPage, returnPath } from './services.js';
 import { HttpError, random, digest, sign, verify, cookie, setCookie, jsonBody, string, email, oneTimeCode, json, redirect, boundedText } from './security.js';
 import { verifyGoogle } from './google.js';
 
@@ -14,9 +14,10 @@ const LIFETIME = 7 * 86400;
 const now = () => Math.floor(Date.now() / 1000);
 
 class Account {
-  /** @param {Request} request @param {AuthEnv} env */
-  constructor(request, env) {
+  /** @param {Request} request @param {AuthEnv} env @param {string} [delivery] */
+  constructor(request, env, delivery = '') {
     this.request = request; this.env = env; this.url = new URL(request.url);
+    this.delivery = delivery;
     this.db = env.DB.withSession('first-primary');
     this.browser = cookie(request, BROWSER) || random();
     this.cookies = [];
@@ -28,6 +29,11 @@ class Account {
     return value;
   }
   async csrf() { return sign(this.secret, `csrf:${this.url.origin}:${this.browser}`); }
+  /** @param {string} token */
+  async sessionHash(token) {
+    // Old frontend cookies cannot be replayed under names on the new session host.
+    return (this.delivery === SESSIONS ? 'gateway:' : '') + await digest(token);
+  }
   /** @param {boolean} [crossService] */
   async body(crossService = false) {
     const origin = this.request.headers.get('Origin');
@@ -55,7 +61,7 @@ class Account {
     return this.db.prepare(`SELECT s.*,u.email,u.name FROM sessions s JOIN users u ON u.id=s.user_id
       LEFT JOIN sessions p ON p.hash=s.parent_hash WHERE s.hash=? AND s.origin=? AND s.expires_at>?
       AND ((s.parent_hash IS NULL AND s.origin=?) OR (p.hash IS NOT NULL AND p.origin=? AND p.expires_at>?))`)
-      .bind(await digest(token), this.url.origin, now(), ACCOUNT, ACCOUNT, now()).first();
+      .bind(await this.sessionHash(token), this.url.origin, now(), ACCOUNT, ACCOUNT, now()).first();
   }
   /** @param {string} userId */
   async centralSession(userId) {
@@ -108,7 +114,7 @@ class Account {
     const token = random();
     const result = await this.db.prepare(`INSERT INTO sessions(hash,user_id,origin,parent_hash,expires_at,created_at)
       SELECT ?,user_id,?,hash,expires_at,? FROM sessions WHERE hash=? AND origin=? AND expires_at>?`)
-      .bind(await digest(token), this.url.origin, now(), parent.parent_hash, ACCOUNT, now()).run();
+      .bind(await this.sessionHash(token), this.url.origin, now(), parent.parent_hash, ACCOUNT, now()).run();
     if (result.meta.changes !== 1) throw new HttpError(401, 'session_expired');
     this.cookies.push(setCookie(LOCAL, token, LIFETIME));
     return sso.return_path;
@@ -254,6 +260,13 @@ class Account {
   async dispatch() {
     const path = this.url.pathname; const central = this.url.origin === ACCOUNT;
     if (this.request.method === 'GET' && path === '/api/status' && central) return this.status();
+    if (this.request.method === 'POST' && path === '/api/status' && central) {
+      const origin = this.request.headers.get('Origin');
+      let source;
+      try { source = origin ? new URL(origin) : null; } catch { throw new HttpError(403, 'origin_denied'); }
+      if (!source || source.origin !== origin || (origin !== ACCOUNT && !registered(source))) throw new HttpError(403, 'origin_denied');
+      await jsonBody(this.request); return this.status();
+    }
     if (this.request.method === 'POST' && path === '/_account/session' && !central) {
       // Existing app service workers sometimes cache every GET, even with no-store.
       if (this.request.headers.get('Origin') !== this.url.origin) throw new HttpError(403, 'origin_denied');
@@ -347,15 +360,66 @@ async function originResponse(request) {
   return result;
 }
 
-export default {
-  /** @param {Request} request @param {AuthEnv} env */
+/** @param {Request} request @param {AuthEnv} env @returns {Promise<Response>} */
+async function serviceSession(request, env) {
+  const url = new URL(request.url);
+  const match = /^\/([a-z]+)\/(\_account\/(?:session|prepare|complete))$/.exec(url.pathname);
+  if (!match || !['POST', 'OPTIONS'].includes(request.method)) return new Response('Not found', { status: 404 });
+  const key = match[1]; const origin = `https://${key}.archerlab.dev`;
+  if (!registered(new URL(origin)) || request.headers.get('Origin') !== origin) return new Response('Forbidden', { status: 403 });
+  let response;
+  if (request.method === 'OPTIONS') response = new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+  else {
+    const headers = new Headers(request.headers);
+    // Each service has its own host-only cookie names on the session API. Concurrent
+    // tabs cannot overwrite another service's browser proof or authenticated session.
+    const scoped = [BROWSER, LOCAL].map(name => [name, cookie(request, `${name}_${key}`)]).filter(([, value]) => value);
+    if (scoped.length) headers.set('Cookie', scoped.map(([name, value]) => `${name}=${value}`).join('; '));
+    else headers.delete('Cookie');
+    const target = new URL(`/${match[2]}`, origin);
+    const virtual = new Request(new Request(target, request), { headers });
+    // The established protocol still binds database sessions and CSRF to the
+    // frontend's exact origin; only their delivery host changes.
+    const result = await accountResponse(virtual, env, SESSIONS);
+    response = new Response(result.body, result);
+    const cookies = result.headers.getSetCookie(); response.headers.delete('Set-Cookie');
+    for (const value of cookies) {
+      response.headers.append('Set-Cookie', value.replace(/^(__Host-al_(?:browser|service))=/, `$1_${key}=`));
+    }
+  }
+  response.headers.set('Access-Control-Allow-Origin', origin);
+  response.headers.set('Access-Control-Allow-Credentials', 'true');
+  response.headers.set('Access-Control-Allow-Methods', 'POST');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  response.headers.set('Vary', 'Origin');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  return response;
+}
+
+/** @param {Request} request @param {AuthEnv} env @param {string} [delivery] @returns {Promise<Response>} */
+async function accountResponse(request, env, delivery = '') {
+  const account = new Account(request, env, delivery);
+  try { return privateResponse(request, await account.dispatch(), account.cookies); }
+  catch (error) {
+    const status = error instanceof HttpError ? error.status : 503;
+    const code = error instanceof HttpError ? error.message : 'temporarily_unavailable';
+    if (!(error instanceof HttpError)) console.error(JSON.stringify({ event: 'account_error', path: new URL(request.url).pathname, kind: error instanceof Error ? error.name : 'unknown' }));
+    const response = privateResponse(request, json({ error: code }, status), account.cookies);
+    if (status === 429) response.headers.set('Retry-After', '600');
+    return response;
+  }
+}
+
+const worker = {
+  /** @param {Request} request @param {AuthEnv} env @returns {Promise<Response>} */
   async fetch(request, env) {
     const url = new URL(request.url); const central = url.origin === ACCOUNT;
     if (url.protocol !== 'https:') {
       url.protocol = 'https:';
-      if (url.origin === ACCOUNT || registered(url)) return redirect(url.href);
+      if (url.origin === ACCOUNT || url.origin === SESSIONS || registered(url)) return redirect(url.href);
       return new Response('Not found', { status: 404 });
     }
+    if (url.origin === SESSIONS) return serviceSession(request, env);
     if (!central && !registered(url)) return new Response('Not found', { status: 404 });
     if (!central && !url.pathname.startsWith('/_account/')) return originResponse(request);
     if (request.method === 'OPTIONS') return privateResponse(request, new Response(null, { status: 204 }));
@@ -363,17 +427,7 @@ export default {
     if (request.method === 'GET' && ['/widget.js', '/widget.css', '/callback.js', '/account.js', '/account.css', '/privacy.html'].includes(staticPath)) {
       return privateResponse(request, await asset(env, staticPath));
     }
-    const account = new Account(request, env);
-    try { return privateResponse(request, await account.dispatch(), account.cookies); }
-    catch (error) {
-      const status = error instanceof HttpError ? error.status : 503;
-      const code = error instanceof HttpError ? error.message : 'temporarily_unavailable';
-      // Do not log URLs, email addresses, OAuth codes, tokens, or raw provider errors.
-      if (!(error instanceof HttpError)) console.error(JSON.stringify({ event: 'account_error', path: url.pathname, kind: error instanceof Error ? error.name : 'unknown' }));
-      const response = privateResponse(request, json({ error: code }, status), account.cookies);
-      if (status === 429) response.headers.set('Retry-After', '600');
-      return response;
-    }
+    return accountResponse(request, env);
   },
   /** @param {ScheduledController} controller @param {AuthEnv} env */
   async scheduled(controller, env) {
@@ -382,3 +436,4 @@ export default {
       .map(table => env.DB.prepare(`DELETE FROM ${table} WHERE expires_at<=?`).bind(time)));
   }
 };
+export default worker;

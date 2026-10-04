@@ -42,8 +42,9 @@ test('the native hub account entry fits signed-in and guest headers in both lang
       await page.getByRole('link',{name:expected,exact:true}).waitFor();
       for(const [width,height] of sizes) {
         await page.setViewportSize({width,height});
+        await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
         const rectangles=await page.locator('.logo,.lang-dropdown__toggle,[data-account-link]').evaluateAll(elements=>elements.map(e=>{const r=e.getBoundingClientRect();return {class:e.className,left:r.left,right:r.right,top:r.top,bottom:r.bottom,height:r.height};}));
-        assert.ok(rectangles.every(r=>r.left>=0&&r.right<=width),`${language} ${signedIn} ${width}: header fits`);
+        assert.ok(rectangles.every(r=>r.left>=0&&r.right<=width),`${language} ${signedIn} ${width}: header fits ${JSON.stringify(rectangles)}`);
         for(let i=0;i<rectangles.length;i++)for(let j=i+1;j<rectangles.length;j++) {
           const a=rectangles[i],b=rectangles[j];
           assert.ok(!(a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top),`${language} ${signedIn} ${width}: header overlap`);

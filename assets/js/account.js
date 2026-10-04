@@ -14,6 +14,7 @@
       checking = true;
       try {
         const response = await fetch('https://account.archerlab.dev/api/status', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
           credentials: 'include', cache: 'no-store', signal: AbortSignal.timeout(8000)
         });
         if (!response.ok) return;

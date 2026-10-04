@@ -1,4 +1,5 @@
 export const ACCOUNT = 'https://account.archerlab.dev';
+export const SESSIONS = 'https://sessions.archerlab.dev';
 
 // Only projects linked from the hub. Separate domains and unlisted games stay out.
 export const SERVICES = Object.freeze({
