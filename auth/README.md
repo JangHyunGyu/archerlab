@@ -4,6 +4,12 @@ Self-hosted Google OIDC and passwordless email sign-in, with SSO for the service
 
 The Worker runs in front of the existing origins. It streams their responses, adds a small account control to linked HTML pages, and serves only its reserved `/_account/` endpoints locally. Existing Pages functions, game saves, anonymous sessions and app APIs keep their current behavior. Separate domains and unlisted projects have no routes. Unlisted games receive no account control or SSO return destination.
 
+## DNS prerequisite
+
+Worker routes require proxied DNS records. In the archerlab.dev zone, enable the orange cloud for `@`, `game`, `nevergrad`, `karma`, `harem`, `cupid`, `chatbot`, `golf`, `itstory`, `chat` and `news`, preserving each existing record's origin target. `account` is a Worker custom domain and Wrangler creates its DNS record automatically. A successful Worker deployment does not enable proxying on existing DNS-only records. Wrangler OAuth cannot edit ordinary DNS records; use the Cloudflare dashboard or a separate zone-scoped DNS Edit API token.
+
+After DNS propagates, check that each linked page includes `data-archerlab-account`, its `/_account/session` POST returns a private anonymous status, and the login link reaches account.archerlab.dev and can return as a guest. Perform these checks through public DNS, rather than a forced edge address.
+
 ## Security boundary
 
 - Account and service cookies are host-only, Secure, HttpOnly and SameSite=Lax. Tokens never enter localStorage. Auth cookies are removed before origin requests.
