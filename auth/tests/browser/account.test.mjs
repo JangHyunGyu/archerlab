@@ -1,10 +1,15 @@
 import { before, after, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { chromium } from '@playwright/test';
+import { chromium, firefox, webkit } from '@playwright/test';
 import { harness, account, service } from '../harness.mjs';
 
 let fixture; let engine;
-before(async () => { fixture = await harness(); engine = await chromium.launch({ headless: true }); });
+before(async () => {
+  fixture = await harness();
+  const type = { chromium, firefox, webkit }[process.env.ACCOUNT_TEST_BROWSER || 'chromium'];
+  assert.ok(type, 'ACCOUNT_TEST_BROWSER must be chromium, firefox, or webkit');
+  engine = await type.launch({ headless: true });
+});
 after(async () => { await engine?.close(); await fixture?.close(); });
 
 async function context(options = {}) {
@@ -12,6 +17,11 @@ async function context(options = {}) {
   await context.route('**/*', async route => {
     const request = route.request();
     const headers = await request.allHeaders(); headers['CF-Connecting-IP'] = '203.0.113.80';
+    if (!headers.cookie && process.env.ACCOUNT_TEST_BROWSER === 'webkit') {
+      // WebKit attaches cookies after interception. Our local transport must carry
+      // the browser's host-scoped jar because this request never reaches its network stack.
+      headers.cookie = (await context.cookies(request.url())).map(value => `${value.name}=${value.value}`).join('; ');
+    }
     const response = await fixture.mf.dispatchFetch(request.url(), { method: request.method(), headers,
       ...(request.postDataBuffer() ? { body: request.postDataBuffer() } : {}), redirect: 'manual' });
     const outputHeaders = Object.fromEntries(response.headers);
@@ -45,7 +55,9 @@ test('browser email sign-in returns to the service, silently joins a second serv
     await page.evaluate(() => localStorage.setItem('existing-game-save', 'preserved'));
     await page.goto('https://cupid.archerlab.dev/');
     await page.locator('#archerlab-account').getByRole('link', { name: 'Account', exact: true }).waitFor();
-    await page.goto(account + '/?lang=ko'); await page.locator('#logout').click();
+    await page.goto(account + '/account?lang=ko');
+    await page.getByRole('heading', { name: '내 계정', exact: true }).waitFor();
+    await page.locator('#logout').click();
     await page.locator('#sign-in').waitFor({ state: 'visible' });
     await page.goto(service + '/');
     await page.locator('#archerlab-account').getByRole('link', { name: 'Sign in' }).waitFor();
@@ -57,7 +69,7 @@ test('browser email sign-in returns to the service, silently joins a second serv
 test('account layout fits phone, tablet and desktop orientations with keyboard and reduced motion', async () => {
   const ctx = await context({ reducedMotion: 'reduce' }); const page = await ctx.newPage();
   try {
-    for (const [width, height] of [[320, 568], [568, 320], [390, 844], [844, 390], [768, 1024], [1024, 768], [1440, 900], [1920, 1080]]) {
+    for (const [width, height] of [[280, 653], [320, 568], [360, 800], [390, 844], [430, 932], [568, 320], [844, 390], [390, 420], [768, 1024], [820, 1180], [1024, 768], [1280, 800], [1440, 900], [1920, 1080], [2560, 1440], [3840, 2160]]) {
       await page.setViewportSize({ width, height }); await page.goto(account + '/?lang=ko');
       await page.locator('#send:not([disabled])').waitFor();
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${width}×${height}: horizontal overflow`);

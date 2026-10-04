@@ -18,7 +18,7 @@
   const label = document.createElement('span'); label.className = 'label'; label.textContent = copy.login; trigger.append(icon, label); shadow.append(trigger);
   const menu = document.createElement('div'); menu.className = 'menu'; menu.hidden = true;
   const name = document.createElement('p'); name.className = 'name'; const email = document.createElement('p'); email.className = 'email';
-  const manage = document.createElement('a'); manage.href = account + '/?lang=' + (ko ? 'ko' : 'en'); manage.textContent = copy.logout;
+  const manage = document.createElement('a'); manage.href = account + '/account?lang=' + (ko ? 'ko' : 'en'); manage.textContent = copy.logout;
   menu.append(name, email, manage); shadow.append(menu);
   const selectors = {
     'archerlab.dev': '.navbar', 'harem.archerlab.dev': '.app__actions', 'golf.archerlab.dev': '.site-nav',
@@ -68,6 +68,9 @@
         target.append(actions);
       }
       target = actions;
+      const nativeLink = actions.querySelector('[data-account-link]');
+      if (nativeLink) nativeLink.hidden = true;
+      host.style.marginInlineStart = '0';
     }
     if (target) {
       if (host.parentElement !== target) target.append(host);

@@ -4,6 +4,8 @@ Self-hosted Google OIDC and passwordless email sign-in, with SSO for the service
 
 The Worker runs in front of the existing origins. It streams their responses, adds a small account control to linked HTML pages, and serves only its reserved `/_account/` endpoints locally. Existing Pages functions, game saves, anonymous sessions and app APIs keep their current behavior. Separate domains and unlisted projects have no routes. Unlisted games receive no account control or SSO return destination.
 
+The hub also has a static account link, so its login entry remains visible before DNS proxying is enabled. Its private cross-origin status request only updates the label; it does not establish a service session or grant permissions. The gateway replaces this entry once active. `/account` displays account details for signed-in users and the sign-in form for guests.
+
 ## DNS prerequisite
 
 Worker routes require proxied DNS records. In the archerlab.dev zone, enable the orange cloud for `@`, `game`, `nevergrad`, `karma`, `harem`, `cupid`, `chatbot`, `golf`, `itstory`, `chat` and `news`, preserving each existing record's origin target. `account` is a Worker custom domain and Wrangler creates its DNS record automatically. A successful Worker deployment does not enable proxying on existing DNS-only records. Wrangler OAuth cannot edit ordinary DNS records; use the Cloudflare dashboard or a separate zone-scoped DNS Edit API token.
@@ -50,6 +52,8 @@ npx wrangler deploy --dry-run
 ```
 
 Apply additive migrations with `npx wrangler d1 migrations apply archerlab-account --remote`. Commit and push main before `npx wrangler deploy`; confirm a clean worktree and HEAD equal to origin/main. Do not deploy Pages manually. This Worker has its own deployment.
+
+The browser suite defaults to Chromium. Set `ACCOUNT_TEST_BROWSER` to `firefox` or `webkit` to run it in another engine, after installing that engine with Playwright. Responsive checks cover 16 viewport sizes, including a short viewport representing an open mobile keyboard.
 
 Email requires enabled Email Sending and verified SPF/DKIM records for archerlab.dev. The binding only allows login@archerlab.dev. If delivery fails, the challenge is discarded and no session is created.
 

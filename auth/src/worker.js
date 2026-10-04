@@ -292,7 +292,7 @@ class Account {
       // document, then navigate explicitly, so the browser URL and app scope agree.
       return asset(this.env, '/callback.html');
     }
-    if (central && path === '/' && this.request.method === 'GET') {
+    if (central && (path === '/' || path === '/account') && this.request.method === 'GET') {
       const token = this.url.searchParams.get('request');
       if (token) {
         if (!await this.ssoRequest(token)) throw new HttpError(400, 'request_expired');
