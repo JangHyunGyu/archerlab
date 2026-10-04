@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>ArcherLab 계정</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M8 31 20 7l12 24M13 24h14' fill='none' stroke='%23d0a05b' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/account.css">
+  <script src="/account.js" defer></script>
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="https://archerlab.dev/">ArcherLab<span class="wordmark-dot"></span></a><span class="masthead-note">ACCOUNT</span><button id="language" type="button" aria-label="Change language">EN</button></header>
+  <main class="account-layout">
+    <section class="introduction" aria-labelledby="intro-title">
+      <span class="section-number">01 / ACCOUNT</span>
+      <h1 id="intro-title" data-i18n="headline">한 번 로그인.<br>함께 쓰는 계정.</h1>
+      <p class="intro-copy" data-i18n="intro">ArcherLab 서비스에서 같은 계정을 사용하세요.<br>비회원으로도 계속 이용할 수 있어요.</p>
+      <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 240 240" fill="none"><circle cx="120" cy="120" r="106"/><circle cx="120" cy="120" r="80"/><path d="M68 174 120 66l52 108M85 140h70M120 24v24M120 192v24M24 120h24M192 120h24"/></svg></div>
+      <p class="intro-caption">LOGIC × DESIGN, IN PRACTICE</p>
+    </section>
+    <section class="form-panel" aria-labelledby="form-title">
+      <p class="eyebrow" id="service-name">ARCHERLAB</p>
+      <h2 id="form-title" data-i18n="login">로그인</h2>
+      <p class="form-description" data-i18n="description">구글 계정이나 이메일로 시작하세요.</p>
+      <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
+      <div id="sign-in">
+        <button class="google-button" id="google" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M21.6 12.2c0-.7-.1-1.4-.2-2.1H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4Z"/><path fill="#34a853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1a6 6 0 0 1-5.7-4.2H3v2.6A10 10 0 0 0 12 22Z"/><path fill="#fbbc05" d="M6.3 13.9a6 6 0 0 1 0-3.8V7.5H3a10 10 0 0 0 0 9l3.3-2.6Z"/><path fill="#ea4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A9.5 9.5 0 0 0 12 2a10 10 0 0 0-9 5.5l3.3 2.6A6 6 0 0 1 12 5.9Z"/></svg><span data-i18n="google">Google로 계속하기</span></button>
+        <div class="divider"><span data-i18n="or">또는 이메일로</span></div>
+        <form id="email-form">
+          <label for="email" data-i18n="email">이메일</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+          <button class="primary-button" id="send" type="submit" disabled data-i18n="send">인증번호 받기</button>
+          <p class="field-note" data-i18n="passwordless">비밀번호 없이, 이메일로 받은 번호를 입력하면 돼요.</p>
+        </form>
+        <form id="code-form" hidden>
+          <label for="code" data-i18n="code">인증번호</label>
+          <p id="sent-to" class="sent-to"></p>
+          <input id="code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" placeholder="000000" required>
+          <button class="primary-button" type="submit" data-i18n="verify">로그인하기</button>
+          <div class="code-actions"><button id="change-email" class="text-button" type="button" data-i18n="changeEmail">다른 이메일 사용</button><button id="resend" class="text-button" type="button" disabled data-i18n="resend">다시 받기</button></div>
+          <p class="field-note" data-i18n="expires">인증번호는 10분 동안 유효해요.</p>
+        </form>
+      </div>
+      <div id="signed-in" hidden><p class="member-name" id="member-name"></p><p class="member-email" id="member-email"></p><button id="continue" class="primary-button" type="button" data-i18n="continue">서비스로 돌아가기</button><button id="logout" class="text-button logout-button" type="button" data-i18n="logout">모든 서비스에서 로그아웃</button></div>
+      <div class="form-footer"><a id="guest" href="https://archerlab.dev/" data-i18n="guest">로그인 없이 계속하기 <span aria-hidden="true">↗</span></a><a href="/privacy.html" data-i18n="privacy">계정 개인정보 안내</a></div>
+    </section>
+  </main>
+  <footer class="page-footer"><span>© ArcherLab</span><a href="mailto:hyungyu@archerlab.dev" data-i18n="help">도움이 필요하신가요?</a></footer>
+</body>
+</html>

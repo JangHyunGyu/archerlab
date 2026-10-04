@@ -1,0 +1,34 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "archerlab-account",
+  "main": "src/worker.js",
+  "account_id": "f5ced3498c8b7674581b5c9987f31585",
+  "compatibility_date": "2026-10-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  "d1_databases": [{
+    "binding": "DB", "database_name": "archerlab-account",
+    "database_id": "ef1efcca-6823-4cec-923d-52f93c7a4455",
+    "migrations_dir": "migrations"
+  }],
+  "vars": { "EMAIL_ENABLED": "true", "EMAIL_FROM": "login@archerlab.dev" },
+  "send_email": [{ "name": "EMAIL", "allowed_sender_addresses": ["login@archerlab.dev"] }],
+  "observability": { "enabled": true, "head_sampling_rate": 0.1, "logs": { "invocation_logs": false } },
+  "triggers": { "crons": ["17 * * * *"] },
+  "routes": [
+    { "pattern": "account.archerlab.dev", "custom_domain": true },
+    { "pattern": "archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "game.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "nevergrad.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "karma.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "harem.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "cupid.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "chatbot.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "golf.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "itstory.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "news.archerlab.dev/*", "zone_name": "archerlab.dev" },
+    { "pattern": "chat.archerlab.dev/*", "zone_name": "archerlab.dev" }
+  ]
+}

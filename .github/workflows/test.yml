@@ -16,3 +16,11 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+      - run: npm ci
+        working-directory: auth
+      - run: npm run types && npm run check && npm test
+        working-directory: auth
+      - run: npx playwright install --with-deps chromium --only-shell
+        working-directory: auth
+      - run: npm run test:browser && npm audit --audit-level=high
+        working-directory: auth

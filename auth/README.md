@@ -1,0 +1,52 @@
+# ArcherLab account
+
+Self-hosted Google OIDC and passwordless email sign-in, with SSO for the services linked from archerlab.dev. Cloudflare hosts the Worker and D1 database and delivers transactional email; it does not manage user authentication.
+
+The Worker runs in front of the existing origins. It streams their responses, adds a small account control to linked HTML pages, and serves only its reserved `/_account/` endpoints locally. Existing Pages functions, game saves, anonymous sessions and app APIs keep their current behavior. Separate domains and unlisted projects have no routes. Unlisted games receive no account control or SSO return destination.
+
+## Security boundary
+
+- Account and service cookies are host-only, Secure, HttpOnly and SameSite=Lax. Tokens never enter localStorage. Auth cookies are removed before origin requests.
+- Service sessions reference a central session. Signing out revokes its service sessions immediately. Other devices remain signed in.
+- Every exchange uses a short-lived, one-time code and a request tied to a host-only browser cookie and registered return destination. SQL consumption is atomic.
+- Mutations require an exact Origin and a browser-bound HMAC CSRF proof. Account CORS only allows the registered service origins.
+- Email challenges expire after 10 minutes, allow five attempts, and store keyed signatures. Issuing a new challenge replaces the previous one. IP, address, browser and global send limits constrain abuse.
+- Google uses authorization code + PKCE, state and nonce. jose verifies signature, issuer, audience, authorized party, token age, expiry and verified email. Existing email accounts and third-party Google email addresses require fresh email proof before linking.
+- Status uses POST on service origins because existing service workers cache GET responses. The callback document consumes its code through POST and explicitly replaces the URL. Auth documents carry a restrictive CSP and no analytics.
+- Database reads use a D1 session starting on the primary. Expired authentication records are deleted hourly. Logs omit URLs, email, codes and raw provider errors.
+
+SSO establishes account identity. It does not migrate old Karma matching accounts, merge anonymous saves, or grant paid access. Existing app API identifiers are not proof of membership. A server integrating paid features must verify this service's session through a service binding and apply its own entitlement checks; never trust the browser's `archerlab:session` event.
+
+## Google configuration
+
+1. In Google Cloud, configure a Google Auth Platform project with an external audience and ArcherLab branding. Request only `openid`, `email`, `profile`.
+2. Create a **Web application** OAuth client. Its authorized redirect URI is exactly:
+
+   `https://account.archerlab.dev/auth/google/callback`
+
+3. Publish the consent configuration for production users. While testing, explicitly add test users.
+4. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` with `npx wrangler secret put` from this directory. Do not place credentials in git or chat.
+5. Verify a real Google login and its return to two services. Until both secrets exist, the UI disables Google and the server rejects its start endpoint.
+
+`SESSION_SECRET` must contain at least 32 cryptographically random bytes. Set it with `wrangler secret put`; `.dev.vars` is ignored. Keep it stable: changing it invalidates pending codes and CSRF proofs.
+
+## Commands
+
+```text
+npm ci
+npm run types
+npm run check
+npm test
+npx playwright install --with-deps chromium --only-shell
+npm run test:browser
+npm audit
+npx wrangler deploy --dry-run
+```
+
+Apply additive migrations with `npx wrangler d1 migrations apply archerlab-account --remote`. Commit and push main before `npx wrangler deploy`; confirm a clean worktree and HEAD equal to origin/main. Do not deploy Pages manually. This Worker has its own deployment.
+
+Email requires enabled Email Sending and verified SPF/DKIM records for archerlab.dev. The binding only allows login@archerlab.dev. If delivery fails, the challenge is discarded and no session is created.
+
+Local security and browser tests use the real Worker and D1 runtime with a test-only transport adapter. They never send mail or introduce a production bypass. Production verification must also check actual mailbox delivery and an interactive Google sign-in; local tests cannot prove those external steps.
+
+If a route causes an origin regression, remove that route from this Worker and deploy the clean main configuration. Existing app sources and original hosting are preserved.
