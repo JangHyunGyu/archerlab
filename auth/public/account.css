@@ -88,6 +88,33 @@ input::placeholder { color: #706f70; }
 .page-footer { width: 100%; max-width: 1120px; margin-inline: auto; padding: 12px max(24px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 10px; color: #88857e; }
 .page-footer a { min-height: 44px; display: flex; align-items: center; }
 
+body[data-account-state="member"] .masthead,
+body[data-account-state="member"] .page-footer { max-width: 720px; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+body[data-account-state="member"] .account-layout { max-width: 720px; align-content: start; padding-top: clamp(32px, 8vh, 88px); padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+body[data-account-state="member"] .form-panel { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+body[data-account-state="member"] .eyebrow,
+body[data-account-state="member"] .form-description { display: none; }
+body[data-account-state="member"] h2 { font-size: clamp(28px, 3vw, 34px); font-weight: 650; margin-bottom: 28px; }
+body[data-account-state="member"] .member-card { align-items: center; gap: 22px; margin: 0; padding: clamp(20px, 4vw, 32px); border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(120deg, #151820, #0e1118 70%); }
+body[data-account-state="member"] .member-avatar { width: 64px; height: 64px; border-radius: 50%; font-size: 25px; background: radial-gradient(circle at 30% 20%, #d0a05b1c, #d0a05b06); }
+body[data-account-state="member"] .member-name { font-size: clamp(19px, 2.5vw, 24px); line-height: 1.45; margin-bottom: 8px; }
+body[data-account-state="member"] .member-email { font-size: 13px; }
+.member-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 20px; }
+body[data-account-state="member"] .member-actions .primary-button { width: auto; flex: 1; min-width: 200px; margin: 0; padding-inline: 18px; background: #d0a05b0b; border-color: #d0a05b40; color: #dfbd88; font-size: 13px; justify-content: space-between; }
+body[data-account-state="member"] .member-actions .primary-button:hover { border-color: var(--gold); background: #d0a05b14; }
+.member-actions svg { flex: none; }
+body[data-account-state="member"] .logout-button { width: auto; margin: 0; padding-inline: 4px; font-size: 12px; }
+body[data-account-state="member"] .form-footer { margin-top: 28px; padding-top: 10px; }
+
+@media (max-width: 540px) {
+  body[data-account-state="member"] .account-layout { padding-top: 32px; }
+  body[data-account-state="member"] .member-card { gap: 16px; align-items: flex-start; }
+  body[data-account-state="member"] .member-avatar { width: 48px; height: 48px; font-size: 21px; }
+  .member-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+  body[data-account-state="member"] .member-actions .primary-button { width: 100%; min-width: 0; flex: none; }
+  body[data-account-state="member"] .logout-button { align-self: flex-end; }
+}
+
 /* The privacy document shares the form surface and its text colors. */
 .form-panel h1 { font-size: clamp(24px, 4vw, 32px); line-height: 1.4; margin: 0 0 24px; letter-spacing: -.7px; }
 .intro-copy { color: var(--muted); font-size: 14px; line-height: 1.9; overflow-wrap: anywhere; }

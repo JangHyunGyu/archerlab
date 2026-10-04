@@ -5,9 +5,20 @@
     en: { login: 'Sign in', description: 'Start with Google or your email address.', google: 'Continue with Google', or: 'or use your email', email: 'Email', send: 'Send a login code', passwordless: 'No password needed. Enter the code sent to your email.', code: 'Login code', verify: 'Sign in', changeEmail: 'Use another email', resend: 'Send again', expires: 'Your code is valid for 10 minutes.', continue: 'Back to your service', logout: 'Sign out of all services', guest: 'Continue as a guest ↗', privacy: 'Account privacy', help: 'Need a hand?', unavailable: 'Sign-in will be available soon. Please check back later.', pending: 'Verify this email address to connect your account.', sent: 'Check your inbox. If the email is missing, check your spam folder.', waiting: 'Please wait.', invalid_email: 'Check your email address.', code_invalid: 'This code is incorrect or has expired. Please check it again.', rate_limited: 'Too many requests. Please try again later.', email_unavailable: 'We could not send your code. Please try again later.', google_unavailable: 'Google sign-in is currently unavailable.', google_invalid: 'We could not verify your Google sign-in. Please try again.', google_cancelled: 'Google sign-in was cancelled.', request_expired: 'This request has expired. Start sign-in again from your service.', generic: 'Check your connection and try again.', loggedOut: 'You are signed out of the connected services.' }
   };
   const $ = id => document.getElementById(id);
+  function initials(name) {
+    const graphemes = text => typeof Intl.Segmenter === 'function'
+      ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text), part => part.segment)
+      : Array.from(text);
+    const words = name.trim().split(/\s+/u);
+    const first = graphemes(words[0])[0] || 'A';
+    const last = words.length > 1 ? graphemes(words.at(-1))[0] : '';
+    const letters = /^\p{Script=Latin}\p{Mark}*$/u;
+    const text = first + (letters.test(first) && letters.test(last) ? last : '');
+    return graphemes(text.toLocaleUpperCase()).slice(0, 2).join('');
+  }
   const accountCopy = {
-    ko: { title: '내 계정', description: 'ArcherLab에서 사용 중인 계정이에요.' },
-    en: { title: 'My account', description: 'Your account for ArcherLab services.' }
+    ko: { title: '내 계정', description: 'ArcherLab에서 사용 중인 계정이에요.', home: 'ArcherLab으로 돌아가기' },
+    en: { title: 'My account', description: 'Your account for ArcherLab services.', home: 'Back to ArcherLab' }
   };
   const params = new URLSearchParams(location.search);
   let language = params.get('lang') || (navigator.language.startsWith('ko') ? 'ko' : 'en');
@@ -23,6 +34,7 @@
     if (state?.user) {
       $('form-title').textContent = accountCopy[language].title;
       document.querySelector('.form-description').textContent = accountCopy[language].description;
+      if (!state.target) $('continue').querySelector('[data-i18n]').textContent = accountCopy[language].home;
     }
   }
   function notice(text, error = false) {
@@ -57,9 +69,10 @@
     $('send').disabled = !state.providers.email;
     $('email').disabled = !state.providers.email;
     $('signed-in').hidden = !state.user; $('sign-in').hidden = Boolean(state.user);
+    document.body.dataset.accountState = state.user ? 'member' : 'guest';
     if (state.user) {
       $('member-name').textContent = state.user.name; $('member-email').textContent = state.user.email;
-      $('member-initial').textContent = Array.from(state.user.name.trim())[0]?.toLocaleUpperCase(language) || 'A';
+      $('member-initial').textContent = initials(state.user.name);
     }
     $('guest').hidden = Boolean(state.user);
     if (state.target) { $('service-name').textContent = state.target.name; $('guest').href = state.target.returnUrl; }

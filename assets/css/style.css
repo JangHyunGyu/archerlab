@@ -216,12 +216,44 @@ body > header {
 
 .account-link[data-account-state="member"] {
   color: var(--text);
-  border-color: rgba(208, 160, 91, 0.35);
-  background: rgba(208, 160, 91, 0.08);
+  border-color: transparent;
+  border-radius: 999px;
+  width: 44px;
+  padding: 5px;
+  background: none;
 }
 
 .account-link[data-account-state="member"] svg {
+  display: none;
+}
+
+.account-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(208, 160, 91, 0.22);
+  border-radius: 50%;
+  background: rgba(208, 160, 91, 0.1);
   color: var(--accent);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.account-avatar[hidden] {
+  display: none;
+}
+
+.account-link[data-account-state="member"] [data-account-label] {
+  display: none;
+}
+
+.account-link[data-account-state="member"]:hover .account-avatar {
+  border-color: var(--accent);
+  background: rgba(208, 160, 91, 0.18);
 }
 
 .lang-dropdown__toggle {
