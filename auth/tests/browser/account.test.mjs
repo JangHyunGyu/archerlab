@@ -1,7 +1,7 @@
 import { before, after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium, firefox, webkit } from '@playwright/test';
-import { harness, account, service } from '../harness.mjs';
+import { harness, account, service, Browser, emailLogin } from '../harness.mjs';
 
 let fixture; let engine;
 before(async () => {
@@ -97,5 +97,29 @@ test('failed code keeps the user on the form with a readable error and allows re
     await page.locator('#notice[data-error]').waitFor(); assert.match(await page.locator('#notice').textContent(), /인증번호/);
     await page.locator('#code').fill(code); await page.locator('#code-form button[type=submit]').click();
     await page.locator('#signed-in').waitFor({ state: 'visible' });
+  } finally { await ctx.close(); }
+});
+
+test('a packed app can replace its document without losing the account menu', async () => {
+  const member = new Browser(fixture.mf);
+  await emailLogin(member, fixture, 'packed@example.com');
+  const ctx = await context({ viewport: { width: 390, height: 844 } });
+  await ctx.addCookies([...member.cookies.get(account)].map(([name, value]) => ({ name, value, domain: 'account.archerlab.dev', path: '/', secure: true, httpOnly: true, sameSite: 'Lax' })));
+  const page = await ctx.newPage(); const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  try {
+    await page.goto('https://chatbot.archerlab.dev/');
+    await page.locator('#archerlab-account').getByRole('link', { name: 'Account', exact: true }).waitFor();
+    await page.evaluate(() => {
+      document.open();
+      document.write('<!doctype html><html><head><title>Unpacked app</title></head><body><header class="app__actions"></header><h1>Unpacked app</h1></body></html>');
+      document.close();
+    });
+    const entry = page.locator('#archerlab-account').getByRole('link', { name: 'Account', exact: true });
+    await entry.waitFor(); await entry.click();
+    await page.locator('#archerlab-account .menu').waitFor({ state: 'visible' });
+    await page.mouse.click(12, 832);
+    await page.locator('#archerlab-account .menu').waitFor({ state: 'hidden' });
+    assert.deepEqual(errors, []);
   } finally { await ctx.close(); }
 });

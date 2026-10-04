@@ -5,6 +5,7 @@
   const ko = document.documentElement.lang.startsWith('ko');
   const copy = ko ? { login: '로그인', member: '계정', logout: '계정 관리 · 로그아웃', unavailable: '로그인 상태를 확인하지 못했어요.' } : { login: 'Sign in', member: 'Account', logout: 'Account · sign out', unavailable: 'We could not check your sign-in.' };
   const host = document.createElement('span'); host.id = 'archerlab-account';
+  let eventsReady = false;
   if (location.hostname === 'archerlab.dev') host.setAttribute('data-hub', '');
   const shadow = host.attachShadow({ mode: 'open' });
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/_account/widget.css'; shadow.append(css);
@@ -58,6 +59,7 @@
     host.style.top = 'max(16px, env(safe-area-inset-top))'; host.style.bottom = 'auto';
   }
   function mount() {
+    if (!document.body) return false;
     let target = [...document.querySelectorAll(selectors[location.hostname] || 'header')].find(element => element.getBoundingClientRect().width > 0 && getComputedStyle(element).visibility !== 'hidden');
     if (target && location.hostname === 'archerlab.dev') {
       let actions = target.querySelector('[data-account-actions]');
@@ -79,6 +81,7 @@
       host.style.left = ''; host.style.right = ''; host.style.top = ''; host.style.bottom = '';
       // Theme comes from the site's own text color and typography.
       host.style.color = getComputedStyle(target).color;
+      if (eventsReady) bindEvents();
       return true;
     }
     if (host.parentElement !== document.body) document.body.append(host);
@@ -87,6 +90,7 @@
     const palette = { 'water-sort': ['#fffffff0', '#6b528f'], 'jelly-pang-2048': ['#fffffff0', '#705683'], 'cat-tower': ['#fffaf2ed', '#775f50'], 'lumen-shift': ['#08141bef', '#a2edf2'], 'school-zombie-defense': ['#111710ed', '#dec892'] }[game];
     if (palette) { host.style.setProperty('--account-surface', palette[0]); host.style.setProperty('--account-ink', palette[1]); }
     placeCorner();
+    if (eventsReady) bindEvents();
     return false;
   }
   mount();
@@ -103,8 +107,8 @@
       if (missing) mount(); else placeCorner();
     });
   });
-  observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class', 'hidden'] });
-  window.addEventListener('resize', placeCorner); document.addEventListener('fullscreenchange', placeCorner);
+  // Packed pages replace the entire body; keep observing the owning document.
+  observer.observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class', 'hidden'] });
   let member = null;
   function render(user) {
     member = user;
@@ -116,7 +120,7 @@
     // Consumers can read identity for display. Server permissions must use the HttpOnly session.
     window.dispatchEvent(new CustomEvent('archerlab:session', { detail: user ? { id: user.id, name: user.name } : null }));
   }
-  trigger.addEventListener('click', event => {
+  function toggleMenu(event) {
     if (!member) return;
     event.preventDefault(); menu.hidden = !menu.hidden; trigger.setAttribute('aria-expanded', String(!menu.hidden));
     if (!menu.hidden) {
@@ -127,9 +131,9 @@
       if (bounds.left < 12) menu.style.right = `${bounds.left - 12}px`;
       else if (bounds.right > innerWidth - 12) menu.style.right = `${bounds.right - innerWidth + 12}px`;
     }
-  });
-  document.addEventListener('pointerdown', event => { if (!event.composedPath().includes(host)) { menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); } });
-  shadow.addEventListener('keydown', event => { if (event.key === 'Escape') { menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); } });
+  }
+  function dismissMenu(event) { if (!event.composedPath().includes(host)) { menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); } }
+  function handleKeydown(event) { if (event.key === 'Escape') { menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); } }
   async function api(base, path, body) {
     const response = await fetch(base + path, { credentials: 'include', cache: 'no-store',
       ...(body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
@@ -150,6 +154,18 @@
   let checking = false;
   async function refresh() { if (checking) return; checking = true; try { await synchronize(); } finally { checking = false; } }
   void refresh();
-  window.addEventListener('pageshow', event => { if (event.persisted) void refresh(); });
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') void refresh(); });
+  function handlePageShow(event) { if (event.persisted) void refresh(); }
+  function handleVisibilityChange() { if (document.visibilityState === 'visible') void refresh(); }
+  function bindEvents() {
+    // document.open() also clears event listeners; restoring the same functions is idempotent.
+    trigger.addEventListener('click', toggleMenu);
+    document.addEventListener('pointerdown', dismissMenu);
+    shadow.addEventListener('keydown', handleKeydown);
+    window.addEventListener('resize', placeCorner);
+    document.addEventListener('fullscreenchange', placeCorner);
+    window.addEventListener('pageshow', handlePageShow);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    eventsReady = true;
+  }
+  bindEvents();
 })();
