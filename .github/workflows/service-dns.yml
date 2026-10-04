@@ -1,0 +1,25 @@
+name: Inspect service DNS
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read service DNS records
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python auth/scripts/dns-routing.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: service-dns
+          path: service-dns.json
+          retention-days: 7
