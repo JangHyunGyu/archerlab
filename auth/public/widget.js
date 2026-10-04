@@ -5,6 +5,7 @@
   const ko = document.documentElement.lang.startsWith('ko');
   const copy = ko ? { login: '로그인', member: '계정', logout: '계정 관리 · 로그아웃', unavailable: '로그인 상태를 확인하지 못했어요.' } : { login: 'Sign in', member: 'Account', logout: 'Account · sign out', unavailable: 'We could not check your sign-in.' };
   const host = document.createElement('span'); host.id = 'archerlab-account';
+  if (location.hostname === 'archerlab.dev') host.setAttribute('data-hub', '');
   const shadow = host.attachShadow({ mode: 'open' });
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/_account/widget.css'; shadow.append(css);
   css.addEventListener('load', () => { if (host.hasAttribute('data-corner')) placeCorner(); });
