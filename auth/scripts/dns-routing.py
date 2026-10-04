@@ -29,6 +29,16 @@ def api(path, body=None):
         raise SystemExit('Cloudflare rejected the DNS inspection')
     return payload['result']
 
+def native_session_ready(host):
+    path = '/jewelria/' if host == 'game.archerlab.dev' else '/'
+    request = urllib.request.Request('https://' + host + path,
+        headers={'User-Agent': 'ArcherLab deployment verification'})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return response.status == 200 and b'assets/js/archerlab-session.js' in response.read()
+    except (urllib.error.URLError, TimeoutError):
+        return False
+
 def main():
     mode = os.environ.get('DNS_MODE', 'inspect')
     target = os.environ.get('DNS_TARGET', 'all-pages')
@@ -47,6 +57,10 @@ def main():
                     raise SystemExit('Unexpected DNS target for ' + host)
                 previous = record['proxied']
                 desired = mode.endswith('-proxied')
+                if previous and not desired and not native_session_ready(host):
+                    print(json.dumps({'skipped': host, 'reason': 'native_session_script_not_verified'}))
+                    records.append({key: record.get(key) for key in ['id', 'name', 'type', 'content', 'proxied', 'ttl']})
+                    continue
                 if previous != desired:
                     record = api('zones/' + ZONE + '/dns_records/' + record['id'], {'proxied': desired})
                     if record['proxied'] != desired or record['content'] != allowed[host]:

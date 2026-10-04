@@ -20,16 +20,6 @@
   "routes": [
     { "pattern": "account.archerlab.dev", "custom_domain": true },
     { "pattern": "sessions.archerlab.dev", "custom_domain": true },
-    { "pattern": "archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "game.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "nevergrad.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "karma.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "harem.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "cupid.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "chatbot.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "golf.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "itstory.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "news.archerlab.dev/*", "zone_name": "archerlab.dev" },
-    { "pattern": "chat.archerlab.dev/*", "zone_name": "archerlab.dev" }
+    { "pattern": "chatbot.archerlab.dev/*", "zone_name": "archerlab.dev" }
   ]
 }
