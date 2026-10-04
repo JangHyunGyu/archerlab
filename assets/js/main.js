@@ -1,3 +1,15 @@
+// 모바일 앱 런처(iframe) 안에서 포털 메인이 다시 로드된 경우(게임의 ArcherLab 링크 등),
+// 런처 오버레이를 닫아 달라고 부모 포털에 알립니다. 같은 오리진 부모에게만 전달됩니다.
+(() => {
+	try {
+		if (window.parent && window.parent !== window) {
+			window.parent.postMessage({ type: "archerlab:go-home", nested: true }, window.location.origin);
+		}
+	} catch (error) {
+		/* cross-origin parent: nothing to notify */
+	}
+})();
+
 // DOMContentLoaded 이벤트는 HTML 문서가 완전히 파싱되었을 때 발생합니다.
 document.addEventListener("DOMContentLoaded", () => {
 	const LANGUAGE_STORAGE_KEY = "archerlab:language";
@@ -266,15 +278,32 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (!launcher) {
 			return;
 		}
-		const frame = launcher.querySelector(".app-launcher__frame");
-		if (frame) {
-			frame.src = "about:blank";
-		}
+		// Remove the frame instead of blanking it: a removed iframe also drops the
+		// session-history entries it created, so history.back() below stays in this page.
+		launcher.querySelector(".app-launcher__frame")?.remove();
 		launcher.setAttribute("hidden", "");
 		document.body.classList.remove("app-launcher-open");
 		if (!options.fromHistory && launcherHistoryActive) {
 			launcherHistoryActive = false;
 			history.back();
+		}
+	};
+
+	const createLauncherFrame = () => {
+		const frame = document.createElement("iframe");
+		frame.className = "app-launcher__frame";
+		frame.title = "ArcherLab app launcher";
+		frame.setAttribute("allow", "accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; gamepad; gyroscope; microphone; camera; payment; screen-wake-lock; xr-spatial-tracking");
+		frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+		return frame;
+	};
+
+	const isArcherlabOrigin = (origin) => {
+		try {
+			const { protocol, hostname } = new URL(origin);
+			return protocol === "https:" && (hostname === "archerlab.dev" || hostname.endsWith(".archerlab.dev"));
+		} catch (error) {
+			return false;
 		}
 	};
 
@@ -288,14 +317,30 @@ document.addEventListener("DOMContentLoaded", () => {
 		launcher.id = "app-launcher";
 		launcher.className = "app-launcher";
 		launcher.setAttribute("hidden", "");
-		launcher.innerHTML = `
-			<iframe class="app-launcher__frame" title="ArcherLab app launcher" allow="accelerometer; autoplay; clipboard-read; clipboard-write; encrypted-media; gamepad; gyroscope; microphone; camera; payment; screen-wake-lock; xr-spatial-tracking" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-		`;
 
 		document.addEventListener("keydown", (event) => {
 			if (event.key === "Escape" && !launcher.hasAttribute("hidden")) {
 				closeAppLauncher(launcher);
 			}
+		});
+
+		// A service inside the launcher asks to go home (its ArcherLab link): close the
+		// overlay instead of letting the portal load inside the frame.
+		window.addEventListener("message", (event) => {
+			if (!event.data || event.data.type !== "archerlab:go-home") {
+				return;
+			}
+			if (launcher.hasAttribute("hidden")) {
+				return;
+			}
+			const frame = launcher.querySelector(".app-launcher__frame");
+			if (!frame || event.source !== frame.contentWindow) {
+				return;
+			}
+			if (!isArcherlabOrigin(event.origin)) {
+				return;
+			}
+			closeAppLauncher(launcher);
 		});
 
 		window.addEventListener("popstate", () => {
@@ -321,10 +366,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		event?.preventDefault?.();
 		const launcher = ensureAppLauncher();
-		const frame = launcher.querySelector(".app-launcher__frame");
-		if (frame) {
-			frame.src = "about:blank";
-		}
+		launcher.querySelector(".app-launcher__frame")?.remove();
+		const frame = createLauncherFrame();
+		launcher.appendChild(frame);
 
 		if (!launcherHistoryActive) {
 			try {
