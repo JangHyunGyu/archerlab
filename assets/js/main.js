@@ -61,17 +61,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	/* ── 커스텀 언어 드롭다운 ── */
 	const dropdowns = document.querySelectorAll("[data-lang-dropdown]");
 
-	// 자동 언어 리다이렉트 (첫 방문 시)
-	if (/bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent)) return;
-	const preferredLanguage = storedLanguage || browserLanguage;
-	if (preferredLanguage && currentLanguage && preferredLanguage !== currentLanguage) {
-		const firstDropdown = dropdowns[0];
-		if (firstDropdown) {
-			const matchItem = firstDropdown.querySelector(`[data-lang-code="${preferredLanguage}"]`);
-			if (matchItem) {
-				setStoredLanguage(preferredLanguage);
-				window.location.replace(matchItem.dataset.langUrl);
-				return;
+	// 자동 언어 리다이렉트 (첫 방문 시). 봇은 색인된 언어 페이지에 남긴다.
+	// 판별에 걸리더라도 연도, 필터, 런처 초기화는 계속한다.
+	const isBot = /bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent);
+	if (!isBot) {
+		const preferredLanguage = storedLanguage || browserLanguage;
+		if (preferredLanguage && currentLanguage && preferredLanguage !== currentLanguage) {
+			const firstDropdown = dropdowns[0];
+			if (firstDropdown) {
+				const matchItem = firstDropdown.querySelector(`[data-lang-code="${preferredLanguage}"]`);
+				if (matchItem?.dataset.langUrl) {
+					setStoredLanguage(preferredLanguage);
+					window.location.replace(matchItem.dataset.langUrl);
+					return;
+				}
 			}
 		}
 	}

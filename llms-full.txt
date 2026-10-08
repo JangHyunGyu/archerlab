@@ -5,14 +5,14 @@
 ## ArcherLab이란? 개발자 한 명이 만든 브라우저 기반 웹 서비스 허브 (ko)
 
 URL: https://archerlab.dev/seo/archerlab-about.html
-Last updated: 2026-10-02
+Last updated: 2026-10-09
 
-ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 19개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
+ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 20개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표, 실시간 채팅 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
 
 ### 한눈에 보기
 - 운영자: 장현규(Hyungyu Jang), 1인 개발
 - 성격: 브라우저 기반 사이드 프로젝트 모음 (프로토타입과 실험 기록)
-- 프로젝트: 19개 — 게임, 커뮤니티, 유틸, 정보
+- 프로젝트: 20개 — 게임, 커뮤니티, 유틸, 정보
 - 이용: 서비스별로 다르지만 대부분 무료이고 앱 설치가 필요 없습니다.
 - 언어: 한국어, 영어 (서비스별로 다름)
 - 문의: hyungyu@archerlab.dev
@@ -33,6 +33,7 @@ ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, A
 - 학원 로맨스·미스터리 비주얼 노벨
 - AI 사주·운세, 골프 스윙 분석, 라틴댄스 영상 분석
 - Hacker News 한국어 요약, IT 역사 타임라인
+- 공개방과 비밀방이 있는 실시간 채팅
 
 ### Notes / 알아 둘 점
 - 하렘 메이트는 19세 이상 성인 전용입니다. 나머지 서비스는 연령 제한이 없지만 Mate는 전문 상담을 대신하지 않으며, 운세 서비스는 오락용 참고 자료입니다.
@@ -55,21 +56,21 @@ hyungyu@archerlab.dev로 보내 주세요.
 가볍게 시작하려면 Archerlab Games, 이야기를 좋아한다면 Cupid나 Nevergrad, 운세에 관심이 있으면 Karma가 있습니다.
 
 **영어 안내도 있나요?**
-네. HN 탑10을 제외한 서비스는 영어 안내 페이지가 있습니다.
+네. HN 탑10과 채팅을 제외하면 영어 안내 페이지가 있습니다. HN 탑10은 한국어 안내만 있고, 채팅은 안내 페이지 없이 서비스로 바로 들어갑니다.
 
 ---
 
 ## What is ArcherLab? A hub of browser-based web services by one developer (en)
 
 URL: https://archerlab.dev/seo/archerlab-about-en.html
-Last updated: 2026-10-02
+Last updated: 2026-10-09
 
-ArcherLab (archerlab.dev) is a hub of 19 side projects built by developer Hyungyu Jang, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary and IT history timelines, all usable in the browser without installing an app. Use the list below to jump to each service guide.
+ArcherLab (archerlab.dev) is a hub of 20 side projects built by developer Hyungyu Jang, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary, IT history timelines and live chat, all usable in the browser without installing an app. Use the list below to jump to each service guide.
 
 ### At a glance
 - Operator: Hyungyu Jang, solo developer
 - Nature: Collection of browser-based side projects (prototypes and experiment logs)
-- Projects: 19 across games, community, utilities and information
+- Projects: 20 across games, community, utilities and information
 - Use: Varies by service, but most are free and need no app install
 - Languages: Korean and English (varies by service)
 - Contact: hyungyu@archerlab.dev
@@ -90,6 +91,7 @@ ArcherLab (archerlab.dev) is a hub of 19 side projects built by developer Hyungy
 - Visual novels: school romance and school mystery
 - AI saju and fortune, golf swing analysis and Latin dance video analysis
 - Hacker News summaries in Korean and IT history timelines
+- Live chat with public and private rooms
 
 ### Notes / 알아 둘 점
 - Harem Mate is for adults aged 19 and over only. Mate does not replace professional counseling, and the fortune service is for entertainment.
@@ -112,4 +114,4 @@ Email hyungyu@archerlab.dev.
 Archerlab Games for a casual start, Cupid or Nevergrad for story games, and Karma for fortune readings.
 
 **Are there English guides?**
-Yes, for every service except HN Top 10, which is Korean only.
+Yes, for every service except HN Top 10 and Chat. HN Top 10 has a Korean guide only, and Chat opens directly without a separate guide.

@@ -52,6 +52,10 @@
   function visible() { if (document.visibilityState === 'visible') void refresh(); }
   function restored(event) { if (event.persisted) void refresh(); }
   function bindEvents() {
+    // document.open() drops document listeners, so synchronize() binds again.
+    // Remove first or every tab return adds another pair.
+    document.removeEventListener('visibilitychange', visible);
+    window.removeEventListener('pageshow', restored);
     document.addEventListener('visibilitychange', visible);
     window.addEventListener('pageshow', restored);
   }
