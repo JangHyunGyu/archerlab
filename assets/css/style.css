@@ -690,8 +690,27 @@ body.app-launcher-open {
 .app-launcher {
   position: fixed;
   inset: 0;
-  z-index: 9000;
+  z-index: 11000;
   background: #050608;
+}
+
+.app-launcher__close {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(8, 10, 15, 0.82);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .app-launcher__frame {

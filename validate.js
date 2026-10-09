@@ -231,6 +231,50 @@ for (const [koPage, enPage] of seoLanguagePairs) {
   }
 }
 
+const seoLanguageSwitchers = [
+  ['seo/side-project-idea.html', '/seo/side-project-ideas.html'],
+  ['seo/side-project-ideas.html', '/seo/side-project-idea.html'],
+  ['seo/1in-gaebal.html', '/seo/solo-developer-portfolio.html'],
+  ['seo/solo-developer-portfolio.html', '/seo/1in-gaebal.html'],
+  ['seo/vibe-coding.html', '/seo/vibe-coding-examples.html'],
+  ['seo/vibe-coding-examples.html', '/seo/vibe-coding.html'],
+];
+
+for (const [page, target] of seoLanguageSwitchers) {
+  const content = readFile(page);
+  check(
+    content.includes(`class="langs"`) && content.includes(`href="${target}"`),
+    `${page} language switch goes to the paired page`,
+    `${page} language switch does not point at ${target}`
+  );
+  check(
+    !content.includes('스포츠/게임/뉴스') && !content.includes('sports tools, games, news') && !/(^|[^0-9])6개/.test(content) && !/six projects|6 Projects|6 Real Apps|Run 6 Projects|Running 6 Projects/i.test(content),
+    `${page} no longer advertises retired counts or categories`,
+    `${page} still advertises a retired project count or category`
+  );
+}
+
+for (const page of ['index.html', 'index-en.html']) {
+  const content = readFile(page);
+  const categories = [...content.matchAll(/<button[^>]*data-tab="([^"]+)"/g)].map((match) => match[1]).filter((tab) => tab !== 'all');
+  check(categories.length === 4, `${page} has 4 category filters`, `${page} has ${categories.length} category filters`);
+  check(
+    content.includes('<strong>4</strong>Categories'),
+    `${page} hero category count is 4`,
+    `${page} hero category count does not match the filters`
+  );
+  check(
+    /<nav class="footer-contact"[\s\S]*href="https:\/\/github\.com\/JangHyunGyu"/.test(content),
+    `${page} footer links to GitHub`,
+    `${page} footer is missing the GitHub link`
+  );
+  check(
+    content.includes('href="https://news.archerlab.dev/hn/"'),
+    `${page} opens HN Top 10 at the daily edition`,
+    `${page} HN card does not open the daily edition`
+  );
+}
+
 for (const page of ['index.html', 'index-en.html']) {
   const content = readFile(page);
   for (const property of ['og:type', 'og:url', 'og:image', 'twitter:card', 'twitter:title', 'twitter:description']) {

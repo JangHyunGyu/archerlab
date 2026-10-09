@@ -432,7 +432,7 @@ const worker = {
   /** @param {ScheduledController} controller @param {AuthEnv} env */
   async scheduled(controller, env) {
     const time = now();
-    await env.DB.batch(['sso_requests', 'oauth_flows', 'pending_google', 'email_challenges', 'sessions', 'rate_limits']
+    await env.DB.batch(['sso_codes', 'sso_requests', 'oauth_flows', 'pending_google', 'email_challenges', 'sessions', 'rate_limits']
       .map(table => env.DB.prepare(`DELETE FROM ${table} WHERE expires_at<=?`).bind(time)));
   }
 };

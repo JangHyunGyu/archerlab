@@ -23,7 +23,7 @@ ArcherLab is a personal development hub by an indie developer. It combines front
 - [Golf Swing Master](https://golf.archerlab.dev/)
 - [Latin Dance Mate](https://latindance.kr/)
 - [IT Story Timeline](https://itstory.archerlab.dev/)
-- [HN Top 10](https://news.archerlab.dev/hn)
+- [HN Top 10](https://news.archerlab.dev/hn/)
 - [ArcherLab Chat](https://chat.archerlab.dev/)
 
 ## Links

@@ -321,6 +321,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		launcher.className = "app-launcher";
 		launcher.setAttribute("hidden", "");
 
+		const closeButton = document.createElement("button");
+		closeButton.type = "button";
+		closeButton.className = "app-launcher__close";
+		closeButton.textContent = "×";
+		closeButton.setAttribute(
+			"aria-label",
+			document.documentElement.lang?.toLowerCase().startsWith("ko") ? "앱 닫기" : "Close app"
+		);
+		closeButton.addEventListener("click", () => closeAppLauncher(launcher));
+		launcher.appendChild(closeButton);
+
 		document.addEventListener("keydown", (event) => {
 			if (event.key === "Escape" && !launcher.hasAttribute("hidden")) {
 				closeAppLauncher(launcher);

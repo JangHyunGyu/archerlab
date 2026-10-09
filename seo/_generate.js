@@ -2,7 +2,7 @@
 const fs = require('fs'); const path = require('path');
 const SITE = 'https://archerlab.dev';
 const ORIGIN_TRIAL_META = '<meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">';
-const HOME = { ko: '/', en: '/index-en.html' };
+const HOME = { ko: '/', en: '/index-en' };
 
 const C = {
   ko: {
@@ -10,7 +10,7 @@ const C = {
     why_title:'archerlab은 무엇인가',
     why:['1인 개발자가 만드는 웹 사이드 프로젝트 허브','AI 골프 스윙 분석, 라틴댄스 모션 코칭, 로맨스 VN, 캐주얼 게임까지','전부 브라우저에서 무설치로 동작','코드·디자인·기획 모두 1인 운영'],
     how_title:'둘러보는 법',
-    how:['아래 [지금 보기] 클릭','관심 있는 카테고리(스포츠/게임/뉴스) 선택','각 프로젝트는 별도 도메인에서 즉시 실행'],
+    how:['아래 [지금 보기] 클릭','관심 있는 카테고리(게임, 커뮤니티, 유틸, 정보) 선택','각 프로젝트는 별도 도메인에서 즉시 실행'],
     faq_title:'자주 묻는 질문',
     faqs:[
       ['1인 개발이 정말 가능한가요?','네. AI 코딩 도구와 관리 가능한 스코프 설정이 핵심입니다. 하나하나 작게 시작해서 살아남는 것만 키웁니다.'],
@@ -32,7 +32,7 @@ const C = {
     why_title:'What is archerlab',
     why:['A solo dev hub of small, browser-first web side projects','AI golf swing analysis, Latin dance motion coaching, romance VNs, casual games','All run in the browser — no install, no signup','Code, design, and product by one person'],
     how_title:'How to explore',
-    how:['Click [Visit] below','Pick a category — sports tools, games, news','Each project runs on its own subdomain'],
+    how:['Click [Visit] below','Pick a category — games, community, utilities, or info','Each project runs on its own subdomain'],
     faq_title:'Frequently asked questions',
     faqs:[
       ['Is solo dev really viable?','Yes. The trick is scope discipline plus AI coding tools. Start small, ship fast, only grow what survives.'],
@@ -53,14 +53,14 @@ const C = {
 
 const PAGES = {
   ko: [
-    { slug:'side-project-idea', h1:'웹 사이드 프로젝트 아이디어 — 1인 개발자가 실제로 만든 6개', title:'웹 사이드 프로젝트 아이디어 | 1인 개발자 실전 사례 2026', meta:'1인 개발자가 실제로 운영 중인 웹 사이드 프로젝트 6가지 — AI 도구, 게임, 뉴스, VN. 아이디어 + 기술 스택 공개.', intro:'"웹 사이드 프로젝트 아이디어"를 검색하면 대부분 To-Do 앱, 날씨 앱 같은 튜토리얼 수준입니다. 여기는 실제로 사용자가 들어오는 6개를 공개합니다.' },
-    { slug:'1in-gaebal', h1:'1인 개발 — 어떻게 6개를 동시에 운영하는가', title:'1인 개발 가이드 | 6개 프로젝트 동시 운영 노하우', meta:'1인 개발자가 6개 사이드 프로젝트를 동시에 운영하는 방법. 스코프 관리, AI 도구 활용, 운영 비용 최소화.', intro:'1인 개발의 가장 큰 적은 "다 만들고 싶은 마음"입니다. 작게 자르고 빠르게 검증하고 살아남는 것만 키우는 게 전부입니다.' },
+    { slug:'side-project-idea', h1:'웹 사이드 프로젝트 아이디어 — 1인 개발자가 실제로 만든 20개', title:'웹 사이드 프로젝트 아이디어 | 1인 개발자 실전 사례 2026', meta:'1인 개발자가 실제로 운영 중인 웹 사이드 프로젝트 20가지 — AI 도구, 게임, 뉴스, VN. 아이디어 + 기술 스택 공개.', intro:'"웹 사이드 프로젝트 아이디어"를 검색하면 대부분 To-Do 앱, 날씨 앱 같은 튜토리얼 수준입니다. 허브에는 실제로 사용자가 들어오는 20개가 있습니다.' },
+    { slug:'1in-gaebal', h1:'1인 개발 — 어떻게 20개를 동시에 운영하는가', title:'1인 개발 가이드 | 20개 프로젝트 동시 운영 노하우', meta:'1인 개발자가 20개 사이드 프로젝트를 동시에 운영하는 방법. 스코프 관리, AI 도구 활용, 운영 비용 최소화.', intro:'1인 개발의 가장 큰 적은 "다 만들고 싶은 마음"입니다. 작게 자르고 빠르게 검증하고 살아남는 것만 키우는 게 전부입니다.' },
     { slug:'vibe-coding', h1:'바이브 코딩 — AI 시대의 1인 개발 워크플로우', title:'바이브 코딩 가이드 | AI 시대 1인 개발 워크플로우 2026', meta:'바이브 코딩(vibe coding)으로 사이드 프로젝트를 빠르게 만드는 워크플로우. Claude Code 활용 사례.', intro:'"바이브 코딩"은 AI에게 다 맡기는 게 아닙니다. 작은 단위로 자르고, 매번 검증하고, 컨텍스트를 관리하는 기술입니다.' }
   ],
   en: [
-    { slug:'side-project-ideas', h1:'Side Project Ideas — 6 Real Apps from One Solo Dev', title:'Side Project Ideas | 6 Real Apps from a Solo Dev 2026', meta:'Six real side projects shipped by one solo developer — AI tools, games, news, visual novels. Ideas plus the actual stack.', intro:'Most "side project ideas" lists end at todo apps and weather apps. Here are six that actually have users — with the real stack and lessons each one taught.' },
-    { slug:'solo-developer-portfolio', h1:'Solo Developer Portfolio — How to Run 6 Projects at Once', title:'Solo Developer Portfolio | Running 6 Projects at Once 2026', meta:'How a solo developer ships and runs six side projects in parallel. Scope discipline, AI tooling, and near-zero ops cost.', intro:'The biggest enemy of solo dev is "wanting to build everything." The trick is small slices, fast validation, and only growing what survives.' },
-    { slug:'vibe-coding-examples', h1:'Vibe Coding Examples — AI-Era Solo Dev Workflow', title:'Vibe Coding Examples | AI-Era Solo Dev Workflow 2026', meta:'Real vibe coding workflow examples from a solo dev shipping six projects with Claude Code.', intro:'"Vibe coding" is not handing everything to the AI. It is small slices, constant verification, and disciplined context management — with the AI as a fast collaborator.' }
+    { slug:'side-project-ideas', h1:'Side Project Ideas — 20 Real Apps from One Solo Dev', title:'Side Project Ideas | 20 Real Apps from a Solo Dev 2026', meta:'Twenty real side projects shipped by one solo developer — AI tools, games, news, visual novels. Ideas plus the actual stack.', intro:'Most "side project ideas" lists end at todo apps and weather apps. The hub has twenty that actually have users — with the real stack and lessons behind them.' },
+    { slug:'solo-developer-portfolio', h1:'Solo Developer Portfolio — How to Run 20 Projects at Once', title:'Solo Developer Portfolio | Running 20 Projects at Once 2026', meta:'How a solo developer ships and runs twenty side projects in parallel. Scope discipline, AI tooling, and near-zero ops cost.', intro:'The biggest enemy of solo dev is "wanting to build everything." The trick is small slices, fast validation, and only growing what survives.' },
+    { slug:'vibe-coding-examples', h1:'Vibe Coding Examples — AI-Era Solo Dev Workflow', title:'Vibe Coding Examples | AI-Era Solo Dev Workflow 2026', meta:'Real vibe coding workflow examples from a solo dev shipping twenty projects with Claude Code.', intro:'"Vibe coding" is not handing everything to the AI. It is small slices, constant verification, and disciplined context management — with the AI as a fast collaborator.' }
   ]
 };
 
@@ -72,10 +72,12 @@ function render(lang, p) {
   const c = C[lang]; const url = `${SITE}/seo/${p.slug}.html`; const home = HOME[lang];
   const pageIndex = PAGES[lang].indexOf(p);
   const altLinks = Object.keys(PAGES).map(L=>`<link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}.html">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}.html">`;
-  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="/seo/${PAGES[L][0].slug}.html">${L.toUpperCase()}</a>`).join(' · ');
+  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="/seo/${PAGES[L][pageIndex].slug}.html">${L.toUpperCase()}</a>`).join(' · ');
   const faqLd = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))};
   return `<!DOCTYPE html>
 <html lang="${c.htmlLang}"><head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MTBCHM8DYM"></script>
+<script src="/assets/js/ga.js?v=20260403" defer></script>
 <meta charset="UTF-8">${ORIGIN_TRIAL_META}<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.title)}</title><meta name="description" content="${esc(p.meta)}">
 <link rel="canonical" href="${url}">
@@ -83,6 +85,7 @@ ${altLinks}
 <meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.meta)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website">
 <style>${CSS}</style>
 <script type="application/ld+json">${JSON.stringify(faqLd)}</script>
+<script src="../assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
 </head><body><div class="wrap">
 <h1>${esc(p.h1)}</h1>
 <p class="intro">${esc(p.intro)}</p>
@@ -110,5 +113,5 @@ const frag = all.map(u => {
   const alts = '\n' + Object.keys(PAGES).map(L=>`    <xhtml:link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}.html"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}.html"/>`;
   return `  <url><loc>${SITE}/seo/${u.slug}.html</loc>${alts}\n    <changefreq>monthly</changefreq><priority>0.7</priority></url>`;
 }).join('\n');
-fs.writeFileSync(path.join(__dirname, '_sitemap_fragment.xml'), frag, 'utf8');
+fs.writeFileSync(path.join(__dirname, '_sitemap_fragment.xml'), frag + '\n', 'utf8');
 console.log('✓ sitemap fragment written');
