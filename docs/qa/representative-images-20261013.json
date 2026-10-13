@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-13",
+  "scope": "Search and social preview metadata only; existing visible page bodies, styles and executable scripts preserved.",
+  "representativeImage": "https://archerlab.dev/assets/images/social/archerlab-representative.png",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "indexablePagesUpdated": 12,
+  "source": "exec-aec4994e-ef98-4ca5-8054-33d4bb70ac2c.png",
+  "originalAssetsPreserved": true,
+  "visualVerification": {
+    "viewports": [
+      "1440x900",
+      "390x844"
+    ],
+    "result": "No visible UI change; zero pixel difference in final comparisons.",
+    "method": "Before/after browser screenshots with animations frozen."
+  },
+  "publishing": "main branch; GitHub Pages/Cloudflare Pages Git integration, or existing news Worker",
+  "generation": {
+    "tool": "Built-in image_gen",
+    "qualityRequest": "Maximum supported quality and highest native resolution, square 1:1",
+    "actualDimensions": [
+      1254,
+      1254
+    ],
+    "qualityOrSizeControlsExposed": false,
+    "masterPreservedWithoutResizing": true,
+    "prompt": "Square 1:1 premium editorial illustration for ArcherLab, an independent web app and browser game project hub. Maximum supported quality and highest native resolution. A beautifully designed small digital creator's workspace: centered open laptop with an elegant abstract grid of colorful app tiles, a jewel puzzle tile, a small friendly cat game tile, a speech bubble tile, a golf ball tile, a camera tile, and a glowing code-bracket motif without readable letters. Deep midnight blue and warm amber with tiny teal accents, sophisticated dimensional illustration, soft lighting, crisp charming objects, uncluttered central composition readable as a tiny search thumbnail. No people, no logos, no readable text, no watermarks. The visual should communicate a varied collection of playful browser tools and games rather than one specific product. Full-quality maximum native resolution."
+  }
+}
