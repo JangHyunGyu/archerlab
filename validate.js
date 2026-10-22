@@ -264,7 +264,7 @@ for (const page of ['index.html', 'index-en.html']) {
     `${page} hero category count does not match the filters`
   );
   check(
-    /<nav class="footer-contact"[\s\S]*href="https:\/\/github\.com\/JangHyunGyu"/.test(content),
+    /<nav class="footer-contact"[\s\S]*href="https:\/\/github\.com\/archerlab"/.test(content),
     `${page} footer links to GitHub`,
     `${page} footer is missing the GitHub link`
   );

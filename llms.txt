@@ -30,7 +30,7 @@ ArcherLab is a personal development hub by an indie developer. It combines front
 - [Korean home](https://archerlab.dev/)
 - [English home](https://archerlab.dev/index-en)
 - [Sitemap](https://archerlab.dev/sitemap.xml)
-- [GitHub](https://github.com/JangHyunGyu)
+- [GitHub](https://github.com/archerlab)
 
 ## Languages
 - Korean

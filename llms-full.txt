@@ -7,16 +7,16 @@
 URL: https://archerlab.dev/seo/archerlab-about.html
 Last updated: 2026-10-09
 
-ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 20개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표, 실시간 채팅 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
+ArcherLab(archerlab.dev)은 개발자 archerlab이 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 20개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표, 실시간 채팅 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
 
 ### 한눈에 보기
-- 운영자: 장현규(Hyungyu Jang), 1인 개발
+- 운영자: archerlab, 1인 개발
 - 성격: 브라우저 기반 사이드 프로젝트 모음 (프로토타입과 실험 기록)
 - 프로젝트: 20개 — 게임, 커뮤니티, 유틸, 정보
 - 이용: 서비스별로 다르지만 대부분 무료이고 앱 설치가 필요 없습니다.
 - 언어: 한국어, 영어 (서비스별로 다름)
-- 문의: hyungyu@archerlab.dev
-- GitHub: github.com/JangHyunGyu
+- 문의: archerlab@archerlab.dev
+- GitHub: github.com/archerlab
 
 ### Who it is for / 대상
 - ArcherLab에 어떤 서비스가 있는지 한눈에 보고 싶은 분
@@ -41,16 +41,16 @@ ArcherLab(archerlab.dev)은 개발자 장현규가 프런트엔드, 백엔드, A
 ### FAQ
 
 **ArcherLab은 어떤 곳인가요?**
-개발자 장현규가 만든 브라우저 기반 사이드 프로젝트를 모아 둔 허브입니다. 프로토타입을 만들고 실험 기록을 남기는 곳으로 운영합니다.
+개발자 archerlab이 만든 브라우저 기반 사이드 프로젝트를 모아 둔 허브입니다. 프로토타입을 만들고 실험 기록을 남기는 곳으로 운영합니다.
 
 **서비스는 무료인가요?**
 안내 페이지에 소개한 서비스는 모두 무료로 시작할 수 있고 대부분 가입과 설치가 필요 없습니다. 자세한 조건은 서비스별 안내 페이지를 확인하세요.
 
 **누가 만들었나요?**
-장현규 한 명이 기획, 개발, 운영을 맡고 있습니다. Cupid처럼 공동 제작자가 있는 작품도 있습니다.
+archerlab이 기획, 개발, 운영을 맡고 있습니다. Cupid처럼 공동 제작자가 있는 작품도 있습니다.
 
 **문의는 어디로 하나요?**
-hyungyu@archerlab.dev로 보내 주세요.
+archerlab@archerlab.dev로 보내 주세요.
 
 **가장 먼저 둘러볼 서비스는?**
 가볍게 시작하려면 Archerlab Games, 이야기를 좋아한다면 Cupid나 Nevergrad, 운세에 관심이 있으면 Karma가 있습니다.
@@ -65,16 +65,16 @@ hyungyu@archerlab.dev로 보내 주세요.
 URL: https://archerlab.dev/seo/archerlab-about-en.html
 Last updated: 2026-10-09
 
-ArcherLab (archerlab.dev) is a hub of 20 side projects built by developer Hyungyu Jang, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary, IT history timelines and live chat, all usable in the browser without installing an app. Use the list below to jump to each service guide.
+ArcherLab (archerlab.dev) is a hub of 20 side projects built by developer archerlab, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary, IT history timelines and live chat, all usable in the browser without installing an app. Use the list below to jump to each service guide.
 
 ### At a glance
-- Operator: Hyungyu Jang, solo developer
+- Operator: archerlab, solo developer
 - Nature: Collection of browser-based side projects (prototypes and experiment logs)
 - Projects: 20 across games, community, utilities and information
 - Use: Varies by service, but most are free and need no app install
 - Languages: Korean and English (varies by service)
-- Contact: hyungyu@archerlab.dev
-- GitHub: github.com/JangHyunGyu
+- Contact: archerlab@archerlab.dev
+- GitHub: github.com/archerlab
 
 ### Who it is for / 대상
 - Visitors who want an overview of what ArcherLab offers
@@ -99,16 +99,16 @@ ArcherLab (archerlab.dev) is a hub of 20 side projects built by developer Hyungy
 ### FAQ
 
 **What is ArcherLab?**
-A hub of browser-based side projects built by developer Hyungyu Jang, run as a place to build prototypes and record experiments.
+A hub of browser-based side projects built by developer archerlab, run as a place to build prototypes and record experiments.
 
 **Are the services free?**
 Every service listed here can be started for free, and most need no signup or install. See each service guide for details.
 
 **Who makes them?**
-Hyungyu Jang handles planning, development and operation. Some projects, such as Cupid, have co-creators.
+archerlab handles planning, development and operation. Some projects, such as Cupid, have co-creators.
 
 **How do I get in touch?**
-Email hyungyu@archerlab.dev.
+Email archerlab@archerlab.dev.
 
 **Where should I start?**
 Archerlab Games for a casual start, Cupid or Nevergrad for story games, and Karma for fortune readings.
