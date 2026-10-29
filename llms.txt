@@ -1,10 +1,11 @@
 # ArcherLab
-> Personal web development hub for 20 browser-based side projects built with frontend, backend, and AI.
+> Personal web development hub for 21 browser-based side projects built with frontend, backend, and AI.
 
 ## About
 ArcherLab is a personal development hub by an indie developer. It combines frontend, backend, and AI to build prototypes and document experiments.
 
 ## Projects
+- [Twenty Questions](https://game.archerlab.dev/twenty-questions/)
 - [Bubbly Lab](https://game.archerlab.dev/water-sort/)
 - [LUMEN SHIFT](https://game.archerlab.dev/lumen-shift/)
 - [Jelly Pang!](https://game.archerlab.dev/jelly-pang-2048/)

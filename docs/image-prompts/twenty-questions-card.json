@@ -1,0 +1,12 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-29",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "master": "assets/images/twenty-questions-link.png",
+  "delivery": "assets/images/twenty-questions-link.webp",
+  "conversion": "lossless WebP, original dimensions and pixels preserved",
+  "prompt": "Create a polished, premium square 1:1 game-directory card illustration for a browser game called Twenty Questions, themed as a secret archive in an antique study. Use the MAXIMUM supported image quality and HIGHEST native resolution for a square image. This is final production artwork, not a draft. A large mysterious closed midnight-teal leather book is the unmistakable central focal point, with exquisite aged gold filigree and corner fittings, a red wax seal, and a single elegant luminous brass question-mark symbol floating just above it. On the dark walnut desk near the book, include a small antique magnifying glass and two understated ivory-and-brass tokens bearing a simple check mark and cross, suggesting yes/no deduction. Rich dark academia atmosphere, deep teal and charcoal shadows, warm amber desk-lamp illumination, softly blurred library shelves, subtle gold dust motes, cinematic painterly realism with refined game-key-art finish. Strong silhouette and controlled contrast so it reads beautifully at small thumbnail sizes. Keep the important composition within the central 80 percent, including mobile thumbnail crops. The book and question mark should dominate, with very little peripheral clutter. No people, no faces, no text titles, no letters, no numbers, no logos, no watermarks, no interface, no border. Opaque background. Preserve full native resolution."
+}
