@@ -180,6 +180,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	syncExternalLanguageLinks();
 
+	const maintenanceDialog = document.getElementById('maintenance-dialog');
+	if (maintenanceDialog) {
+		let maintenanceTrigger = null;
+		document.querySelectorAll('[data-maintenance]').forEach((card) => {
+			const openNotice = (event) => {
+				event.preventDefault();
+				maintenanceTrigger = card;
+				if (!maintenanceDialog.open) maintenanceDialog.showModal();
+			};
+			card.addEventListener('click', openNotice);
+			card.addEventListener('mousedown', (event) => {
+				if (event.button === 1) event.preventDefault();
+			});
+			card.addEventListener('auxclick', (event) => {
+				if (event.button === 1) openNotice(event);
+			});
+			card.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') openNotice(event);
+			});
+		});
+		maintenanceDialog.addEventListener('close', () => maintenanceTrigger?.focus());
+		maintenanceDialog.addEventListener('click', (event) => {
+			if (event.target !== maintenanceDialog) return;
+			const rect = maintenanceDialog.getBoundingClientRect();
+			if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) {
+				maintenanceDialog.close();
+			}
+		});
+	}
+
 	const enableImageClickBursts = () => {
 		const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 		if (reduceMotion) {
