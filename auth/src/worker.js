@@ -1,5 +1,5 @@
 import { ACCOUNT, SESSIONS, SERVICES, registered, linkedPage, returnPath } from './services.js';
-import { HttpError, random, digest, sign, verify, cookie, setCookie, jsonBody, string, email, ipSubnet, oneTimeCode, json, redirect, boundedText } from './security.js';
+import { HttpError, random, digest, sign, verify, cookie, setCookie, jsonBody, string, email, canonicalEmailKey, ipSubnet, oneTimeCode, json, redirect, boundedText } from './security.js';
 import { verifyGoogle } from './google.js';
 
 /** @typedef {Omit<Env, 'EMAIL_ENABLED'> & { EMAIL_ENABLED: string, SESSION_SECRET?: string, GOOGLE_CLIENT_ID?: string, GOOGLE_CLIENT_SECRET?: string }} AuthEnv */
@@ -126,6 +126,12 @@ class Account {
   }
   /** @param {string} address @param {string} name */
   async user(address, name) {
+    const canonical = canonicalEmailKey(address);
+    if (address.endsWith('@gmail.com')) {
+      const existingGmail = await this.db.prepare("SELECT id FROM users WHERE email=? OR (email LIKE '%@gmail.com' AND replace(substr(email, 1, instr(email, '@') - 1), '.', '') || '@gmail.com' = ?) LIMIT 1")
+        .bind(address, canonical).first();
+      if (existingGmail) return String(existingGmail.id);
+    }
     await this.db.prepare('INSERT OR IGNORE INTO users(id,email,name,created_at) VALUES(?,?,?,?)')
       .bind(crypto.randomUUID(), address, name.slice(0, 80), now()).run();
     const user = await this.db.prepare('SELECT id FROM users WHERE email=?').bind(address).first();
@@ -160,7 +166,7 @@ class Account {
     const body = await this.body(); await this.ipLimit();
     if (this.env.EMAIL_ENABLED !== 'true') throw new HttpError(503, 'email_unavailable');
     const address = email(body.email);
-    await this.limit(`email:${address}`, 3, 900);
+    await this.limit(`email:${canonicalEmailKey(address)}`, 3, 900);
     await this.limit(`email-browser:${this.browser}`, 5, 900);
     const sub = ipSubnet(this.request.headers.get('CF-Connecting-IP') || '');
     if (sub) await this.limit(`email-sub:${sub}`, 15, 900);

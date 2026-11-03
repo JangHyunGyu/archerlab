@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { harness,Browser,emailLogin,account } from './harness.mjs';
 import { SESSIONS } from '../src/services.js';
 let fixture,browser;
-before(async()=>{fixture=await harness();browser=new Browser(fixture.mf);await emailLogin(browser,fixture,'gateway@example.com');});
+before(async()=>{fixture=await harness();browser=new Browser(fixture.mf);await emailLogin(browser,fixture,'gateway@gmail.com');});
 after(async()=>fixture?.close());
 const base=key=>SESSIONS+'/'+key+'/_account/';
 const source=key=>'https://'+key+'.archerlab.dev';

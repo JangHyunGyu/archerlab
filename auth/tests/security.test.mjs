@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { generateKeyPair, SignJWT } from 'jose';
 import { harness, Browser, account, service, emailLogin } from './harness.mjs';
 import { verifyGoogle } from '../src/google.js';
+import { email } from '../src/security.js';
 import { registered, linkedPage, returnPath, GAMES } from '../src/services.js';
 
 let fixture; let browser;
@@ -55,39 +56,39 @@ test('CORS rejects unregistered origins and uses exact approved origins', async 
 });
 test('mutations require matching Origin and a browser-bound CSRF proof', async () => {
   const { data } = await browser.json(account + '/api/status');
-  assert.equal((await browser.request(account + '/api/email/start', { email: 'a@example.com', csrf: data.csrf }, { origin: 'https://evil.example' })).status, 403);
-  assert.equal((await browser.request(account + '/api/email/start', { email: 'a@example.com', csrf: '0'.repeat(64) })).status, 403);
+  assert.equal((await browser.request(account + '/api/email/start', { email: 'a@gmail.com', csrf: data.csrf }, { origin: 'https://evil.example' })).status, 403);
+  assert.equal((await browser.request(account + '/api/email/start', { email: 'a@gmail.com', csrf: '0'.repeat(64) })).status, 403);
   const stranger = new Browser(fixture.mf, '203.0.113.11');
-  assert.equal((await stranger.request(account + '/api/email/start', { email: 'a@example.com', csrf: data.csrf })).status, 403);
+  assert.equal((await stranger.request(account + '/api/email/start', { email: 'a@gmail.com', csrf: data.csrf })).status, 403);
 });
 test('email verification issues a real account session without exposing tokens, consumed codes cannot replay', async () => {
   const result = await emailLogin(browser, fixture); assert.equal(result.response.status, 200);
   assert.equal(result.data.redirect, account + '/');
   assert.doesNotMatch(JSON.stringify(result.data), /token|session/);
-  const { data: status } = await browser.json(account + '/api/status'); assert.equal(status.user.email, 'member@example.com');
+  const { data: status } = await browser.json(account + '/api/status'); assert.equal(status.user.email, 'member@gmail.com');
   assert.equal((await browser.request(account + '/api/email/verify', { csrf: result.csrf, challenge: result.challenge, code: result.code })).status, 400);
 });
 test('wrong browser cannot redeem a correct email code', async () => {
   const first = new Browser(fixture.mf, '203.0.113.12'); const second = new Browser(fixture.mf, '203.0.113.13');
   const { data: a } = await first.json(account + '/api/status'); const { data: b } = await second.json(account + '/api/status');
-  const { data: sent } = await first.json(account + '/api/email/start', { csrf: a.csrf, email: 'isolated@example.com' });
+  const { data: sent } = await first.json(account + '/api/email/start', { csrf: a.csrf, email: 'isolated@gmail.com' });
   const code = fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0];
   assert.equal((await second.request(account + '/api/email/verify', { csrf: b.csrf, challenge: sent.challenge, code })).status, 400);
   assert.equal((await first.request(account + '/api/email/verify', { csrf: a.csrf, challenge: sent.challenge, code })).status, 200);
 });
 test('five failed attempts exhaust a challenge and new code invalidates the previous one', async () => {
   const b = new Browser(fixture.mf, '203.0.113.14'); const { data: state } = await b.json(account + '/api/status');
-  const { data: first } = await b.json(account + '/api/email/start', { csrf: state.csrf, email: 'attempts@example.com' });
+  const { data: first } = await b.json(account + '/api/email/start', { csrf: state.csrf, email: 'attempts@gmail.com' });
   const code = fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0]; const wrong = code === '111111' ? '222222' : '111111';
   for (let i = 0; i < 5; i++) assert.equal((await b.request(account + '/api/email/verify', { csrf: state.csrf, challenge: first.challenge, code: wrong })).status, 400);
   assert.equal((await b.request(account + '/api/email/verify', { csrf: state.csrf, challenge: first.challenge, code })).status, 400);
-  await b.request(account + '/api/email/start', { csrf: state.csrf, email: 'attempts@example.com' });
+  await b.request(account + '/api/email/start', { csrf: state.csrf, email: 'attempts@gmail.com' });
   assert.equal((await b.request(account + '/api/email/verify', { csrf: state.csrf, challenge: first.challenge, code })).status, 400);
 });
 test('email send limits do not distinguish existing users', async () => {
   const b = new Browser(fixture.mf, '203.0.113.15'); const { data } = await b.json(account + '/api/status');
-  for (let i = 0; i < 3; i++) assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'limited@example.com' })).status, 200);
-  assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'limited@example.com' })).status, 429);
+  for (let i = 0; i < 3; i++) assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'limited@gmail.com' })).status, 200);
+  assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'limited@gmail.com' })).status, 429);
 });
 test('SSO validates service Origin, browser possession, one-time consumption and fixed return URL', async () => {
   const { data: local } = await browser.json(service + '/_account/session', {}); assert.equal(local.user, null);
@@ -135,8 +136,8 @@ test('Google ID token verification rejects signature, issuer, audience, nonce, e
 });
 test('expired email challenges and malformed body are rejected', async () => {
   const b = new Browser(fixture.mf, '203.0.113.19'); const { data } = await b.json(account + '/api/status');
-  const { data: sent } = await b.json(account + '/api/email/start', { csrf: data.csrf, email: 'expired@example.com' });
-  await fixture.db.prepare('UPDATE email_challenges SET expires_at=0 WHERE email=?').bind('expired@example.com').run();
+  const { data: sent } = await b.json(account + '/api/email/start', { csrf: data.csrf, email: 'expired@gmail.com' });
+  await fixture.db.prepare('UPDATE email_challenges SET expires_at=0 WHERE email=?').bind('expired@gmail.com').run();
   const code = fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0];
   assert.equal((await b.request(account + '/api/email/verify', { csrf: data.csrf, challenge: sent.challenge, code })).status, 400);
   assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'x'.repeat(5000) })).status, 413);
@@ -145,7 +146,7 @@ test('provider failure is fail-closed and discarded challenge cannot log in', as
   const failing = await harness({ mailFails: true });
   try {
     const b = new Browser(failing.mf); const { data } = await b.json(account + '/api/status');
-    assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'failure@example.com' })).status, 503);
+    assert.equal((await b.request(account + '/api/email/start', { csrf: data.csrf, email: 'failure@gmail.com' })).status, 503);
     assert.equal(await failing.db.prepare('SELECT count(*) AS n FROM email_challenges').first('n'), 0);
   } finally { await failing.close(); }
 });
@@ -156,7 +157,7 @@ test('service status cannot be cached through GET, and callback documents contai
   const html = await response.text(); assert.match(html, /callback.js/); assert.doesNotMatch(html, /secret/);
 });
 test('expired exchange codes and revoked parents cannot create service sessions', async () => {
-  const b = new Browser(fixture.mf, '203.0.113.20'); await emailLogin(b, fixture, 'revoked@example.com');
+  const b = new Browser(fixture.mf, '203.0.113.20'); await emailLogin(b, fixture, 'revoked@gmail.com');
   const { data: local } = await b.json(service + '/_account/session', {}); const { data: central } = await b.json(account + '/api/status');
   const { data: pending } = await b.json(service + '/_account/prepare', { csrf: local.csrf, returnPath: '/' });
   const { data: ticket } = await b.json(account + '/api/sso', { csrf: central.csrf, request: pending.request }, { origin: service });
@@ -173,19 +174,29 @@ test('email proof connects a pending Google identity only for the matching addre
   const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token));
   const hash = [...new Uint8Array(bytes)].map(v => v.toString(16).padStart(2, '0')).join('');
   await fixture.db.prepare('INSERT INTO pending_google(browser_hash,subject,email,name,expires_at) VALUES(?,?,?,?,?)')
-    .bind(hash, 'pending-google-subject', 'link@example.com', 'Linked member', Math.floor(Date.now() / 1000) + 600).run();
-  await emailLogin(b, fixture, 'different@example.com');
+    .bind(hash, 'pending-google-subject', 'link@gmail.com', 'Linked member', Math.floor(Date.now() / 1000) + 600).run();
+  await emailLogin(b, fixture, 'different@gmail.com');
   assert.equal(await fixture.db.prepare('SELECT count(*) AS n FROM identities WHERE provider=? AND subject=?').bind('google', 'pending-google-subject').first('n'), 0);
-  await emailLogin(b, fixture, 'link@example.com');
+  await emailLogin(b, fixture, 'link@gmail.com');
   const { data } = await b.json(account + '/api/status');
   assert.equal(await fixture.db.prepare('SELECT user_id FROM identities WHERE provider=? AND subject=?').bind('google', 'pending-google-subject').first('user_id'), data.user.id);
 });
-
-test('disposable email domains are rejected at email start', async () => {
+test('global 8-locale email whitelist, plus-alias rejection, and Gmail dot-trick deduplication', async () => {
+  for (const allowed of ['user@gmail.com', 'user@naver.com', 'user@kakao.com', 'user@yahoo.co.jp', 'user@qq.com', 'user@gmx.de', 'user@orange.fr', 'user@yahoo.es', 'user@uol.com.br', 'user@icloud.com', 'user@outlook.com', 'user@proton.me']) {
+    assert.equal(email(allowed), allowed);
+  }
+  assert.equal(email('user@googlemail.com'), 'user@gmail.com');
   const b = new Browser(fixture.mf, '198.51.100.44');
   const { data } = await b.json(account + '/api/status');
-  for (const disposable of ['abuse@mailinator.com', 'bot@10minutemail.com', 'throwaway@yopmail.com']) {
-    const res = await b.request(account + '/api/email/start', { csrf: data.csrf, email: disposable });
-    assert.equal(res.status, 400);
+  for (const rejected of ['abuse@mailinator.com', 'bot@10minutemail.com', 'throwaway@yopmail.com', 'catchall@custom-domain.xyz', 'member+1@gmail.com', 'user+tag@naver.com']) {
+    const res = await b.request(account + '/api/email/start', { csrf: data.csrf, email: rejected });
+    assert.equal(res.status, 400, rejected);
   }
+  const b1 = new Browser(fixture.mf, '198.51.100.45');
+  const b2 = new Browser(fixture.mf, '198.51.100.46');
+  await emailLogin(b1, fixture, 'dot.trick.user@gmail.com');
+  await emailLogin(b2, fixture, 'dottrickuser@googlemail.com');
+  const { data: s1 } = await b1.json(account + '/api/status');
+  const { data: s2 } = await b2.json(account + '/api/status');
+  assert.equal(s1.user.id, s2.user.id, 'Gmail dot variants and googlemail.com map to the same account ID');
 });

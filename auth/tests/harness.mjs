@@ -58,7 +58,7 @@ export class Browser {
 }
 export const account = 'https://account.archerlab.dev';
 export const service = 'https://harem.archerlab.dev';
-export async function emailLogin(browser, fixture, address = 'member@example.com') {
+export async function emailLogin(browser, fixture, address = 'member@gmail.com') {
   const { data: status } = await browser.json(account + '/api/status');
   const { response: sent, data: challenge } = await browser.json(account + '/api/email/start', { csrf: status.csrf, email: address });
   if (sent.status !== 200) throw new Error(JSON.stringify(challenge));
