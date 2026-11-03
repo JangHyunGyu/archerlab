@@ -76,10 +76,35 @@ export function string(value, limit = 256) {
   if (typeof value !== 'string' || value.length > limit) throw new HttpError(400, 'invalid_request');
   return value;
 }
+const DISPOSABLE_EMAIL_DOMAINS = new Set([
+  'mailinator.com', 'guerrillamail.com', '10minutemail.com', 'tempmail.com',
+  'temp-mail.org', 'yopmail.com', 'sharklasers.com', 'trashmail.com',
+  'getnada.com', 'maildrop.cc', 'dispostable.com', 'throwawaymail.com',
+  'mohmal.com', 'fakeinbox.com', 'mailnesia.com', 'burnermail.io',
+  'tempail.com', 'emailondeck.com',
+]);
+/** @param {string} ip */
+export function ipSubnet(ip) {
+  const raw = String(ip || '').trim().toLowerCase();
+  const v4 = raw.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.\d{1,3}$/);
+  if (v4) return `v4:${v4[1]}.${v4[2]}.${v4[3]}.0/24`;
+  if (raw.includes(':')) {
+    const [head, tail] = raw.split('::');
+    const left = head ? head.split(':').filter(Boolean) : [];
+    const right = tail !== undefined ? (tail ? tail.split(':').filter(Boolean) : []) : [];
+    const fill = tail !== undefined ? Math.max(0, 8 - left.length - right.length) : 0;
+    const full = [...left, ...Array(fill).fill('0'), ...right].slice(0, 3).map(p => p.padStart(4, '0'));
+    while (full.length < 3) full.push('0000');
+    return `v6:${full.join(':')}::/48`;
+  }
+  return '';
+}
 /** @param {unknown} value */
 export function email(value) {
   const address = string(value, 254).trim().toLowerCase();
   if (!/^[a-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,63}$/i.test(address)) throw new HttpError(400, 'invalid_email');
+  const domain = address.split('@')[1] || '';
+  if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) throw new HttpError(400, 'invalid_email');
   return address;
 }
 export function oneTimeCode() {

@@ -1,5 +1,5 @@
 import { ACCOUNT, SESSIONS, SERVICES, registered, linkedPage, returnPath } from './services.js';
-import { HttpError, random, digest, sign, verify, cookie, setCookie, jsonBody, string, email, oneTimeCode, json, redirect, boundedText } from './security.js';
+import { HttpError, random, digest, sign, verify, cookie, setCookie, jsonBody, string, email, ipSubnet, oneTimeCode, json, redirect, boundedText } from './security.js';
 import { verifyGoogle } from './google.js';
 
 /** @typedef {Omit<Env, 'EMAIL_ENABLED'> & { EMAIL_ENABLED: string, SESSION_SECRET?: string, GOOGLE_CLIENT_ID?: string, GOOGLE_CLIENT_SECRET?: string }} AuthEnv */
@@ -53,7 +53,12 @@ class Account {
       .bind(hash, (bucket + 1) * duration).first();
     if (!row || Number(row.count) > maximum) throw new HttpError(429, 'rate_limited');
   }
-  async ipLimit() { await this.limit(`ip:${this.request.headers.get('CF-Connecting-IP') || 'unknown'}`, 30, 600); }
+  async ipLimit() {
+    const ip = this.request.headers.get('CF-Connecting-IP') || 'unknown';
+    await this.limit(`ip:${ip}`, 30, 600);
+    const sub = ipSubnet(ip);
+    if (sub) await this.limit(`sub:${sub}`, 120, 600);
+  }
   async session() {
     const isAccount = this.url.origin === ACCOUNT;
     const token = cookie(this.request, isAccount ? CENTRAL : LOCAL);
@@ -157,6 +162,10 @@ class Account {
     const address = email(body.email);
     await this.limit(`email:${address}`, 3, 900);
     await this.limit(`email-browser:${this.browser}`, 5, 900);
+    const sub = ipSubnet(this.request.headers.get('CF-Connecting-IP') || '');
+    if (sub) await this.limit(`email-sub:${sub}`, 15, 900);
+    const fp = this.request.headers.get('X-Device-Fp') || '';
+    if (/^[a-f0-9]{16,64}$/i.test(fp)) await this.limit(`email-fp:${fp.toLowerCase()}`, 5, 900);
     await this.limit('email-global', 200, 3600);
     const requestToken = body.request ? string(body.request, 43) : null;
     if (requestToken && !await this.ssoRequest(requestToken)) throw new HttpError(400, 'request_expired');

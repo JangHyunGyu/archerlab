@@ -180,3 +180,12 @@ test('email proof connects a pending Google identity only for the matching addre
   const { data } = await b.json(account + '/api/status');
   assert.equal(await fixture.db.prepare('SELECT user_id FROM identities WHERE provider=? AND subject=?').bind('google', 'pending-google-subject').first('user_id'), data.user.id);
 });
+
+test('disposable email domains are rejected at email start', async () => {
+  const b = new Browser(fixture.mf, '198.51.100.44');
+  const { data } = await b.json(account + '/api/status');
+  for (const disposable of ['abuse@mailinator.com', 'bot@10minutemail.com', 'throwaway@yopmail.com']) {
+    const res = await b.request(account + '/api/email/start', { csrf: data.csrf, email: disposable });
+    assert.equal(res.status, 400);
+  }
+});
