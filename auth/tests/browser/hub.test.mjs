@@ -11,7 +11,7 @@ let fixture,engine,member;
 before(async()=>{
   fixture=await harness();
   engine=await ({chromium,firefox,webkit}[process.env.ACCOUNT_TEST_BROWSER||'chromium']).launch({headless:true});
-  member=new Browser(fixture.mf);await emailLogin(member,fixture,'hub-layout@example.com');
+  member=new Browser(fixture.mf);await emailLogin(member,fixture,'hub-layout@gmail.com');
 });
 after(async()=>{await engine?.close();await fixture?.close();});
 

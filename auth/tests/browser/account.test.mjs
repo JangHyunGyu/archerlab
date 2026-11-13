@@ -46,7 +46,7 @@ test('central sign-in silently joins every linked service without controls and l
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   try {
     await page.goto(account + '/account?lang=ko');
-    await page.locator('#email').fill('browser@example.com'); await page.locator('#send').click();
+    await page.locator('#email').fill('browser@gmail.com'); await page.locator('#send').click();
     await page.locator('#code').waitFor({ state: 'visible' });
     const code = fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0];
     await page.locator('#code').fill(code); await page.locator('#code-form button[type=submit]').click();
@@ -112,13 +112,13 @@ test('code and signed-in layouts fit both languages, including long account deta
   }
   try {
     await page.goto(account + '/account?lang=ko');
-    await page.locator('#email').fill('long-layout@example.com');await page.locator('#send').click();
+    await page.locator('#email').fill('long-layout@gmail.com');await page.locator('#send').click();
     await page.locator('#code').waitFor({state:'visible'});
     await fits('code');
     const otp=fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0];
     await page.locator('#code').fill(otp);await page.locator('#code-form button[type=submit]').click();
     await page.locator('#signed-in').waitFor({state:'visible'});
-    await fixture.db.prepare('UPDATE users SET name=?,email=? WHERE email=?').bind('Alexandria '.repeat(7).trim(),'a'.repeat(64)+'@'+'b'.repeat(63)+'.'+'c'.repeat(63)+'.example','long-layout@example.com').run();
+    await fixture.db.prepare('UPDATE users SET name=?,email=? WHERE email=?').bind('Alexandria '.repeat(7).trim(),'a'.repeat(64)+'@'+'b'.repeat(63)+'.'+'c'.repeat(63)+'.example','long-layout@gmail.com').run();
     await page.reload();await page.locator('#signed-in').waitFor({state:'visible'});
     assert.equal(await page.locator('#guest').isVisible(),false);
     await fits('member');
@@ -148,7 +148,7 @@ test('account layout fits phone, tablet and desktop orientations with keyboard a
 test('failed code keeps the user on the form with a readable error and allows retry', async () => {
   const ctx = await context(); const page = await ctx.newPage();
   try {
-    await page.goto(account + '/?lang=ko'); await page.locator('#email').fill('retry@example.com'); await page.locator('#send').click();
+    await page.goto(account + '/?lang=ko'); await page.locator('#email').fill('retry@gmail.com'); await page.locator('#send').click();
     await page.locator('#code').waitFor({ state: 'visible' });
     const code = fixture.mail.at(-1).text.match(/\b\d{6}\b/)[0];
     await page.locator('#code').fill(code === '111111' ? '222222' : '111111');
@@ -161,7 +161,7 @@ test('failed code keeps the user on the form with a readable error and allows re
 
 test('a packed app can replace its document without losing silent SSO or changing its layout', async () => {
   const member = new Browser(fixture.mf);
-  await emailLogin(member, fixture, 'packed@example.com');
+  await emailLogin(member, fixture, 'packed@gmail.com');
   const ctx = await context({ viewport: { width: 390, height: 844 } });
   await ctx.addCookies([...member.cookies.get(account)].map(([name, value]) => ({ name, value, domain: 'account.archerlab.dev', path: '/', secure: true, httpOnly: true, sameSite: 'Lax' })));
   const page = await ctx.newPage(); const errors = [];
@@ -197,7 +197,7 @@ test('a guest stays on the service and silent SSO leaves the document untouched'
 });
 
 test('simultaneous service tabs keep independent browser proofs and sessions', async () => {
-  const member=new Browser(fixture.mf);await emailLogin(member,fixture,'parallel@example.com');
+  const member=new Browser(fixture.mf);await emailLogin(member,fixture,'parallel@gmail.com');
   const ctx=await context();
   await ctx.addCookies([...member.cookies.get(account)].map(([name,value])=>({name,value,domain:'account.archerlab.dev',path:'/',secure:true,httpOnly:true,sameSite:'Lax'})));
   try {
