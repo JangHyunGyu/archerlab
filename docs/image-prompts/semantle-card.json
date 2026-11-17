@@ -1,0 +1,16 @@
+{
+  "tool": "higgsfield gpt_image_2_6 (xhigh 2k) + twenty-questions/tools/process-assets.mjs (sharp Lanczos3 multi-resolution)",
+  "date": "2026-11-17",
+  "dimensions": [
+    1200,
+    1200
+  ],
+  "master": "assets/images/semantle-link.png",
+  "delivery": [
+    "assets/images/semantle-link-400.webp",
+    "assets/images/semantle-link-800.webp",
+    "assets/images/semantle-link.webp"
+  ],
+  "conversion": "WebP quality 90, smartSubsample, responsive srcset (400w, 800w, 1200w) + 1200x1200 PNG fallback",
+  "prompt": "Flagship commercial puzzle game key-art cover in rich royal Prussian-teal, dark walnut, and antique brushed gold, like The Room and Jewelria. Dramatic 40-degree macro studio close-up on a dark teal-leather and carved walnut game table lit by warm tungsten lamp light. Centerpiece: an ornate handcrafted antique-gold and sapphire-glass semantic compass and mechanical chronometer resting over concentric brass calibration rings that warm in color from cool sapphire-cyan at the outer ring through burnished copper in the middle ring to a blazing golden-amber bullseye core with a poised brass stopwatch needle. Tactile blank carved ivory-and-gold square domino word tiles rest along a sweeping spiral arc toward the golden bullseye, accompanied by fine floating golden dust motes. Strictly no text, no letters, no numbers, no logos."
+}
