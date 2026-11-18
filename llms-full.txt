@@ -4,7 +4,7 @@
 
 ## ArcherLab이란? 개발자 한 명이 만든 브라우저 기반 웹 서비스 허브 (ko)
 
-URL: https://archerlab.dev/seo/archerlab-about.html
+URL: https://archerlab.dev/seo/archerlab-about
 Last updated: 2026-10-09
 
 ArcherLab(archerlab.dev)은 개발자 archerlab이 프런트엔드, 백엔드, AI를 조합해 만든 사이드 프로젝트 21개를 모아 둔 허브입니다. 무료 브라우저 게임 포털, 비주얼 노벨, AI 운세와 영상 분석 도구, 뉴스 요약, IT 역사 연표, 실시간 채팅 등을 앱 설치 없이 브라우저에서 쓸 수 있습니다. 아래에서 서비스별 안내 페이지로 이동할 수 있습니다.
@@ -62,7 +62,7 @@ archerlab@archerlab.dev로 보내 주세요.
 
 ## What is ArcherLab? A hub of browser-based web services by one developer (en)
 
-URL: https://archerlab.dev/seo/archerlab-about-en.html
+URL: https://archerlab.dev/seo/archerlab-about-en
 Last updated: 2026-10-09
 
 ArcherLab (archerlab.dev) is a hub of 21 side projects built by developer archerlab, combining frontend, backend and AI. It includes a free browser game portal, visual novels, AI fortune and video analysis tools, a news summary, IT history timelines and live chat, all usable in the browser without installing an app. Use the list below to jump to each service guide.

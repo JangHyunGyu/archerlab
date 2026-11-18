@@ -38,7 +38,7 @@ ArcherLab is a personal development hub by an indie developer. It combines front
 - English
 
 ## Service guide (what it is, pricing, how to use, FAQ)
-- Korean: https://archerlab.dev/seo/archerlab-about.html
-- English: https://archerlab.dev/seo/archerlab-about-en.html
+- Korean: https://archerlab.dev/seo/archerlab-about
+- English: https://archerlab.dev/seo/archerlab-about-en
 - Full text for AI systems: https://archerlab.dev/llms-full.txt
 - Last updated: 2026-10-09

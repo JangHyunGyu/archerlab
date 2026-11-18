@@ -210,6 +210,54 @@ for (const legalPage of ['privacy.html', 'terms.html']) {
   );
 }
 
+check(
+  new Set(sitemapUrls).size === sitemapUrls.length,
+  'sitemap.xml has no duplicate <loc> entries',
+  'sitemap.xml contains duplicate <loc> entries'
+);
+
+for (const url of sitemapUrls) {
+  const parsed = new URL(url);
+  const targetRel = parsed.pathname === '/' ? 'index.html' : `${parsed.pathname.replace(/^\//, '')}.html`;
+  check(
+    parsed.origin === 'https://archerlab.dev' && !parsed.pathname.endsWith('.html'),
+    `sitemap URL uses extensionless canonical path: ${url}`,
+    `sitemap URL must be extensionless on archerlab.dev: ${url}`
+  );
+  check(
+    fileExists(targetRel),
+    `sitemap URL resolves to ${targetRel}`,
+    `sitemap URL target MISSING: ${targetRel}`
+  );
+  if (fileExists(targetRel)) {
+    const html = readFile(targetRel);
+    const canonicalMatch = html.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+    const ogUrlMatch = html.match(/<meta\b[^>]*property=["']og:url["'][^>]*content=["']([^"']+)["']/i);
+    check(
+      Boolean(canonicalMatch && canonicalMatch[1] === url),
+      `${targetRel} canonical matches sitemap <loc>`,
+      `${targetRel} canonical mismatch (expected ${url}, got ${canonicalMatch?.[1]})`
+    );
+    check(
+      Boolean(ogUrlMatch && ogUrlMatch[1] === url),
+      `${targetRel} og:url matches sitemap <loc>`,
+      `${targetRel} og:url mismatch (expected ${url}, got ${ogUrlMatch?.[1]})`
+    );
+  }
+}
+
+const seoFiles = fs.readdirSync(path.join(ROOT, 'seo'))
+  .filter((name) => name.endsWith('.html'))
+  .map((name) => `seo/${name}`);
+const legacySeoHtmlRef = /(?:https:\/\/archerlab\.dev\/|(?:^|[\s"'(=])\/?)seo\/[a-z0-9-]+\.html/i;
+for (const doc of ['index.html', 'index-en.html', 'llms.txt', 'llms-full.txt', ...seoFiles]) {
+  check(
+    !legacySeoHtmlRef.test(readFile(doc)),
+    `${doc} has no .html SEO link/reference`,
+    `${doc} still references a .html SEO path`
+  );
+}
+
 const seoLanguagePairs = [
   ['seo/side-project-idea.html', 'seo/side-project-ideas.html'],
   ['seo/1in-gaebal.html', 'seo/solo-developer-portfolio.html'],
@@ -217,8 +265,8 @@ const seoLanguagePairs = [
 ];
 
 for (const [koPage, enPage] of seoLanguagePairs) {
-  const koUrl = `https://archerlab.dev/${koPage}`;
-  const enUrl = `https://archerlab.dev/${enPage}`;
+  const koUrl = `https://archerlab.dev/${koPage.replace(/\.html$/, '')}`;
+  const enUrl = `https://archerlab.dev/${enPage.replace(/\.html$/, '')}`;
   for (const page of [koPage, enPage]) {
     const content = readFile(page);
     check(
@@ -232,12 +280,12 @@ for (const [koPage, enPage] of seoLanguagePairs) {
 }
 
 const seoLanguageSwitchers = [
-  ['seo/side-project-idea.html', '/seo/side-project-ideas.html'],
-  ['seo/side-project-ideas.html', '/seo/side-project-idea.html'],
-  ['seo/1in-gaebal.html', '/seo/solo-developer-portfolio.html'],
-  ['seo/solo-developer-portfolio.html', '/seo/1in-gaebal.html'],
-  ['seo/vibe-coding.html', '/seo/vibe-coding-examples.html'],
-  ['seo/vibe-coding-examples.html', '/seo/vibe-coding.html'],
+  ['seo/side-project-idea.html', '/seo/side-project-ideas'],
+  ['seo/side-project-ideas.html', '/seo/side-project-idea'],
+  ['seo/1in-gaebal.html', '/seo/solo-developer-portfolio'],
+  ['seo/solo-developer-portfolio.html', '/seo/1in-gaebal'],
+  ['seo/vibe-coding.html', '/seo/vibe-coding-examples'],
+  ['seo/vibe-coding-examples.html', '/seo/vibe-coding'],
 ];
 
 for (const [page, target] of seoLanguageSwitchers) {

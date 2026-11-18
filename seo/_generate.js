@@ -69,11 +69,12 @@ const CSS = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function render(lang, p) {
-  const c = C[lang]; const url = `${SITE}/seo/${p.slug}.html`; const home = HOME[lang];
+  const c = C[lang]; const url = `${SITE}/seo/${p.slug}`; const home = HOME[lang];
   const pageIndex = PAGES[lang].indexOf(p);
-  const altLinks = Object.keys(PAGES).map(L=>`<link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}.html">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}.html">`;
-  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="/seo/${PAGES[L][pageIndex].slug}.html">${L.toUpperCase()}</a>`).join(' · ');
+  const altLinks = Object.keys(PAGES).map(L=>`<link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}">`;
+  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="/seo/${PAGES[L][pageIndex].slug}">${L.toUpperCase()}</a>`).join(' · ');
   const faqLd = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))};
+  const pageLd = {"@context":"https://schema.org","@type":"WebPage","@id":`${url}#webpage`,"url":url,"primaryImageOfPage":{"@type":"ImageObject","url":`${SITE}/assets/images/social/archerlab-representative.png`,"width":1254,"height":1254}};
   return `<!DOCTYPE html>
 <html lang="${c.htmlLang}"><head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MTBCHM8DYM"></script>
@@ -86,11 +87,23 @@ ${altLinks}
 <style>${CSS}</style>
 <script type="application/ld+json">${JSON.stringify(faqLd)}</script>
 <script src="../assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
+    <meta property="og:image" content="${SITE}/assets/images/social/archerlab-representative.png">
+    <meta property="og:image:secure_url" content="${SITE}/assets/images/social/archerlab-representative.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1254">
+    <meta property="og:image:height" content="1254">
+    <meta property="og:image:alt" content="ArcherLab web applications and browser games">
+    <meta name="twitter:image" content="${SITE}/assets/images/social/archerlab-representative.png">
+    <meta name="twitter:image:alt" content="ArcherLab web applications and browser games">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+    <script type="application/ld+json">${JSON.stringify(pageLd)}</script>
 </head><body><div class="wrap">
 <h1>${esc(p.h1)}</h1>
 <p class="intro">${esc(p.intro)}</p>
 <div class="cta-box"><a class="cta" href="${home}">${esc(c.cta)}</a></div>
-<h2>${esc(c.why_title)}</h2><ul>${c.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>
+<h2>${esc(c.why_title)}</h2><ul>${C[lang].why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>
 <h2>${esc(c.picks_title)}</h2>
 <div class="pick"><h3>${esc(c.main_name)}</h3><p>${esc(c.main_desc)}</p></div>
 <div class="pick"><h3>${esc(c.sec_name)} <span class="badge">${esc(c.sec_label)}</span></h3><p>${esc(c.sec_desc)}</p></div>
@@ -110,8 +123,8 @@ for (const lang of Object.keys(PAGES)) for (const p of PAGES[lang]) {
 console.log(`✓ ${n} pages generated`);
 const frag = all.map(u => {
   const pageIndex = PAGES[u.lang].findIndex(p => p.slug === u.slug);
-  const alts = '\n' + Object.keys(PAGES).map(L=>`    <xhtml:link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}.html"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}.html"/>`;
-  return `  <url><loc>${SITE}/seo/${u.slug}.html</loc>${alts}\n    <changefreq>monthly</changefreq><priority>0.7</priority></url>`;
+  const alts = '\n' + Object.keys(PAGES).map(L=>`    <xhtml:link rel="alternate" hreflang="${L}" href="${SITE}/seo/${PAGES[L][pageIndex].slug}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[pageIndex].slug}"/>`;
+  return `  <url><loc>${SITE}/seo/${u.slug}</loc>${alts}\n    <changefreq>monthly</changefreq><priority>0.7</priority></url>`;
 }).join('\n');
 fs.writeFileSync(path.join(__dirname, '_sitemap_fragment.xml'), frag + '\n', 'utf8');
 console.log('✓ sitemap fragment written');
