@@ -7,7 +7,7 @@
       : Array.from(text);
     const words = name.trim().split(/\s+/u);
     const first = graphemes(words[0])[0] || 'A';
-    const last = words.length > 1 ? graphemes(words.at(-1))[0] : '';
+    const last = words.length > 1 ? graphemes(words[words.length - 1])[0] : '';
     const letters = /^\p{Script=Latin}\p{Mark}*$/u;
     const text = first + (letters.test(first) && letters.test(last) ? last : '');
     return graphemes(text.toLocaleUpperCase()).slice(0, 2).join('');
@@ -22,18 +22,25 @@
     const korean = document.documentElement.lang.startsWith('ko');
     let checking = false;
 
-    async function refresh() {
+    async function refresh() { var __oc0, __oc1;
       if (checking) return;
       checking = true;
       try {
-        const response = await fetch('https://account.archerlab.dev/api/status', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
-          credentials: 'include', cache: 'no-store', signal: AbortSignal.timeout(8000)
-        });
+        const controller = typeof AbortController === 'function' ? new AbortController() : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 8000) : null;
+        let response;
+        try {
+          response = await fetch('https://account.archerlab.dev/api/status', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}',
+            credentials: 'include', cache: 'no-store', ...(controller ? { signal: controller.signal } : {})
+          });
+        } finally {
+          if (timeoutId !== null) clearTimeout(timeoutId);
+        }
         if (!response.ok) return;
         const status = await response.json();
         const accountLabel = status.user ? (korean ? '내 계정' : 'My account') : (korean ? '로그인' : 'Sign in');
-        const name = status.user?.name?.trim() || 'ArcherLab';
+        const name = (((__oc1 = (__oc0 = status.user) === null || __oc0 === void 0 ? void 0 : __oc0.name) === null || __oc1 === void 0 ? void 0 : __oc1.trim())) || 'ArcherLab';
         label.textContent = accountLabel;
         link.setAttribute('aria-label', accountLabel);
         link.title = status.user ? `${accountLabel} · ${name}` : accountLabel;
@@ -45,7 +52,7 @@
         window.dispatchEvent(new CustomEvent('archerlab:session', {
           detail: status.user ? { id: status.user.id, name: status.user.name } : null
         }));
-      } catch {
+      } catch (_err) {
         // The static link remains available if the status request cannot complete.
       } finally {
         checking = false;

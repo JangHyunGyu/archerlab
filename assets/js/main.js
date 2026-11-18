@@ -11,7 +11,7 @@
 })();
 
 // DOMContentLoaded 이벤트는 HTML 문서가 완전히 파싱되었을 때 발생합니다.
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { var __oc0;
 	const LANGUAGE_STORAGE_KEY = "archerlab:language";
 
 	const normalizeLanguage = (value) => {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	};
 
-	const currentLanguage = normalizeLanguage(document.documentElement?.lang || "");
+	const currentLanguage = normalizeLanguage((((__oc0 = document.documentElement) === null || __oc0 === void 0 ? void 0 : __oc0.lang)) || "");
 	const storedLanguage = normalizeLanguage(getStoredLanguage());
 	const browserLanguage = detectBrowserLanguage();
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const firstDropdown = dropdowns[0];
 			if (firstDropdown) {
 				const matchItem = firstDropdown.querySelector(`[data-lang-code="${preferredLanguage}"]`);
-				if (matchItem?.dataset.langUrl) {
+				if (((matchItem === null || matchItem === void 0 ? void 0 : matchItem.dataset.langUrl))) {
 					setStoredLanguage(preferredLanguage);
 					window.location.replace(matchItem.dataset.langUrl);
 					return;
@@ -165,8 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (!linkNodes.length) {
 			return;
 		}
-		linkNodes.forEach((node) => {
-			const linkKey = node.dataset?.linkKey;
+		linkNodes.forEach((node) => { var __oc1;
+			const linkKey = (((__oc1 = node.dataset) === null || __oc1 === void 0 ? void 0 : __oc1.linkKey));
 			if (!linkKey) {
 				return;
 			}
@@ -180,8 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	syncExternalLanguageLinks();
 
-	const enableImageClickBursts = () => {
-		const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+	const enableImageClickBursts = () => { var __oc2, __oc3;
+		const reduceMotion = (((__oc3 = (__oc2 = window.matchMedia) === null || __oc2 === void 0 ? void 0 : __oc2.call(window, "(prefers-reduced-motion: reduce)")) === null || __oc3 === void 0 ? void 0 : __oc3.matches));
 		if (reduceMotion) {
 			return;
 		}
@@ -251,17 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	let launcherHistoryActive = false;
 
-	const isMobileLauncherViewport = () => {
-		const coarsePointer = window.matchMedia?.("(pointer: coarse)")?.matches;
-		const narrowViewport = window.matchMedia?.("(max-width: 820px)")?.matches;
+	const isMobileLauncherViewport = () => { var __oc4, __oc5, __oc6, __oc7;
+		const coarsePointer = (((__oc5 = (__oc4 = window.matchMedia) === null || __oc4 === void 0 ? void 0 : __oc4.call(window, "(pointer: coarse)")) === null || __oc5 === void 0 ? void 0 : __oc5.matches));
+		const narrowViewport = (((__oc7 = (__oc6 = window.matchMedia) === null || __oc6 === void 0 ? void 0 : __oc6.call(window, "(max-width: 820px)")) === null || __oc7 === void 0 ? void 0 : __oc7.matches));
 		return Boolean(coarsePointer || narrowViewport);
 	};
 
-	const getHubTargetUrl = (el) => {
+	const getHubTargetUrl = (el) => { var __oc8;
 		if (!el) {
 			return "";
 		}
-		if (el.dataset?.href) {
+		if ((((__oc8 = el.dataset) === null || __oc8 === void 0 ? void 0 : __oc8.href))) {
 			return el.dataset.href;
 		}
 		return el.href || "";
@@ -277,13 +277,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		return event.button === undefined || event.button === 0;
 	};
 
-	const closeAppLauncher = (launcher, options = {}) => {
+	const closeAppLauncher = (launcher, options = {}) => { var __oc9;
 		if (!launcher) {
 			return;
 		}
 		// Remove the frame instead of blanking it: a removed iframe also drops the
 		// session-history entries it created, so history.back() below stays in this page.
-		launcher.querySelector(".app-launcher__frame")?.remove();
+		(((__oc9 = launcher.querySelector(".app-launcher__frame")) === null || __oc9 === void 0 ? void 0 : __oc9.remove()));
 		launcher.setAttribute("hidden", "");
 		document.body.classList.remove("app-launcher-open");
 		if (!options.fromHistory && launcherHistoryActive) {
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		return launcher;
 	};
 
-	const launchLinkedApp = (el, event) => {
+	const launchLinkedApp = (el, event) => { var __oc10, __oc11;
 		if (!isMobileLauncherViewport() || !isPlainPrimaryClick(event)) {
 			return false;
 		}
@@ -367,9 +367,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			return false;
 		}
 
-		event?.preventDefault?.();
+		(((__oc10 = event === null || event === void 0 ? void 0 : event.preventDefault) === null || __oc10 === void 0 ? void 0 : __oc10.call(event)));
 		const launcher = ensureAppLauncher();
-		launcher.querySelector(".app-launcher__frame")?.remove();
+		(((__oc11 = launcher.querySelector(".app-launcher__frame")) === null || __oc11 === void 0 ? void 0 : __oc11.remove()));
 		const frame = createLauncherFrame();
 		launcher.appendChild(frame);
 

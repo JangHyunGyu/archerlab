@@ -19,7 +19,7 @@
       const target = new URL(result.returnPath, location.origin);
       if (target.origin !== location.origin) throw new Error('invalid');
       location.replace(target.href);
-    } catch {
+    } catch (_err) {
       status.textContent = ko ? '로그인을 다시 시작해 주세요.' : 'Please start sign-in again.';
       const help = document.getElementById('help'); help.hidden = false;
       help.textContent = ko ? '요청이 만료됐거나 다른 브라우저에서 열렸어요. 이용하던 서비스에서 다시 로그인해 주세요.' : 'This request expired or was opened in a different browser. Start sign-in again from your service.';

@@ -11,7 +11,7 @@
       : Array.from(text);
     const words = name.trim().split(/\s+/u);
     const first = graphemes(words[0])[0] || 'A';
-    const last = words.length > 1 ? graphemes(words.at(-1))[0] : '';
+    const last = words.length > 1 ? graphemes(words[words.length - 1])[0] : '';
     const letters = /^\p{Script=Latin}\p{Mark}*$/u;
     const text = first + (letters.test(first) && letters.test(last) ? last : '');
     return graphemes(text.toLocaleUpperCase()).slice(0, 2).join('');
@@ -22,7 +22,7 @@
   };
   const params = new URLSearchParams(location.search);
   let language = params.get('lang') || (navigator.language.startsWith('ko') ? 'ko' : 'en');
-  if (!Object.hasOwn(copy, language)) language = 'en';
+  if (!Object.prototype.hasOwnProperty.call(copy, language)) language = 'en';
   let state; let challenge; let resendAt = 0; let busy = false;
   function translate() {
     document.documentElement.lang = language;
@@ -31,7 +31,7 @@
       element.textContent = value;
     }
     $('language').textContent = language === 'ko' ? 'EN' : '한국어';
-    if (state?.user) {
+    if (((state === null || state === void 0 ? void 0 : state.user))) {
       $('form-title').textContent = accountCopy[language].title;
       document.querySelector('.form-description').textContent = accountCopy[language].description;
       if (!state.target) $('continue').querySelector('[data-i18n]').textContent = accountCopy[language].home;
@@ -54,12 +54,12 @@
     const active = document.activeElement;
     try { await callback(); }
     catch (error) { notice(copy[language][error.message] || copy[language].generic, true); }
-    finally { busy = false; document.querySelector('.form-panel').removeAttribute('aria-busy'); if (active?.isConnected) active.focus(); }
+    finally { busy = false; document.querySelector('.form-panel').removeAttribute('aria-busy'); if (((active === null || active === void 0 ? void 0 : active.isConnected))) active.focus(); }
   }
-  function go(url) {
+  function go(url) { var __oc0;
     const target = new URL(url);
     const approved = target.origin === 'https://account.archerlab.dev' || target.origin === 'https://accounts.google.com' ||
-      state?.target?.origin === target.origin;
+      (((__oc0 = state === null || state === void 0 ? void 0 : state.target) === null || __oc0 === void 0 ? void 0 : __oc0.origin)) === target.origin;
     if (!approved) throw new Error('generic');
     location.assign(target.href);
   }
@@ -100,7 +100,9 @@
     $('email-form').hidden = false; $('code-form').hidden = true;
     await load(); notice(copy[language].loggedOut);
   }));
-  $('continue').addEventListener('click', () => location.assign(state?.target?.returnUrl || 'https://archerlab.dev/'));
+  $('continue').addEventListener('click', () => { var __oc1; return (
+location.assign((((__oc1 = state === null || state === void 0 ? void 0 : state.target) === null || __oc1 === void 0 ? void 0 : __oc1.returnUrl)) || 'https://archerlab.dev/')
+); });
   setInterval(() => { const remaining = Math.max(0, Math.ceil((resendAt - Date.now()) / 1000)); $('resend').disabled = busy || remaining > 0; $('resend').textContent = copy[language].resend + (remaining ? ` (${remaining}s)` : ''); }, 1000);
   translate(); void action(async () => { await load(); if (params.get('error')) notice(copy[language][params.get('error')] || copy[language].generic, true); });
 })();
